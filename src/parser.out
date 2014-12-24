@@ -1,0 +1,593 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> body
+Rule 1     body -> statement
+Rule 2     statement -> statement CR expression
+Rule 3     statement -> statement CR
+Rule 4     statement -> expression
+Rule 5     expression -> CR
+Rule 6     expression -> LINE
+Rule 7     expression -> H1 factor
+Rule 8     expression -> H2 factor
+Rule 9     expression -> H3 factor
+Rule 10    expression -> H4 factor
+Rule 11    expression -> H5 factor
+Rule 12    expression -> H6 factor
+Rule 13    expression -> SH1
+Rule 14    expression -> SH2
+Rule 15    expression -> expression factor
+Rule 16    expression -> factor
+Rule 17    factor -> STRONG factor STRONG
+Rule 18    factor -> EM factor EM
+Rule 19    factor -> factor subfactor
+Rule 20    factor -> subfactor
+Rule 21    subfactor -> TEXT
+
+Terminals, with rules where they appear
+
+CR                   : 2 3 5
+EM                   : 18 18
+H1                   : 7
+H2                   : 8
+H3                   : 9
+H4                   : 10
+H5                   : 11
+H6                   : 12
+LINE                 : 6
+SH1                  : 13
+SH2                  : 14
+STRONG               : 17 17
+TEXT                 : 21
+error                : 
+
+Nonterminals, with rules where they appear
+
+body                 : 0
+expression           : 2 4 15
+factor               : 7 8 9 10 11 12 15 16 17 18 19
+statement            : 1 2 3
+subfactor            : 19 20
+
+Parsing method: SLR
+
+state 0
+
+    (0) S' -> . body
+    (1) body -> . statement
+    (2) statement -> . statement CR expression
+    (3) statement -> . statement CR
+    (4) statement -> . expression
+    (5) expression -> . CR
+    (6) expression -> . LINE
+    (7) expression -> . H1 factor
+    (8) expression -> . H2 factor
+    (9) expression -> . H3 factor
+    (10) expression -> . H4 factor
+    (11) expression -> . H5 factor
+    (12) expression -> . H6 factor
+    (13) expression -> . SH1
+    (14) expression -> . SH2
+    (15) expression -> . expression factor
+    (16) expression -> . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    CR              shift and go to state 14
+    LINE            shift and go to state 15
+    H1              shift and go to state 6
+    H2              shift and go to state 4
+    H3              shift and go to state 5
+    H4              shift and go to state 8
+    H5              shift and go to state 9
+    H6              shift and go to state 7
+    SH1             shift and go to state 2
+    SH2             shift and go to state 3
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    body                           shift and go to state 1
+    expression                     shift and go to state 17
+    subfactor                      shift and go to state 18
+    statement                      shift and go to state 12
+    factor                         shift and go to state 13
+
+state 1
+
+    (0) S' -> body .
+
+
+
+state 2
+
+    (13) expression -> SH1 .
+
+    $end            reduce using rule 13 (expression -> SH1 .)
+    CR              reduce using rule 13 (expression -> SH1 .)
+    STRONG          reduce using rule 13 (expression -> SH1 .)
+    EM              reduce using rule 13 (expression -> SH1 .)
+    TEXT            reduce using rule 13 (expression -> SH1 .)
+
+
+state 3
+
+    (14) expression -> SH2 .
+
+    $end            reduce using rule 14 (expression -> SH2 .)
+    CR              reduce using rule 14 (expression -> SH2 .)
+    STRONG          reduce using rule 14 (expression -> SH2 .)
+    EM              reduce using rule 14 (expression -> SH2 .)
+    TEXT            reduce using rule 14 (expression -> SH2 .)
+
+
+state 4
+
+    (8) expression -> H2 . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 19
+
+state 5
+
+    (9) expression -> H3 . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 20
+
+state 6
+
+    (7) expression -> H1 . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 21
+
+state 7
+
+    (12) expression -> H6 . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 22
+
+state 8
+
+    (10) expression -> H4 . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 23
+
+state 9
+
+    (11) expression -> H5 . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 24
+
+state 10
+
+    (21) subfactor -> TEXT .
+
+    $end            reduce using rule 21 (subfactor -> TEXT .)
+    CR              reduce using rule 21 (subfactor -> TEXT .)
+    STRONG          reduce using rule 21 (subfactor -> TEXT .)
+    EM              reduce using rule 21 (subfactor -> TEXT .)
+    TEXT            reduce using rule 21 (subfactor -> TEXT .)
+
+
+state 11
+
+    (18) factor -> EM . factor EM
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 25
+
+state 12
+
+    (1) body -> statement .
+    (2) statement -> statement . CR expression
+    (3) statement -> statement . CR
+
+    $end            reduce using rule 1 (body -> statement .)
+    CR              shift and go to state 26
+
+
+state 13
+
+    (16) expression -> factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 16 (expression -> factor .)
+    CR              reduce using rule 16 (expression -> factor .)
+    STRONG          reduce using rule 16 (expression -> factor .)
+    EM              reduce using rule 16 (expression -> factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 16 (expression -> factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 14
+
+    (5) expression -> CR .
+
+    $end            reduce using rule 5 (expression -> CR .)
+    CR              reduce using rule 5 (expression -> CR .)
+    STRONG          reduce using rule 5 (expression -> CR .)
+    EM              reduce using rule 5 (expression -> CR .)
+    TEXT            reduce using rule 5 (expression -> CR .)
+
+
+state 15
+
+    (6) expression -> LINE .
+
+    $end            reduce using rule 6 (expression -> LINE .)
+    CR              reduce using rule 6 (expression -> LINE .)
+    STRONG          reduce using rule 6 (expression -> LINE .)
+    EM              reduce using rule 6 (expression -> LINE .)
+    TEXT            reduce using rule 6 (expression -> LINE .)
+
+
+state 16
+
+    (17) factor -> STRONG . factor STRONG
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 28
+
+state 17
+
+    (4) statement -> expression .
+    (15) expression -> expression . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    $end            reduce using rule 4 (statement -> expression .)
+    CR              reduce using rule 4 (statement -> expression .)
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 29
+
+state 18
+
+    (20) factor -> subfactor .
+
+    $end            reduce using rule 20 (factor -> subfactor .)
+    CR              reduce using rule 20 (factor -> subfactor .)
+    STRONG          reduce using rule 20 (factor -> subfactor .)
+    EM              reduce using rule 20 (factor -> subfactor .)
+    TEXT            reduce using rule 20 (factor -> subfactor .)
+
+
+state 19
+
+    (8) expression -> H2 factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 8 (expression -> H2 factor .)
+    CR              reduce using rule 8 (expression -> H2 factor .)
+    STRONG          reduce using rule 8 (expression -> H2 factor .)
+    EM              reduce using rule 8 (expression -> H2 factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 8 (expression -> H2 factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 20
+
+    (9) expression -> H3 factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 9 (expression -> H3 factor .)
+    CR              reduce using rule 9 (expression -> H3 factor .)
+    STRONG          reduce using rule 9 (expression -> H3 factor .)
+    EM              reduce using rule 9 (expression -> H3 factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 9 (expression -> H3 factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 21
+
+    (7) expression -> H1 factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 7 (expression -> H1 factor .)
+    CR              reduce using rule 7 (expression -> H1 factor .)
+    STRONG          reduce using rule 7 (expression -> H1 factor .)
+    EM              reduce using rule 7 (expression -> H1 factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 7 (expression -> H1 factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 22
+
+    (12) expression -> H6 factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 12 (expression -> H6 factor .)
+    CR              reduce using rule 12 (expression -> H6 factor .)
+    STRONG          reduce using rule 12 (expression -> H6 factor .)
+    EM              reduce using rule 12 (expression -> H6 factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 12 (expression -> H6 factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 23
+
+    (10) expression -> H4 factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 10 (expression -> H4 factor .)
+    CR              reduce using rule 10 (expression -> H4 factor .)
+    STRONG          reduce using rule 10 (expression -> H4 factor .)
+    EM              reduce using rule 10 (expression -> H4 factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 10 (expression -> H4 factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 24
+
+    (11) expression -> H5 factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 11 (expression -> H5 factor .)
+    CR              reduce using rule 11 (expression -> H5 factor .)
+    STRONG          reduce using rule 11 (expression -> H5 factor .)
+    EM              reduce using rule 11 (expression -> H5 factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 11 (expression -> H5 factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 25
+
+    (18) factor -> EM factor . EM
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+    EM              shift and go to state 30
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 27
+
+state 26
+
+    (2) statement -> statement CR . expression
+    (3) statement -> statement CR .
+    (5) expression -> . CR
+    (6) expression -> . LINE
+    (7) expression -> . H1 factor
+    (8) expression -> . H2 factor
+    (9) expression -> . H3 factor
+    (10) expression -> . H4 factor
+    (11) expression -> . H5 factor
+    (12) expression -> . H6 factor
+    (13) expression -> . SH1
+    (14) expression -> . SH2
+    (15) expression -> . expression factor
+    (16) expression -> . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for CR resolved as shift
+    $end            reduce using rule 3 (statement -> statement CR .)
+    CR              shift and go to state 14
+    LINE            shift and go to state 15
+    H1              shift and go to state 6
+    H2              shift and go to state 4
+    H3              shift and go to state 5
+    H4              shift and go to state 8
+    H5              shift and go to state 9
+    H6              shift and go to state 7
+    SH1             shift and go to state 2
+    SH2             shift and go to state 3
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+  ! CR              [ reduce using rule 3 (statement -> statement CR .) ]
+
+    expression                     shift and go to state 31
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 13
+
+state 27
+
+    (19) factor -> factor subfactor .
+
+    $end            reduce using rule 19 (factor -> factor subfactor .)
+    CR              reduce using rule 19 (factor -> factor subfactor .)
+    STRONG          reduce using rule 19 (factor -> factor subfactor .)
+    EM              reduce using rule 19 (factor -> factor subfactor .)
+    TEXT            reduce using rule 19 (factor -> factor subfactor .)
+
+
+state 28
+
+    (17) factor -> STRONG factor . STRONG
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+    STRONG          shift and go to state 32
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 27
+
+state 29
+
+    (15) expression -> expression factor .
+    (19) factor -> factor . subfactor
+    (21) subfactor -> . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    $end            reduce using rule 15 (expression -> expression factor .)
+    CR              reduce using rule 15 (expression -> expression factor .)
+    STRONG          reduce using rule 15 (expression -> expression factor .)
+    EM              reduce using rule 15 (expression -> expression factor .)
+    TEXT            shift and go to state 10
+
+  ! TEXT            [ reduce using rule 15 (expression -> expression factor .) ]
+
+    subfactor                      shift and go to state 27
+
+state 30
+
+    (18) factor -> EM factor EM .
+
+    $end            reduce using rule 18 (factor -> EM factor EM .)
+    CR              reduce using rule 18 (factor -> EM factor EM .)
+    STRONG          reduce using rule 18 (factor -> EM factor EM .)
+    EM              reduce using rule 18 (factor -> EM factor EM .)
+    TEXT            reduce using rule 18 (factor -> EM factor EM .)
+
+
+state 31
+
+    (2) statement -> statement CR expression .
+    (15) expression -> expression . factor
+    (17) factor -> . STRONG factor STRONG
+    (18) factor -> . EM factor EM
+    (19) factor -> . factor subfactor
+    (20) factor -> . subfactor
+    (21) subfactor -> . TEXT
+
+    $end            reduce using rule 2 (statement -> statement CR expression .)
+    CR              reduce using rule 2 (statement -> statement CR expression .)
+    STRONG          shift and go to state 16
+    EM              shift and go to state 11
+    TEXT            shift and go to state 10
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 29
+
+state 32
+
+    (17) factor -> STRONG factor STRONG .
+
+    $end            reduce using rule 17 (factor -> STRONG factor STRONG .)
+    CR              reduce using rule 17 (factor -> STRONG factor STRONG .)
+    STRONG          reduce using rule 17 (factor -> STRONG factor STRONG .)
+    EM              reduce using rule 17 (factor -> STRONG factor STRONG .)
+    TEXT            reduce using rule 17 (factor -> STRONG factor STRONG .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for TEXT in state 13 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 19 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 20 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 21 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 22 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 23 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 24 resolved as shift
+WARNING: shift/reduce conflict for CR in state 26 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 29 resolved as shift
