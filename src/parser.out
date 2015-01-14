@@ -4,51 +4,131 @@ Grammar
 
 Rule 0     S' -> body
 Rule 1     body -> statement
-Rule 2     statement -> statement CR expression
-Rule 3     statement -> statement CR
-Rule 4     statement -> expression
-Rule 5     expression -> CR
-Rule 6     expression -> LINE
-Rule 7     expression -> H1 factor
-Rule 8     expression -> H2 factor
-Rule 9     expression -> H3 factor
-Rule 10    expression -> H4 factor
-Rule 11    expression -> H5 factor
-Rule 12    expression -> H6 factor
-Rule 13    expression -> SH1
-Rule 14    expression -> SH2
-Rule 15    expression -> expression factor
-Rule 16    expression -> factor
-Rule 17    factor -> STRONG factor STRONG
-Rule 18    factor -> EM factor EM
-Rule 19    factor -> factor subfactor
-Rule 20    factor -> subfactor
-Rule 21    subfactor -> TEXT
+Rule 2     statement -> <empty>
+Rule 3     statement -> statement CR expression
+Rule 4     statement -> statement CR
+Rule 5     statement -> expression
+Rule 6     expression -> H1 factor
+Rule 7     expression -> H2 factor
+Rule 8     expression -> H3 factor
+Rule 9     expression -> expression expression
+Rule 10    expression -> factor
+Rule 11    expression -> line
+Rule 12    expression -> picture
+Rule 13    expression -> ul
+Rule 14    expression -> codes
+Rule 15    expression -> quote
+Rule 16    expression -> link
+Rule 17    expression -> strong
+Rule 18    expression -> em
+Rule 19    line -> AS AS AS
+Rule 20    line -> UDL UDL UDL
+Rule 21    line -> AS BLANK AS BLANK AS
+Rule 22    line -> UDL BLANK UDL BLANK UDL
+Rule 23    line -> MINUS MINUS MINUS
+Rule 24    line -> EQ EQ EQ
+Rule 25    strong -> AS em AS
+Rule 26    strong -> UDL em UDL
+Rule 27    em -> ASfactor AS
+Rule 28    em -> UDL factor UDL
+Rule 29    ASfactor -> AS factor
+Rule 30    ASfactor -> ASfactor factor
+Rule 31    quote -> RT factor
+Rule 32    codes -> code QQ
+Rule 33    codes -> code CR QQ
+Rule 34    codes -> QQ UDL factor UDL QQ
+Rule 35    codes -> QQ codes QQ
+Rule 36    code -> QQ factor
+Rule 37    code -> code factor
+Rule 38    code -> code CR
+Rule 39    code -> QQ CR factor
+Rule 40    ul -> olis
+Rule 41    ul -> olis iul
+Rule 42    oli -> NUMBER DOT factor CR
+Rule 43    olis -> olis oli
+Rule 44    olis -> oli
+Rule 45    ul -> lis
+Rule 46    iul -> ilis
+Rule 47    iiul -> iilis
+Rule 48    ul -> lis iul
+Rule 49    iul -> ilis iiul
+Rule 50    li -> ASfactor CR
+Rule 51    ili -> TAB li
+Rule 52    iili -> TAB TAB li
+Rule 53    lis -> lis li
+Rule 54    lis -> li
+Rule 55    ilis -> ilis ili
+Rule 56    ilis -> ili
+Rule 57    iilis -> iilis iili
+Rule 58    iilis -> iili
+Rule 59    li -> li PLUS factor CR
+Rule 60    li -> li MINUS factor CR
+Rule 61    li -> PLUS factor CR
+Rule 62    li -> MINUS factor CR
+Rule 63    picture -> EXCLAM LSQ factor RSQ LB factor RB
+Rule 64    link -> LT factor RT
+Rule 65    link -> LSQ factor RSQ LB factor RB
+Rule 66    factor -> factor subfactor
+Rule 67    factor -> subfactor
+Rule 68    subfactor -> WORD
+Rule 69    subfactor -> NUMBER
+Rule 70    subfactor -> DOT
+Rule 71    subfactor -> BLANK
+Rule 72    subfactor -> TAB
 
 Terminals, with rules where they appear
 
-CR                   : 2 3 5
-EM                   : 18 18
-H1                   : 7
-H2                   : 8
-H3                   : 9
-H4                   : 10
-H5                   : 11
-H6                   : 12
-LINE                 : 6
-SH1                  : 13
-SH2                  : 14
-STRONG               : 17 17
-TEXT                 : 21
+AS                   : 19 19 19 21 21 21 25 25 27 29
+BLANK                : 21 21 22 22 71
+CR                   : 3 4 33 38 39 42 50 59 60 61 62
+DOT                  : 42 70
+EQ                   : 24 24 24
+EXCLAM               : 63
+H1                   : 6
+H2                   : 7
+H3                   : 8
+LB                   : 63 65
+LSQ                  : 63 65
+LT                   : 64
+MINUS                : 23 23 23 60 62
+NUMBER               : 42 69
+PLUS                 : 59 61
+QQ                   : 32 33 34 34 35 35 36 39
+RB                   : 63 65
+RSQ                  : 63 65
+RT                   : 31 64
+TAB                  : 51 52 52 72
+UDL                  : 20 20 20 22 22 22 26 26 28 28 34 34
+WORD                 : 68
 error                : 
 
 Nonterminals, with rules where they appear
 
+ASfactor             : 27 30 50
 body                 : 0
-expression           : 2 4 15
-factor               : 7 8 9 10 11 12 15 16 17 18 19
-statement            : 1 2 3
-subfactor            : 19 20
+code                 : 32 33 37 38
+codes                : 14 35
+em                   : 18 25 26
+expression           : 3 5 9 9
+factor               : 6 7 8 10 28 29 30 31 34 36 37 39 42 59 60 61 62 63 63 64 65 65 66
+iili                 : 57 58
+iilis                : 47 57
+iiul                 : 49
+ili                  : 55 56
+ilis                 : 46 49 55
+iul                  : 41 48
+li                   : 51 52 53 54 59 60
+line                 : 11
+link                 : 16
+lis                  : 45 48 53
+oli                  : 43 44
+olis                 : 40 41 43
+picture              : 12
+quote                : 15
+statement            : 1 3 4
+strong               : 17
+subfactor            : 66 67
+ul                   : 13
 
 Parsing method: SLR
 
@@ -56,538 +136,3696 @@ state 0
 
     (0) S' -> . body
     (1) body -> . statement
-    (2) statement -> . statement CR expression
-    (3) statement -> . statement CR
-    (4) statement -> . expression
-    (5) expression -> . CR
-    (6) expression -> . LINE
-    (7) expression -> . H1 factor
-    (8) expression -> . H2 factor
-    (9) expression -> . H3 factor
-    (10) expression -> . H4 factor
-    (11) expression -> . H5 factor
-    (12) expression -> . H6 factor
-    (13) expression -> . SH1
-    (14) expression -> . SH2
-    (15) expression -> . expression factor
-    (16) expression -> . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
+    (2) statement -> .
+    (3) statement -> . statement CR expression
+    (4) statement -> . statement CR
+    (5) statement -> . expression
+    (6) expression -> . H1 factor
+    (7) expression -> . H2 factor
+    (8) expression -> . H3 factor
+    (9) expression -> . expression expression
+    (10) expression -> . factor
+    (11) expression -> . line
+    (12) expression -> . picture
+    (13) expression -> . ul
+    (14) expression -> . codes
+    (15) expression -> . quote
+    (16) expression -> . link
+    (17) expression -> . strong
+    (18) expression -> . em
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (19) line -> . AS AS AS
+    (20) line -> . UDL UDL UDL
+    (21) line -> . AS BLANK AS BLANK AS
+    (22) line -> . UDL BLANK UDL BLANK UDL
+    (23) line -> . MINUS MINUS MINUS
+    (24) line -> . EQ EQ EQ
+    (63) picture -> . EXCLAM LSQ factor RSQ LB factor RB
+    (40) ul -> . olis
+    (41) ul -> . olis iul
+    (45) ul -> . lis
+    (48) ul -> . lis iul
+    (32) codes -> . code QQ
+    (33) codes -> . code CR QQ
+    (34) codes -> . QQ UDL factor UDL QQ
+    (35) codes -> . QQ codes QQ
+    (31) quote -> . RT factor
+    (64) link -> . LT factor RT
+    (65) link -> . LSQ factor RSQ LB factor RB
+    (25) strong -> . AS em AS
+    (26) strong -> . UDL em UDL
+    (27) em -> . ASfactor AS
+    (28) em -> . UDL factor UDL
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+    (43) olis -> . olis oli
+    (44) olis -> . oli
+    (53) lis -> . lis li
+    (54) lis -> . li
+    (36) code -> . QQ factor
+    (37) code -> . code factor
+    (38) code -> . code CR
+    (39) code -> . QQ CR factor
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (42) oli -> . NUMBER DOT factor CR
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
 
-    CR              shift and go to state 14
-    LINE            shift and go to state 15
-    H1              shift and go to state 6
-    H2              shift and go to state 4
-    H3              shift and go to state 5
-    H4              shift and go to state 8
-    H5              shift and go to state 9
-    H6              shift and go to state 7
-    SH1             shift and go to state 2
-    SH2             shift and go to state 3
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
+    $end            reduce using rule 2 (statement -> .)
+    CR              reduce using rule 2 (statement -> .)
+    H1              shift and go to state 32
+    H2              shift and go to state 30
+    H3              shift and go to state 31
+    AS              shift and go to state 24
+    UDL             shift and go to state 37
+    MINUS           shift and go to state 8
+    EQ              shift and go to state 28
+    EXCLAM          shift and go to state 7
+    QQ              shift and go to state 29
+    RT              shift and go to state 10
+    LT              shift and go to state 14
+    LSQ             shift and go to state 36
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 4
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+    PLUS            shift and go to state 15
 
-    body                           shift and go to state 1
-    expression                     shift and go to state 17
+    body                           shift and go to state 19
+    picture                        shift and go to state 20
+    codes                          shift and go to state 11
+    olis                           shift and go to state 34
+    oli                            shift and go to state 21
+    quote                          shift and go to state 22
+    lis                            shift and go to state 5
+    em                             shift and go to state 1
+    li                             shift and go to state 13
+    ul                             shift and go to state 33
+    code                           shift and go to state 2
+    link                           shift and go to state 25
+    ASfactor                       shift and go to state 3
+    statement                      shift and go to state 16
+    factor                         shift and go to state 23
+    line                           shift and go to state 26
+    strong                         shift and go to state 27
+    expression                     shift and go to state 35
     subfactor                      shift and go to state 18
-    statement                      shift and go to state 12
-    factor                         shift and go to state 13
 
 state 1
+
+    (18) expression -> em .
+
+    $end            reduce using rule 18 (expression -> em .)
+    CR              reduce using rule 18 (expression -> em .)
+    H1              reduce using rule 18 (expression -> em .)
+    H2              reduce using rule 18 (expression -> em .)
+    H3              reduce using rule 18 (expression -> em .)
+    WORD            reduce using rule 18 (expression -> em .)
+    NUMBER          reduce using rule 18 (expression -> em .)
+    DOT             reduce using rule 18 (expression -> em .)
+    BLANK           reduce using rule 18 (expression -> em .)
+    TAB             reduce using rule 18 (expression -> em .)
+    AS              reduce using rule 18 (expression -> em .)
+    UDL             reduce using rule 18 (expression -> em .)
+    MINUS           reduce using rule 18 (expression -> em .)
+    EQ              reduce using rule 18 (expression -> em .)
+    EXCLAM          reduce using rule 18 (expression -> em .)
+    PLUS            reduce using rule 18 (expression -> em .)
+    QQ              reduce using rule 18 (expression -> em .)
+    RT              reduce using rule 18 (expression -> em .)
+    LT              reduce using rule 18 (expression -> em .)
+    LSQ             reduce using rule 18 (expression -> em .)
+
+
+state 2
+
+    (32) codes -> code . QQ
+    (33) codes -> code . CR QQ
+    (37) code -> code . factor
+    (38) code -> code . CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    QQ              shift and go to state 38
+    CR              shift and go to state 41
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 40
+
+state 3
+
+    (27) em -> ASfactor . AS
+    (30) ASfactor -> ASfactor . factor
+    (50) li -> ASfactor . CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    AS              shift and go to state 42
+    CR              shift and go to state 44
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 43
+
+state 4
+
+    (69) subfactor -> NUMBER .
+    (42) oli -> NUMBER . DOT factor CR
+
+  ! shift/reduce conflict for DOT resolved as shift
+    $end            reduce using rule 69 (subfactor -> NUMBER .)
+    CR              reduce using rule 69 (subfactor -> NUMBER .)
+    H1              reduce using rule 69 (subfactor -> NUMBER .)
+    H2              reduce using rule 69 (subfactor -> NUMBER .)
+    H3              reduce using rule 69 (subfactor -> NUMBER .)
+    WORD            reduce using rule 69 (subfactor -> NUMBER .)
+    NUMBER          reduce using rule 69 (subfactor -> NUMBER .)
+    BLANK           reduce using rule 69 (subfactor -> NUMBER .)
+    TAB             reduce using rule 69 (subfactor -> NUMBER .)
+    AS              reduce using rule 69 (subfactor -> NUMBER .)
+    UDL             reduce using rule 69 (subfactor -> NUMBER .)
+    MINUS           reduce using rule 69 (subfactor -> NUMBER .)
+    EQ              reduce using rule 69 (subfactor -> NUMBER .)
+    EXCLAM          reduce using rule 69 (subfactor -> NUMBER .)
+    PLUS            reduce using rule 69 (subfactor -> NUMBER .)
+    QQ              reduce using rule 69 (subfactor -> NUMBER .)
+    RT              reduce using rule 69 (subfactor -> NUMBER .)
+    LT              reduce using rule 69 (subfactor -> NUMBER .)
+    LSQ             reduce using rule 69 (subfactor -> NUMBER .)
+    RSQ             reduce using rule 69 (subfactor -> NUMBER .)
+    RB              reduce using rule 69 (subfactor -> NUMBER .)
+    DOT             shift and go to state 45
+
+  ! DOT             [ reduce using rule 69 (subfactor -> NUMBER .) ]
+
+
+state 5
+
+    (45) ul -> lis .
+    (48) ul -> lis . iul
+    (53) lis -> lis . li
+    (46) iul -> . ilis
+    (49) iul -> . ilis iiul
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+    (55) ilis -> . ilis ili
+    (56) ilis -> . ili
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (51) ili -> . TAB li
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for AS resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 45 (ul -> lis .)
+    CR              reduce using rule 45 (ul -> lis .)
+    H1              reduce using rule 45 (ul -> lis .)
+    H2              reduce using rule 45 (ul -> lis .)
+    H3              reduce using rule 45 (ul -> lis .)
+    WORD            reduce using rule 45 (ul -> lis .)
+    NUMBER          reduce using rule 45 (ul -> lis .)
+    DOT             reduce using rule 45 (ul -> lis .)
+    BLANK           reduce using rule 45 (ul -> lis .)
+    UDL             reduce using rule 45 (ul -> lis .)
+    EQ              reduce using rule 45 (ul -> lis .)
+    EXCLAM          reduce using rule 45 (ul -> lis .)
+    QQ              reduce using rule 45 (ul -> lis .)
+    RT              reduce using rule 45 (ul -> lis .)
+    LT              reduce using rule 45 (ul -> lis .)
+    LSQ             reduce using rule 45 (ul -> lis .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 53
+    AS              shift and go to state 49
+    TAB             shift and go to state 51
+
+  ! TAB             [ reduce using rule 45 (ul -> lis .) ]
+  ! AS              [ reduce using rule 45 (ul -> lis .) ]
+  ! MINUS           [ reduce using rule 45 (ul -> lis .) ]
+  ! PLUS            [ reduce using rule 45 (ul -> lis .) ]
+
+    iul                            shift and go to state 46
+    ASfactor                       shift and go to state 47
+    li                             shift and go to state 48
+    ilis                           shift and go to state 50
+    ili                            shift and go to state 52
+
+state 6
+
+    (68) subfactor -> WORD .
+
+    $end            reduce using rule 68 (subfactor -> WORD .)
+    CR              reduce using rule 68 (subfactor -> WORD .)
+    H1              reduce using rule 68 (subfactor -> WORD .)
+    H2              reduce using rule 68 (subfactor -> WORD .)
+    H3              reduce using rule 68 (subfactor -> WORD .)
+    WORD            reduce using rule 68 (subfactor -> WORD .)
+    NUMBER          reduce using rule 68 (subfactor -> WORD .)
+    DOT             reduce using rule 68 (subfactor -> WORD .)
+    BLANK           reduce using rule 68 (subfactor -> WORD .)
+    TAB             reduce using rule 68 (subfactor -> WORD .)
+    AS              reduce using rule 68 (subfactor -> WORD .)
+    UDL             reduce using rule 68 (subfactor -> WORD .)
+    MINUS           reduce using rule 68 (subfactor -> WORD .)
+    EQ              reduce using rule 68 (subfactor -> WORD .)
+    EXCLAM          reduce using rule 68 (subfactor -> WORD .)
+    PLUS            reduce using rule 68 (subfactor -> WORD .)
+    QQ              reduce using rule 68 (subfactor -> WORD .)
+    RT              reduce using rule 68 (subfactor -> WORD .)
+    LT              reduce using rule 68 (subfactor -> WORD .)
+    LSQ             reduce using rule 68 (subfactor -> WORD .)
+    RSQ             reduce using rule 68 (subfactor -> WORD .)
+    RB              reduce using rule 68 (subfactor -> WORD .)
+
+
+state 7
+
+    (63) picture -> EXCLAM . LSQ factor RSQ LB factor RB
+
+    LSQ             shift and go to state 54
+
+
+state 8
+
+    (23) line -> MINUS . MINUS MINUS
+    (62) li -> MINUS . factor CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    MINUS           shift and go to state 56
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 55
+
+state 9
+
+    (70) subfactor -> DOT .
+
+    $end            reduce using rule 70 (subfactor -> DOT .)
+    CR              reduce using rule 70 (subfactor -> DOT .)
+    H1              reduce using rule 70 (subfactor -> DOT .)
+    H2              reduce using rule 70 (subfactor -> DOT .)
+    H3              reduce using rule 70 (subfactor -> DOT .)
+    WORD            reduce using rule 70 (subfactor -> DOT .)
+    NUMBER          reduce using rule 70 (subfactor -> DOT .)
+    DOT             reduce using rule 70 (subfactor -> DOT .)
+    BLANK           reduce using rule 70 (subfactor -> DOT .)
+    TAB             reduce using rule 70 (subfactor -> DOT .)
+    AS              reduce using rule 70 (subfactor -> DOT .)
+    UDL             reduce using rule 70 (subfactor -> DOT .)
+    MINUS           reduce using rule 70 (subfactor -> DOT .)
+    EQ              reduce using rule 70 (subfactor -> DOT .)
+    EXCLAM          reduce using rule 70 (subfactor -> DOT .)
+    PLUS            reduce using rule 70 (subfactor -> DOT .)
+    QQ              reduce using rule 70 (subfactor -> DOT .)
+    RT              reduce using rule 70 (subfactor -> DOT .)
+    LT              reduce using rule 70 (subfactor -> DOT .)
+    LSQ             reduce using rule 70 (subfactor -> DOT .)
+    RSQ             reduce using rule 70 (subfactor -> DOT .)
+    RB              reduce using rule 70 (subfactor -> DOT .)
+
+
+state 10
+
+    (31) quote -> RT . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 57
+
+state 11
+
+    (14) expression -> codes .
+
+    $end            reduce using rule 14 (expression -> codes .)
+    CR              reduce using rule 14 (expression -> codes .)
+    H1              reduce using rule 14 (expression -> codes .)
+    H2              reduce using rule 14 (expression -> codes .)
+    H3              reduce using rule 14 (expression -> codes .)
+    WORD            reduce using rule 14 (expression -> codes .)
+    NUMBER          reduce using rule 14 (expression -> codes .)
+    DOT             reduce using rule 14 (expression -> codes .)
+    BLANK           reduce using rule 14 (expression -> codes .)
+    TAB             reduce using rule 14 (expression -> codes .)
+    AS              reduce using rule 14 (expression -> codes .)
+    UDL             reduce using rule 14 (expression -> codes .)
+    MINUS           reduce using rule 14 (expression -> codes .)
+    EQ              reduce using rule 14 (expression -> codes .)
+    EXCLAM          reduce using rule 14 (expression -> codes .)
+    PLUS            reduce using rule 14 (expression -> codes .)
+    QQ              reduce using rule 14 (expression -> codes .)
+    RT              reduce using rule 14 (expression -> codes .)
+    LT              reduce using rule 14 (expression -> codes .)
+    LSQ             reduce using rule 14 (expression -> codes .)
+
+
+state 12
+
+    (72) subfactor -> TAB .
+
+    $end            reduce using rule 72 (subfactor -> TAB .)
+    CR              reduce using rule 72 (subfactor -> TAB .)
+    H1              reduce using rule 72 (subfactor -> TAB .)
+    H2              reduce using rule 72 (subfactor -> TAB .)
+    H3              reduce using rule 72 (subfactor -> TAB .)
+    WORD            reduce using rule 72 (subfactor -> TAB .)
+    NUMBER          reduce using rule 72 (subfactor -> TAB .)
+    DOT             reduce using rule 72 (subfactor -> TAB .)
+    BLANK           reduce using rule 72 (subfactor -> TAB .)
+    TAB             reduce using rule 72 (subfactor -> TAB .)
+    AS              reduce using rule 72 (subfactor -> TAB .)
+    UDL             reduce using rule 72 (subfactor -> TAB .)
+    MINUS           reduce using rule 72 (subfactor -> TAB .)
+    EQ              reduce using rule 72 (subfactor -> TAB .)
+    EXCLAM          reduce using rule 72 (subfactor -> TAB .)
+    PLUS            reduce using rule 72 (subfactor -> TAB .)
+    QQ              reduce using rule 72 (subfactor -> TAB .)
+    RT              reduce using rule 72 (subfactor -> TAB .)
+    LT              reduce using rule 72 (subfactor -> TAB .)
+    LSQ             reduce using rule 72 (subfactor -> TAB .)
+    RSQ             reduce using rule 72 (subfactor -> TAB .)
+    RB              reduce using rule 72 (subfactor -> TAB .)
+
+
+state 13
+
+    (54) lis -> li .
+    (59) li -> li . PLUS factor CR
+    (60) li -> li . MINUS factor CR
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    $end            reduce using rule 54 (lis -> li .)
+    CR              reduce using rule 54 (lis -> li .)
+    H1              reduce using rule 54 (lis -> li .)
+    H2              reduce using rule 54 (lis -> li .)
+    H3              reduce using rule 54 (lis -> li .)
+    WORD            reduce using rule 54 (lis -> li .)
+    NUMBER          reduce using rule 54 (lis -> li .)
+    DOT             reduce using rule 54 (lis -> li .)
+    BLANK           reduce using rule 54 (lis -> li .)
+    TAB             reduce using rule 54 (lis -> li .)
+    AS              reduce using rule 54 (lis -> li .)
+    UDL             reduce using rule 54 (lis -> li .)
+    EQ              reduce using rule 54 (lis -> li .)
+    EXCLAM          reduce using rule 54 (lis -> li .)
+    QQ              reduce using rule 54 (lis -> li .)
+    RT              reduce using rule 54 (lis -> li .)
+    LT              reduce using rule 54 (lis -> li .)
+    LSQ             reduce using rule 54 (lis -> li .)
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 59
+
+  ! MINUS           [ reduce using rule 54 (lis -> li .) ]
+  ! PLUS            [ reduce using rule 54 (lis -> li .) ]
+
+
+state 14
+
+    (64) link -> LT . factor RT
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 60
+
+state 15
+
+    (61) li -> PLUS . factor CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 61
+
+state 16
+
+    (1) body -> statement .
+    (3) statement -> statement . CR expression
+    (4) statement -> statement . CR
+
+    $end            reduce using rule 1 (body -> statement .)
+    CR              shift and go to state 62
+
+
+state 17
+
+    (71) subfactor -> BLANK .
+
+    $end            reduce using rule 71 (subfactor -> BLANK .)
+    CR              reduce using rule 71 (subfactor -> BLANK .)
+    H1              reduce using rule 71 (subfactor -> BLANK .)
+    H2              reduce using rule 71 (subfactor -> BLANK .)
+    H3              reduce using rule 71 (subfactor -> BLANK .)
+    WORD            reduce using rule 71 (subfactor -> BLANK .)
+    NUMBER          reduce using rule 71 (subfactor -> BLANK .)
+    DOT             reduce using rule 71 (subfactor -> BLANK .)
+    BLANK           reduce using rule 71 (subfactor -> BLANK .)
+    TAB             reduce using rule 71 (subfactor -> BLANK .)
+    AS              reduce using rule 71 (subfactor -> BLANK .)
+    UDL             reduce using rule 71 (subfactor -> BLANK .)
+    MINUS           reduce using rule 71 (subfactor -> BLANK .)
+    EQ              reduce using rule 71 (subfactor -> BLANK .)
+    EXCLAM          reduce using rule 71 (subfactor -> BLANK .)
+    PLUS            reduce using rule 71 (subfactor -> BLANK .)
+    QQ              reduce using rule 71 (subfactor -> BLANK .)
+    RT              reduce using rule 71 (subfactor -> BLANK .)
+    LT              reduce using rule 71 (subfactor -> BLANK .)
+    LSQ             reduce using rule 71 (subfactor -> BLANK .)
+    RSQ             reduce using rule 71 (subfactor -> BLANK .)
+    RB              reduce using rule 71 (subfactor -> BLANK .)
+
+
+state 18
+
+    (67) factor -> subfactor .
+
+    $end            reduce using rule 67 (factor -> subfactor .)
+    CR              reduce using rule 67 (factor -> subfactor .)
+    H1              reduce using rule 67 (factor -> subfactor .)
+    H2              reduce using rule 67 (factor -> subfactor .)
+    H3              reduce using rule 67 (factor -> subfactor .)
+    WORD            reduce using rule 67 (factor -> subfactor .)
+    NUMBER          reduce using rule 67 (factor -> subfactor .)
+    DOT             reduce using rule 67 (factor -> subfactor .)
+    BLANK           reduce using rule 67 (factor -> subfactor .)
+    TAB             reduce using rule 67 (factor -> subfactor .)
+    AS              reduce using rule 67 (factor -> subfactor .)
+    UDL             reduce using rule 67 (factor -> subfactor .)
+    MINUS           reduce using rule 67 (factor -> subfactor .)
+    EQ              reduce using rule 67 (factor -> subfactor .)
+    EXCLAM          reduce using rule 67 (factor -> subfactor .)
+    PLUS            reduce using rule 67 (factor -> subfactor .)
+    QQ              reduce using rule 67 (factor -> subfactor .)
+    RT              reduce using rule 67 (factor -> subfactor .)
+    LT              reduce using rule 67 (factor -> subfactor .)
+    LSQ             reduce using rule 67 (factor -> subfactor .)
+    RSQ             reduce using rule 67 (factor -> subfactor .)
+    RB              reduce using rule 67 (factor -> subfactor .)
+
+
+state 19
 
     (0) S' -> body .
 
 
 
-state 2
-
-    (13) expression -> SH1 .
-
-    $end            reduce using rule 13 (expression -> SH1 .)
-    CR              reduce using rule 13 (expression -> SH1 .)
-    STRONG          reduce using rule 13 (expression -> SH1 .)
-    EM              reduce using rule 13 (expression -> SH1 .)
-    TEXT            reduce using rule 13 (expression -> SH1 .)
-
-
-state 3
-
-    (14) expression -> SH2 .
-
-    $end            reduce using rule 14 (expression -> SH2 .)
-    CR              reduce using rule 14 (expression -> SH2 .)
-    STRONG          reduce using rule 14 (expression -> SH2 .)
-    EM              reduce using rule 14 (expression -> SH2 .)
-    TEXT            reduce using rule 14 (expression -> SH2 .)
-
-
-state 4
-
-    (8) expression -> H2 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 19
-
-state 5
-
-    (9) expression -> H3 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 20
-
-state 6
-
-    (7) expression -> H1 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 21
-
-state 7
-
-    (12) expression -> H6 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 22
-
-state 8
-
-    (10) expression -> H4 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 23
-
-state 9
-
-    (11) expression -> H5 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 24
-
-state 10
-
-    (21) subfactor -> TEXT .
-
-    $end            reduce using rule 21 (subfactor -> TEXT .)
-    CR              reduce using rule 21 (subfactor -> TEXT .)
-    STRONG          reduce using rule 21 (subfactor -> TEXT .)
-    EM              reduce using rule 21 (subfactor -> TEXT .)
-    TEXT            reduce using rule 21 (subfactor -> TEXT .)
-
-
-state 11
-
-    (18) factor -> EM . factor EM
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 25
-
-state 12
-
-    (1) body -> statement .
-    (2) statement -> statement . CR expression
-    (3) statement -> statement . CR
-
-    $end            reduce using rule 1 (body -> statement .)
-    CR              shift and go to state 26
-
-
-state 13
-
-    (16) expression -> factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
-
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 16 (expression -> factor .)
-    CR              reduce using rule 16 (expression -> factor .)
-    STRONG          reduce using rule 16 (expression -> factor .)
-    EM              reduce using rule 16 (expression -> factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 16 (expression -> factor .) ]
-
-    subfactor                      shift and go to state 27
-
-state 14
-
-    (5) expression -> CR .
-
-    $end            reduce using rule 5 (expression -> CR .)
-    CR              reduce using rule 5 (expression -> CR .)
-    STRONG          reduce using rule 5 (expression -> CR .)
-    EM              reduce using rule 5 (expression -> CR .)
-    TEXT            reduce using rule 5 (expression -> CR .)
-
-
-state 15
-
-    (6) expression -> LINE .
-
-    $end            reduce using rule 6 (expression -> LINE .)
-    CR              reduce using rule 6 (expression -> LINE .)
-    STRONG          reduce using rule 6 (expression -> LINE .)
-    EM              reduce using rule 6 (expression -> LINE .)
-    TEXT            reduce using rule 6 (expression -> LINE .)
-
-
-state 16
-
-    (17) factor -> STRONG . factor STRONG
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 28
-
-state 17
-
-    (4) statement -> expression .
-    (15) expression -> expression . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    $end            reduce using rule 4 (statement -> expression .)
-    CR              reduce using rule 4 (statement -> expression .)
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 29
-
-state 18
-
-    (20) factor -> subfactor .
-
-    $end            reduce using rule 20 (factor -> subfactor .)
-    CR              reduce using rule 20 (factor -> subfactor .)
-    STRONG          reduce using rule 20 (factor -> subfactor .)
-    EM              reduce using rule 20 (factor -> subfactor .)
-    TEXT            reduce using rule 20 (factor -> subfactor .)
-
-
-state 19
-
-    (8) expression -> H2 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
-
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 8 (expression -> H2 factor .)
-    CR              reduce using rule 8 (expression -> H2 factor .)
-    STRONG          reduce using rule 8 (expression -> H2 factor .)
-    EM              reduce using rule 8 (expression -> H2 factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 8 (expression -> H2 factor .) ]
-
-    subfactor                      shift and go to state 27
-
 state 20
 
-    (9) expression -> H3 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (12) expression -> picture .
 
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 9 (expression -> H3 factor .)
-    CR              reduce using rule 9 (expression -> H3 factor .)
-    STRONG          reduce using rule 9 (expression -> H3 factor .)
-    EM              reduce using rule 9 (expression -> H3 factor .)
-    TEXT            shift and go to state 10
+    $end            reduce using rule 12 (expression -> picture .)
+    CR              reduce using rule 12 (expression -> picture .)
+    H1              reduce using rule 12 (expression -> picture .)
+    H2              reduce using rule 12 (expression -> picture .)
+    H3              reduce using rule 12 (expression -> picture .)
+    WORD            reduce using rule 12 (expression -> picture .)
+    NUMBER          reduce using rule 12 (expression -> picture .)
+    DOT             reduce using rule 12 (expression -> picture .)
+    BLANK           reduce using rule 12 (expression -> picture .)
+    TAB             reduce using rule 12 (expression -> picture .)
+    AS              reduce using rule 12 (expression -> picture .)
+    UDL             reduce using rule 12 (expression -> picture .)
+    MINUS           reduce using rule 12 (expression -> picture .)
+    EQ              reduce using rule 12 (expression -> picture .)
+    EXCLAM          reduce using rule 12 (expression -> picture .)
+    PLUS            reduce using rule 12 (expression -> picture .)
+    QQ              reduce using rule 12 (expression -> picture .)
+    RT              reduce using rule 12 (expression -> picture .)
+    LT              reduce using rule 12 (expression -> picture .)
+    LSQ             reduce using rule 12 (expression -> picture .)
 
-  ! TEXT            [ reduce using rule 9 (expression -> H3 factor .) ]
-
-    subfactor                      shift and go to state 27
 
 state 21
 
-    (7) expression -> H1 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (44) olis -> oli .
 
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 7 (expression -> H1 factor .)
-    CR              reduce using rule 7 (expression -> H1 factor .)
-    STRONG          reduce using rule 7 (expression -> H1 factor .)
-    EM              reduce using rule 7 (expression -> H1 factor .)
-    TEXT            shift and go to state 10
+    $end            reduce using rule 44 (olis -> oli .)
+    CR              reduce using rule 44 (olis -> oli .)
+    H1              reduce using rule 44 (olis -> oli .)
+    H2              reduce using rule 44 (olis -> oli .)
+    H3              reduce using rule 44 (olis -> oli .)
+    WORD            reduce using rule 44 (olis -> oli .)
+    NUMBER          reduce using rule 44 (olis -> oli .)
+    DOT             reduce using rule 44 (olis -> oli .)
+    BLANK           reduce using rule 44 (olis -> oli .)
+    TAB             reduce using rule 44 (olis -> oli .)
+    AS              reduce using rule 44 (olis -> oli .)
+    UDL             reduce using rule 44 (olis -> oli .)
+    MINUS           reduce using rule 44 (olis -> oli .)
+    EQ              reduce using rule 44 (olis -> oli .)
+    EXCLAM          reduce using rule 44 (olis -> oli .)
+    PLUS            reduce using rule 44 (olis -> oli .)
+    QQ              reduce using rule 44 (olis -> oli .)
+    RT              reduce using rule 44 (olis -> oli .)
+    LT              reduce using rule 44 (olis -> oli .)
+    LSQ             reduce using rule 44 (olis -> oli .)
 
-  ! TEXT            [ reduce using rule 7 (expression -> H1 factor .) ]
-
-    subfactor                      shift and go to state 27
 
 state 22
 
-    (12) expression -> H6 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (15) expression -> quote .
 
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 12 (expression -> H6 factor .)
-    CR              reduce using rule 12 (expression -> H6 factor .)
-    STRONG          reduce using rule 12 (expression -> H6 factor .)
-    EM              reduce using rule 12 (expression -> H6 factor .)
-    TEXT            shift and go to state 10
+    $end            reduce using rule 15 (expression -> quote .)
+    CR              reduce using rule 15 (expression -> quote .)
+    H1              reduce using rule 15 (expression -> quote .)
+    H2              reduce using rule 15 (expression -> quote .)
+    H3              reduce using rule 15 (expression -> quote .)
+    WORD            reduce using rule 15 (expression -> quote .)
+    NUMBER          reduce using rule 15 (expression -> quote .)
+    DOT             reduce using rule 15 (expression -> quote .)
+    BLANK           reduce using rule 15 (expression -> quote .)
+    TAB             reduce using rule 15 (expression -> quote .)
+    AS              reduce using rule 15 (expression -> quote .)
+    UDL             reduce using rule 15 (expression -> quote .)
+    MINUS           reduce using rule 15 (expression -> quote .)
+    EQ              reduce using rule 15 (expression -> quote .)
+    EXCLAM          reduce using rule 15 (expression -> quote .)
+    PLUS            reduce using rule 15 (expression -> quote .)
+    QQ              reduce using rule 15 (expression -> quote .)
+    RT              reduce using rule 15 (expression -> quote .)
+    LT              reduce using rule 15 (expression -> quote .)
+    LSQ             reduce using rule 15 (expression -> quote .)
 
-  ! TEXT            [ reduce using rule 12 (expression -> H6 factor .) ]
-
-    subfactor                      shift and go to state 27
 
 state 23
 
-    (10) expression -> H4 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (10) expression -> factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
 
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 10 (expression -> H4 factor .)
-    CR              reduce using rule 10 (expression -> H4 factor .)
-    STRONG          reduce using rule 10 (expression -> H4 factor .)
-    EM              reduce using rule 10 (expression -> H4 factor .)
-    TEXT            shift and go to state 10
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 10 (expression -> factor .)
+    CR              reduce using rule 10 (expression -> factor .)
+    H1              reduce using rule 10 (expression -> factor .)
+    H2              reduce using rule 10 (expression -> factor .)
+    H3              reduce using rule 10 (expression -> factor .)
+    AS              reduce using rule 10 (expression -> factor .)
+    UDL             reduce using rule 10 (expression -> factor .)
+    MINUS           reduce using rule 10 (expression -> factor .)
+    EQ              reduce using rule 10 (expression -> factor .)
+    EXCLAM          reduce using rule 10 (expression -> factor .)
+    PLUS            reduce using rule 10 (expression -> factor .)
+    QQ              reduce using rule 10 (expression -> factor .)
+    RT              reduce using rule 10 (expression -> factor .)
+    LT              reduce using rule 10 (expression -> factor .)
+    LSQ             reduce using rule 10 (expression -> factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
 
-  ! TEXT            [ reduce using rule 10 (expression -> H4 factor .) ]
+  ! WORD            [ reduce using rule 10 (expression -> factor .) ]
+  ! NUMBER          [ reduce using rule 10 (expression -> factor .) ]
+  ! DOT             [ reduce using rule 10 (expression -> factor .) ]
+  ! BLANK           [ reduce using rule 10 (expression -> factor .) ]
+  ! TAB             [ reduce using rule 10 (expression -> factor .) ]
 
-    subfactor                      shift and go to state 27
+    subfactor                      shift and go to state 63
 
 state 24
 
-    (11) expression -> H5 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (19) line -> AS . AS AS
+    (21) line -> AS . BLANK AS BLANK AS
+    (25) strong -> AS . em AS
+    (29) ASfactor -> AS . factor
+    (27) em -> . ASfactor AS
+    (28) em -> . UDL factor UDL
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
 
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 11 (expression -> H5 factor .)
-    CR              reduce using rule 11 (expression -> H5 factor .)
-    STRONG          reduce using rule 11 (expression -> H5 factor .)
-    EM              reduce using rule 11 (expression -> H5 factor .)
-    TEXT            shift and go to state 10
+    AS              shift and go to state 67
+    BLANK           shift and go to state 66
+    UDL             shift and go to state 69
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    TAB             shift and go to state 12
 
-  ! TEXT            [ reduce using rule 11 (expression -> H5 factor .) ]
-
-    subfactor                      shift and go to state 27
+    em                             shift and go to state 64
+    ASfactor                       shift and go to state 65
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 68
 
 state 25
 
-    (18) factor -> EM factor . EM
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (16) expression -> link .
 
-    EM              shift and go to state 30
-    TEXT            shift and go to state 10
+    $end            reduce using rule 16 (expression -> link .)
+    CR              reduce using rule 16 (expression -> link .)
+    H1              reduce using rule 16 (expression -> link .)
+    H2              reduce using rule 16 (expression -> link .)
+    H3              reduce using rule 16 (expression -> link .)
+    WORD            reduce using rule 16 (expression -> link .)
+    NUMBER          reduce using rule 16 (expression -> link .)
+    DOT             reduce using rule 16 (expression -> link .)
+    BLANK           reduce using rule 16 (expression -> link .)
+    TAB             reduce using rule 16 (expression -> link .)
+    AS              reduce using rule 16 (expression -> link .)
+    UDL             reduce using rule 16 (expression -> link .)
+    MINUS           reduce using rule 16 (expression -> link .)
+    EQ              reduce using rule 16 (expression -> link .)
+    EXCLAM          reduce using rule 16 (expression -> link .)
+    PLUS            reduce using rule 16 (expression -> link .)
+    QQ              reduce using rule 16 (expression -> link .)
+    RT              reduce using rule 16 (expression -> link .)
+    LT              reduce using rule 16 (expression -> link .)
+    LSQ             reduce using rule 16 (expression -> link .)
 
-    subfactor                      shift and go to state 27
 
 state 26
 
-    (2) statement -> statement CR . expression
-    (3) statement -> statement CR .
-    (5) expression -> . CR
-    (6) expression -> . LINE
-    (7) expression -> . H1 factor
-    (8) expression -> . H2 factor
-    (9) expression -> . H3 factor
-    (10) expression -> . H4 factor
-    (11) expression -> . H5 factor
-    (12) expression -> . H6 factor
-    (13) expression -> . SH1
-    (14) expression -> . SH2
-    (15) expression -> . expression factor
-    (16) expression -> . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
+    (11) expression -> line .
 
-  ! shift/reduce conflict for CR resolved as shift
-    $end            reduce using rule 3 (statement -> statement CR .)
-    CR              shift and go to state 14
-    LINE            shift and go to state 15
-    H1              shift and go to state 6
-    H2              shift and go to state 4
-    H3              shift and go to state 5
-    H4              shift and go to state 8
-    H5              shift and go to state 9
-    H6              shift and go to state 7
-    SH1             shift and go to state 2
-    SH2             shift and go to state 3
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
+    $end            reduce using rule 11 (expression -> line .)
+    CR              reduce using rule 11 (expression -> line .)
+    H1              reduce using rule 11 (expression -> line .)
+    H2              reduce using rule 11 (expression -> line .)
+    H3              reduce using rule 11 (expression -> line .)
+    WORD            reduce using rule 11 (expression -> line .)
+    NUMBER          reduce using rule 11 (expression -> line .)
+    DOT             reduce using rule 11 (expression -> line .)
+    BLANK           reduce using rule 11 (expression -> line .)
+    TAB             reduce using rule 11 (expression -> line .)
+    AS              reduce using rule 11 (expression -> line .)
+    UDL             reduce using rule 11 (expression -> line .)
+    MINUS           reduce using rule 11 (expression -> line .)
+    EQ              reduce using rule 11 (expression -> line .)
+    EXCLAM          reduce using rule 11 (expression -> line .)
+    PLUS            reduce using rule 11 (expression -> line .)
+    QQ              reduce using rule 11 (expression -> line .)
+    RT              reduce using rule 11 (expression -> line .)
+    LT              reduce using rule 11 (expression -> line .)
+    LSQ             reduce using rule 11 (expression -> line .)
 
-  ! CR              [ reduce using rule 3 (statement -> statement CR .) ]
-
-    expression                     shift and go to state 31
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 13
 
 state 27
 
-    (19) factor -> factor subfactor .
+    (17) expression -> strong .
 
-    $end            reduce using rule 19 (factor -> factor subfactor .)
-    CR              reduce using rule 19 (factor -> factor subfactor .)
-    STRONG          reduce using rule 19 (factor -> factor subfactor .)
-    EM              reduce using rule 19 (factor -> factor subfactor .)
-    TEXT            reduce using rule 19 (factor -> factor subfactor .)
+    $end            reduce using rule 17 (expression -> strong .)
+    CR              reduce using rule 17 (expression -> strong .)
+    H1              reduce using rule 17 (expression -> strong .)
+    H2              reduce using rule 17 (expression -> strong .)
+    H3              reduce using rule 17 (expression -> strong .)
+    WORD            reduce using rule 17 (expression -> strong .)
+    NUMBER          reduce using rule 17 (expression -> strong .)
+    DOT             reduce using rule 17 (expression -> strong .)
+    BLANK           reduce using rule 17 (expression -> strong .)
+    TAB             reduce using rule 17 (expression -> strong .)
+    AS              reduce using rule 17 (expression -> strong .)
+    UDL             reduce using rule 17 (expression -> strong .)
+    MINUS           reduce using rule 17 (expression -> strong .)
+    EQ              reduce using rule 17 (expression -> strong .)
+    EXCLAM          reduce using rule 17 (expression -> strong .)
+    PLUS            reduce using rule 17 (expression -> strong .)
+    QQ              reduce using rule 17 (expression -> strong .)
+    RT              reduce using rule 17 (expression -> strong .)
+    LT              reduce using rule 17 (expression -> strong .)
+    LSQ             reduce using rule 17 (expression -> strong .)
 
 
 state 28
 
-    (17) factor -> STRONG factor . STRONG
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (24) line -> EQ . EQ EQ
 
-    STRONG          shift and go to state 32
-    TEXT            shift and go to state 10
+    EQ              shift and go to state 70
 
-    subfactor                      shift and go to state 27
 
 state 29
 
-    (15) expression -> expression factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (34) codes -> QQ . UDL factor UDL QQ
+    (35) codes -> QQ . codes QQ
+    (36) code -> QQ . factor
+    (39) code -> QQ . CR factor
+    (32) codes -> . code QQ
+    (33) codes -> . code CR QQ
+    (34) codes -> . QQ UDL factor UDL QQ
+    (35) codes -> . QQ codes QQ
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (36) code -> . QQ factor
+    (37) code -> . code factor
+    (38) code -> . code CR
+    (39) code -> . QQ CR factor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
 
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 15 (expression -> expression factor .)
-    CR              reduce using rule 15 (expression -> expression factor .)
-    STRONG          reduce using rule 15 (expression -> expression factor .)
-    EM              reduce using rule 15 (expression -> expression factor .)
-    TEXT            shift and go to state 10
+    UDL             shift and go to state 74
+    CR              shift and go to state 73
+    QQ              shift and go to state 29
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
 
-  ! TEXT            [ reduce using rule 15 (expression -> expression factor .) ]
-
-    subfactor                      shift and go to state 27
+    code                           shift and go to state 2
+    codes                          shift and go to state 71
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 72
 
 state 30
 
-    (18) factor -> EM factor EM .
+    (7) expression -> H2 . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
 
-    $end            reduce using rule 18 (factor -> EM factor EM .)
-    CR              reduce using rule 18 (factor -> EM factor EM .)
-    STRONG          reduce using rule 18 (factor -> EM factor EM .)
-    EM              reduce using rule 18 (factor -> EM factor EM .)
-    TEXT            reduce using rule 18 (factor -> EM factor EM .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
 
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 75
 
 state 31
 
-    (2) statement -> statement CR expression .
-    (15) expression -> expression . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
+    (8) expression -> H3 . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
 
-    $end            reduce using rule 2 (statement -> statement CR expression .)
-    CR              reduce using rule 2 (statement -> statement CR expression .)
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
 
     subfactor                      shift and go to state 18
-    factor                         shift and go to state 29
+    factor                         shift and go to state 76
 
 state 32
 
-    (17) factor -> STRONG factor STRONG .
+    (6) expression -> H1 . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
 
-    $end            reduce using rule 17 (factor -> STRONG factor STRONG .)
-    CR              reduce using rule 17 (factor -> STRONG factor STRONG .)
-    STRONG          reduce using rule 17 (factor -> STRONG factor STRONG .)
-    EM              reduce using rule 17 (factor -> STRONG factor STRONG .)
-    TEXT            reduce using rule 17 (factor -> STRONG factor STRONG .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 77
+
+state 33
+
+    (13) expression -> ul .
+
+    $end            reduce using rule 13 (expression -> ul .)
+    CR              reduce using rule 13 (expression -> ul .)
+    H1              reduce using rule 13 (expression -> ul .)
+    H2              reduce using rule 13 (expression -> ul .)
+    H3              reduce using rule 13 (expression -> ul .)
+    WORD            reduce using rule 13 (expression -> ul .)
+    NUMBER          reduce using rule 13 (expression -> ul .)
+    DOT             reduce using rule 13 (expression -> ul .)
+    BLANK           reduce using rule 13 (expression -> ul .)
+    TAB             reduce using rule 13 (expression -> ul .)
+    AS              reduce using rule 13 (expression -> ul .)
+    UDL             reduce using rule 13 (expression -> ul .)
+    MINUS           reduce using rule 13 (expression -> ul .)
+    EQ              reduce using rule 13 (expression -> ul .)
+    EXCLAM          reduce using rule 13 (expression -> ul .)
+    PLUS            reduce using rule 13 (expression -> ul .)
+    QQ              reduce using rule 13 (expression -> ul .)
+    RT              reduce using rule 13 (expression -> ul .)
+    LT              reduce using rule 13 (expression -> ul .)
+    LSQ             reduce using rule 13 (expression -> ul .)
+
+
+state 34
+
+    (40) ul -> olis .
+    (41) ul -> olis . iul
+    (43) olis -> olis . oli
+    (46) iul -> . ilis
+    (49) iul -> . ilis iiul
+    (42) oli -> . NUMBER DOT factor CR
+    (55) ilis -> . ilis ili
+    (56) ilis -> . ili
+    (51) ili -> . TAB li
+
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 40 (ul -> olis .)
+    CR              reduce using rule 40 (ul -> olis .)
+    H1              reduce using rule 40 (ul -> olis .)
+    H2              reduce using rule 40 (ul -> olis .)
+    H3              reduce using rule 40 (ul -> olis .)
+    WORD            reduce using rule 40 (ul -> olis .)
+    DOT             reduce using rule 40 (ul -> olis .)
+    BLANK           reduce using rule 40 (ul -> olis .)
+    AS              reduce using rule 40 (ul -> olis .)
+    UDL             reduce using rule 40 (ul -> olis .)
+    MINUS           reduce using rule 40 (ul -> olis .)
+    EQ              reduce using rule 40 (ul -> olis .)
+    EXCLAM          reduce using rule 40 (ul -> olis .)
+    PLUS            reduce using rule 40 (ul -> olis .)
+    QQ              reduce using rule 40 (ul -> olis .)
+    RT              reduce using rule 40 (ul -> olis .)
+    LT              reduce using rule 40 (ul -> olis .)
+    LSQ             reduce using rule 40 (ul -> olis .)
+    NUMBER          shift and go to state 79
+    TAB             shift and go to state 51
+
+  ! NUMBER          [ reduce using rule 40 (ul -> olis .) ]
+  ! TAB             [ reduce using rule 40 (ul -> olis .) ]
+
+    iul                            shift and go to state 78
+    oli                            shift and go to state 80
+    ili                            shift and go to state 52
+    ilis                           shift and go to state 50
+
+state 35
+
+    (5) statement -> expression .
+    (9) expression -> expression . expression
+    (6) expression -> . H1 factor
+    (7) expression -> . H2 factor
+    (8) expression -> . H3 factor
+    (9) expression -> . expression expression
+    (10) expression -> . factor
+    (11) expression -> . line
+    (12) expression -> . picture
+    (13) expression -> . ul
+    (14) expression -> . codes
+    (15) expression -> . quote
+    (16) expression -> . link
+    (17) expression -> . strong
+    (18) expression -> . em
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (19) line -> . AS AS AS
+    (20) line -> . UDL UDL UDL
+    (21) line -> . AS BLANK AS BLANK AS
+    (22) line -> . UDL BLANK UDL BLANK UDL
+    (23) line -> . MINUS MINUS MINUS
+    (24) line -> . EQ EQ EQ
+    (63) picture -> . EXCLAM LSQ factor RSQ LB factor RB
+    (40) ul -> . olis
+    (41) ul -> . olis iul
+    (45) ul -> . lis
+    (48) ul -> . lis iul
+    (32) codes -> . code QQ
+    (33) codes -> . code CR QQ
+    (34) codes -> . QQ UDL factor UDL QQ
+    (35) codes -> . QQ codes QQ
+    (31) quote -> . RT factor
+    (64) link -> . LT factor RT
+    (65) link -> . LSQ factor RSQ LB factor RB
+    (25) strong -> . AS em AS
+    (26) strong -> . UDL em UDL
+    (27) em -> . ASfactor AS
+    (28) em -> . UDL factor UDL
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+    (43) olis -> . olis oli
+    (44) olis -> . oli
+    (53) lis -> . lis li
+    (54) lis -> . li
+    (36) code -> . QQ factor
+    (37) code -> . code factor
+    (38) code -> . code CR
+    (39) code -> . QQ CR factor
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (42) oli -> . NUMBER DOT factor CR
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+
+    $end            reduce using rule 5 (statement -> expression .)
+    CR              reduce using rule 5 (statement -> expression .)
+    H1              shift and go to state 32
+    H2              shift and go to state 30
+    H3              shift and go to state 31
+    AS              shift and go to state 24
+    UDL             shift and go to state 37
+    MINUS           shift and go to state 8
+    EQ              shift and go to state 28
+    EXCLAM          shift and go to state 7
+    QQ              shift and go to state 29
+    RT              shift and go to state 10
+    LT              shift and go to state 14
+    LSQ             shift and go to state 36
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 4
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+    PLUS            shift and go to state 15
+
+    em                             shift and go to state 1
+    picture                        shift and go to state 20
+    codes                          shift and go to state 11
+    olis                           shift and go to state 34
+    oli                            shift and go to state 21
+    quote                          shift and go to state 22
+    lis                            shift and go to state 5
+    li                             shift and go to state 13
+    ul                             shift and go to state 33
+    code                           shift and go to state 2
+    link                           shift and go to state 25
+    ASfactor                       shift and go to state 3
+    factor                         shift and go to state 23
+    line                           shift and go to state 26
+    strong                         shift and go to state 27
+    expression                     shift and go to state 81
+    subfactor                      shift and go to state 18
+
+state 36
+
+    (65) link -> LSQ . factor RSQ LB factor RB
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 82
+
+state 37
+
+    (20) line -> UDL . UDL UDL
+    (22) line -> UDL . BLANK UDL BLANK UDL
+    (26) strong -> UDL . em UDL
+    (28) em -> UDL . factor UDL
+    (27) em -> . ASfactor AS
+    (28) em -> . UDL factor UDL
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    UDL             shift and go to state 86
+    BLANK           shift and go to state 84
+    AS              shift and go to state 49
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    TAB             shift and go to state 12
+
+    em                             shift and go to state 83
+    ASfactor                       shift and go to state 65
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 85
+
+state 38
+
+    (32) codes -> code QQ .
+
+    $end            reduce using rule 32 (codes -> code QQ .)
+    CR              reduce using rule 32 (codes -> code QQ .)
+    H1              reduce using rule 32 (codes -> code QQ .)
+    H2              reduce using rule 32 (codes -> code QQ .)
+    H3              reduce using rule 32 (codes -> code QQ .)
+    WORD            reduce using rule 32 (codes -> code QQ .)
+    NUMBER          reduce using rule 32 (codes -> code QQ .)
+    DOT             reduce using rule 32 (codes -> code QQ .)
+    BLANK           reduce using rule 32 (codes -> code QQ .)
+    TAB             reduce using rule 32 (codes -> code QQ .)
+    AS              reduce using rule 32 (codes -> code QQ .)
+    UDL             reduce using rule 32 (codes -> code QQ .)
+    MINUS           reduce using rule 32 (codes -> code QQ .)
+    EQ              reduce using rule 32 (codes -> code QQ .)
+    EXCLAM          reduce using rule 32 (codes -> code QQ .)
+    PLUS            reduce using rule 32 (codes -> code QQ .)
+    QQ              reduce using rule 32 (codes -> code QQ .)
+    RT              reduce using rule 32 (codes -> code QQ .)
+    LT              reduce using rule 32 (codes -> code QQ .)
+    LSQ             reduce using rule 32 (codes -> code QQ .)
+
+
+state 39
+
+    (69) subfactor -> NUMBER .
+
+    $end            reduce using rule 69 (subfactor -> NUMBER .)
+    CR              reduce using rule 69 (subfactor -> NUMBER .)
+    H1              reduce using rule 69 (subfactor -> NUMBER .)
+    H2              reduce using rule 69 (subfactor -> NUMBER .)
+    H3              reduce using rule 69 (subfactor -> NUMBER .)
+    WORD            reduce using rule 69 (subfactor -> NUMBER .)
+    NUMBER          reduce using rule 69 (subfactor -> NUMBER .)
+    DOT             reduce using rule 69 (subfactor -> NUMBER .)
+    BLANK           reduce using rule 69 (subfactor -> NUMBER .)
+    TAB             reduce using rule 69 (subfactor -> NUMBER .)
+    AS              reduce using rule 69 (subfactor -> NUMBER .)
+    UDL             reduce using rule 69 (subfactor -> NUMBER .)
+    MINUS           reduce using rule 69 (subfactor -> NUMBER .)
+    EQ              reduce using rule 69 (subfactor -> NUMBER .)
+    EXCLAM          reduce using rule 69 (subfactor -> NUMBER .)
+    PLUS            reduce using rule 69 (subfactor -> NUMBER .)
+    QQ              reduce using rule 69 (subfactor -> NUMBER .)
+    RT              reduce using rule 69 (subfactor -> NUMBER .)
+    LT              reduce using rule 69 (subfactor -> NUMBER .)
+    LSQ             reduce using rule 69 (subfactor -> NUMBER .)
+    RSQ             reduce using rule 69 (subfactor -> NUMBER .)
+    RB              reduce using rule 69 (subfactor -> NUMBER .)
+
+
+state 40
+
+    (37) code -> code factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    QQ              reduce using rule 37 (code -> code factor .)
+    CR              reduce using rule 37 (code -> code factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 37 (code -> code factor .) ]
+  ! NUMBER          [ reduce using rule 37 (code -> code factor .) ]
+  ! DOT             [ reduce using rule 37 (code -> code factor .) ]
+  ! BLANK           [ reduce using rule 37 (code -> code factor .) ]
+  ! TAB             [ reduce using rule 37 (code -> code factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 41
+
+    (33) codes -> code CR . QQ
+    (38) code -> code CR .
+
+  ! shift/reduce conflict for QQ resolved as shift
+    QQ              shift and go to state 87
+    CR              reduce using rule 38 (code -> code CR .)
+    WORD            reduce using rule 38 (code -> code CR .)
+    NUMBER          reduce using rule 38 (code -> code CR .)
+    DOT             reduce using rule 38 (code -> code CR .)
+    BLANK           reduce using rule 38 (code -> code CR .)
+    TAB             reduce using rule 38 (code -> code CR .)
+
+  ! QQ              [ reduce using rule 38 (code -> code CR .) ]
+
+
+state 42
+
+    (27) em -> ASfactor AS .
+
+    $end            reduce using rule 27 (em -> ASfactor AS .)
+    CR              reduce using rule 27 (em -> ASfactor AS .)
+    H1              reduce using rule 27 (em -> ASfactor AS .)
+    H2              reduce using rule 27 (em -> ASfactor AS .)
+    H3              reduce using rule 27 (em -> ASfactor AS .)
+    WORD            reduce using rule 27 (em -> ASfactor AS .)
+    NUMBER          reduce using rule 27 (em -> ASfactor AS .)
+    DOT             reduce using rule 27 (em -> ASfactor AS .)
+    BLANK           reduce using rule 27 (em -> ASfactor AS .)
+    TAB             reduce using rule 27 (em -> ASfactor AS .)
+    AS              reduce using rule 27 (em -> ASfactor AS .)
+    UDL             reduce using rule 27 (em -> ASfactor AS .)
+    MINUS           reduce using rule 27 (em -> ASfactor AS .)
+    EQ              reduce using rule 27 (em -> ASfactor AS .)
+    EXCLAM          reduce using rule 27 (em -> ASfactor AS .)
+    PLUS            reduce using rule 27 (em -> ASfactor AS .)
+    QQ              reduce using rule 27 (em -> ASfactor AS .)
+    RT              reduce using rule 27 (em -> ASfactor AS .)
+    LT              reduce using rule 27 (em -> ASfactor AS .)
+    LSQ             reduce using rule 27 (em -> ASfactor AS .)
+
+
+state 43
+
+    (30) ASfactor -> ASfactor factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    AS              reduce using rule 30 (ASfactor -> ASfactor factor .)
+    CR              reduce using rule 30 (ASfactor -> ASfactor factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 30 (ASfactor -> ASfactor factor .) ]
+  ! NUMBER          [ reduce using rule 30 (ASfactor -> ASfactor factor .) ]
+  ! DOT             [ reduce using rule 30 (ASfactor -> ASfactor factor .) ]
+  ! BLANK           [ reduce using rule 30 (ASfactor -> ASfactor factor .) ]
+  ! TAB             [ reduce using rule 30 (ASfactor -> ASfactor factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 44
+
+    (50) li -> ASfactor CR .
+
+    $end            reduce using rule 50 (li -> ASfactor CR .)
+    CR              reduce using rule 50 (li -> ASfactor CR .)
+    H1              reduce using rule 50 (li -> ASfactor CR .)
+    H2              reduce using rule 50 (li -> ASfactor CR .)
+    H3              reduce using rule 50 (li -> ASfactor CR .)
+    WORD            reduce using rule 50 (li -> ASfactor CR .)
+    NUMBER          reduce using rule 50 (li -> ASfactor CR .)
+    DOT             reduce using rule 50 (li -> ASfactor CR .)
+    BLANK           reduce using rule 50 (li -> ASfactor CR .)
+    TAB             reduce using rule 50 (li -> ASfactor CR .)
+    AS              reduce using rule 50 (li -> ASfactor CR .)
+    UDL             reduce using rule 50 (li -> ASfactor CR .)
+    MINUS           reduce using rule 50 (li -> ASfactor CR .)
+    EQ              reduce using rule 50 (li -> ASfactor CR .)
+    EXCLAM          reduce using rule 50 (li -> ASfactor CR .)
+    PLUS            reduce using rule 50 (li -> ASfactor CR .)
+    QQ              reduce using rule 50 (li -> ASfactor CR .)
+    RT              reduce using rule 50 (li -> ASfactor CR .)
+    LT              reduce using rule 50 (li -> ASfactor CR .)
+    LSQ             reduce using rule 50 (li -> ASfactor CR .)
+
+
+state 45
+
+    (42) oli -> NUMBER DOT . factor CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 88
+
+state 46
+
+    (48) ul -> lis iul .
+
+    $end            reduce using rule 48 (ul -> lis iul .)
+    CR              reduce using rule 48 (ul -> lis iul .)
+    H1              reduce using rule 48 (ul -> lis iul .)
+    H2              reduce using rule 48 (ul -> lis iul .)
+    H3              reduce using rule 48 (ul -> lis iul .)
+    WORD            reduce using rule 48 (ul -> lis iul .)
+    NUMBER          reduce using rule 48 (ul -> lis iul .)
+    DOT             reduce using rule 48 (ul -> lis iul .)
+    BLANK           reduce using rule 48 (ul -> lis iul .)
+    TAB             reduce using rule 48 (ul -> lis iul .)
+    AS              reduce using rule 48 (ul -> lis iul .)
+    UDL             reduce using rule 48 (ul -> lis iul .)
+    MINUS           reduce using rule 48 (ul -> lis iul .)
+    EQ              reduce using rule 48 (ul -> lis iul .)
+    EXCLAM          reduce using rule 48 (ul -> lis iul .)
+    PLUS            reduce using rule 48 (ul -> lis iul .)
+    QQ              reduce using rule 48 (ul -> lis iul .)
+    RT              reduce using rule 48 (ul -> lis iul .)
+    LT              reduce using rule 48 (ul -> lis iul .)
+    LSQ             reduce using rule 48 (ul -> lis iul .)
+
+
+state 47
+
+    (50) li -> ASfactor . CR
+    (30) ASfactor -> ASfactor . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    CR              shift and go to state 44
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 43
+
+state 48
+
+    (53) lis -> lis li .
+    (59) li -> li . PLUS factor CR
+    (60) li -> li . MINUS factor CR
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    $end            reduce using rule 53 (lis -> lis li .)
+    CR              reduce using rule 53 (lis -> lis li .)
+    H1              reduce using rule 53 (lis -> lis li .)
+    H2              reduce using rule 53 (lis -> lis li .)
+    H3              reduce using rule 53 (lis -> lis li .)
+    WORD            reduce using rule 53 (lis -> lis li .)
+    NUMBER          reduce using rule 53 (lis -> lis li .)
+    DOT             reduce using rule 53 (lis -> lis li .)
+    BLANK           reduce using rule 53 (lis -> lis li .)
+    TAB             reduce using rule 53 (lis -> lis li .)
+    AS              reduce using rule 53 (lis -> lis li .)
+    UDL             reduce using rule 53 (lis -> lis li .)
+    EQ              reduce using rule 53 (lis -> lis li .)
+    EXCLAM          reduce using rule 53 (lis -> lis li .)
+    QQ              reduce using rule 53 (lis -> lis li .)
+    RT              reduce using rule 53 (lis -> lis li .)
+    LT              reduce using rule 53 (lis -> lis li .)
+    LSQ             reduce using rule 53 (lis -> lis li .)
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 59
+
+  ! MINUS           [ reduce using rule 53 (lis -> lis li .) ]
+  ! PLUS            [ reduce using rule 53 (lis -> lis li .) ]
+
+
+state 49
+
+    (29) ASfactor -> AS . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 68
+
+state 50
+
+    (46) iul -> ilis .
+    (49) iul -> ilis . iiul
+    (55) ilis -> ilis . ili
+    (47) iiul -> . iilis
+    (51) ili -> . TAB li
+    (57) iilis -> . iilis iili
+    (58) iilis -> . iili
+    (52) iili -> . TAB TAB li
+
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 46 (iul -> ilis .)
+    CR              reduce using rule 46 (iul -> ilis .)
+    H1              reduce using rule 46 (iul -> ilis .)
+    H2              reduce using rule 46 (iul -> ilis .)
+    H3              reduce using rule 46 (iul -> ilis .)
+    WORD            reduce using rule 46 (iul -> ilis .)
+    NUMBER          reduce using rule 46 (iul -> ilis .)
+    DOT             reduce using rule 46 (iul -> ilis .)
+    BLANK           reduce using rule 46 (iul -> ilis .)
+    AS              reduce using rule 46 (iul -> ilis .)
+    UDL             reduce using rule 46 (iul -> ilis .)
+    MINUS           reduce using rule 46 (iul -> ilis .)
+    EQ              reduce using rule 46 (iul -> ilis .)
+    EXCLAM          reduce using rule 46 (iul -> ilis .)
+    PLUS            reduce using rule 46 (iul -> ilis .)
+    QQ              reduce using rule 46 (iul -> ilis .)
+    RT              reduce using rule 46 (iul -> ilis .)
+    LT              reduce using rule 46 (iul -> ilis .)
+    LSQ             reduce using rule 46 (iul -> ilis .)
+    TAB             shift and go to state 91
+
+  ! TAB             [ reduce using rule 46 (iul -> ilis .) ]
+
+    iiul                           shift and go to state 89
+    iilis                          shift and go to state 90
+    iili                           shift and go to state 92
+    ili                            shift and go to state 93
+
+state 51
+
+    (51) ili -> TAB . li
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 53
+    AS              shift and go to state 49
+
+    ASfactor                       shift and go to state 47
+    li                             shift and go to state 94
+
+state 52
+
+    (56) ilis -> ili .
+
+    $end            reduce using rule 56 (ilis -> ili .)
+    CR              reduce using rule 56 (ilis -> ili .)
+    H1              reduce using rule 56 (ilis -> ili .)
+    H2              reduce using rule 56 (ilis -> ili .)
+    H3              reduce using rule 56 (ilis -> ili .)
+    WORD            reduce using rule 56 (ilis -> ili .)
+    NUMBER          reduce using rule 56 (ilis -> ili .)
+    DOT             reduce using rule 56 (ilis -> ili .)
+    BLANK           reduce using rule 56 (ilis -> ili .)
+    TAB             reduce using rule 56 (ilis -> ili .)
+    AS              reduce using rule 56 (ilis -> ili .)
+    UDL             reduce using rule 56 (ilis -> ili .)
+    MINUS           reduce using rule 56 (ilis -> ili .)
+    EQ              reduce using rule 56 (ilis -> ili .)
+    EXCLAM          reduce using rule 56 (ilis -> ili .)
+    PLUS            reduce using rule 56 (ilis -> ili .)
+    QQ              reduce using rule 56 (ilis -> ili .)
+    RT              reduce using rule 56 (ilis -> ili .)
+    LT              reduce using rule 56 (ilis -> ili .)
+    LSQ             reduce using rule 56 (ilis -> ili .)
+
+
+state 53
+
+    (62) li -> MINUS . factor CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 55
+
+state 54
+
+    (63) picture -> EXCLAM LSQ . factor RSQ LB factor RB
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 95
+
+state 55
+
+    (62) li -> MINUS factor . CR
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    CR              shift and go to state 96
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 56
+
+    (23) line -> MINUS MINUS . MINUS
+
+    MINUS           shift and go to state 97
+
+
+state 57
+
+    (31) quote -> RT factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 31 (quote -> RT factor .)
+    CR              reduce using rule 31 (quote -> RT factor .)
+    H1              reduce using rule 31 (quote -> RT factor .)
+    H2              reduce using rule 31 (quote -> RT factor .)
+    H3              reduce using rule 31 (quote -> RT factor .)
+    AS              reduce using rule 31 (quote -> RT factor .)
+    UDL             reduce using rule 31 (quote -> RT factor .)
+    MINUS           reduce using rule 31 (quote -> RT factor .)
+    EQ              reduce using rule 31 (quote -> RT factor .)
+    EXCLAM          reduce using rule 31 (quote -> RT factor .)
+    PLUS            reduce using rule 31 (quote -> RT factor .)
+    QQ              reduce using rule 31 (quote -> RT factor .)
+    RT              reduce using rule 31 (quote -> RT factor .)
+    LT              reduce using rule 31 (quote -> RT factor .)
+    LSQ             reduce using rule 31 (quote -> RT factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 31 (quote -> RT factor .) ]
+  ! NUMBER          [ reduce using rule 31 (quote -> RT factor .) ]
+  ! DOT             [ reduce using rule 31 (quote -> RT factor .) ]
+  ! BLANK           [ reduce using rule 31 (quote -> RT factor .) ]
+  ! TAB             [ reduce using rule 31 (quote -> RT factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 58
+
+    (59) li -> li PLUS . factor CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    factor                         shift and go to state 98
+    subfactor                      shift and go to state 18
+
+state 59
+
+    (60) li -> li MINUS . factor CR
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    factor                         shift and go to state 99
+    subfactor                      shift and go to state 18
+
+state 60
+
+    (64) link -> LT factor . RT
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    RT              shift and go to state 100
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 61
+
+    (61) li -> PLUS factor . CR
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    CR              shift and go to state 101
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 62
+
+    (3) statement -> statement CR . expression
+    (4) statement -> statement CR .
+    (6) expression -> . H1 factor
+    (7) expression -> . H2 factor
+    (8) expression -> . H3 factor
+    (9) expression -> . expression expression
+    (10) expression -> . factor
+    (11) expression -> . line
+    (12) expression -> . picture
+    (13) expression -> . ul
+    (14) expression -> . codes
+    (15) expression -> . quote
+    (16) expression -> . link
+    (17) expression -> . strong
+    (18) expression -> . em
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (19) line -> . AS AS AS
+    (20) line -> . UDL UDL UDL
+    (21) line -> . AS BLANK AS BLANK AS
+    (22) line -> . UDL BLANK UDL BLANK UDL
+    (23) line -> . MINUS MINUS MINUS
+    (24) line -> . EQ EQ EQ
+    (63) picture -> . EXCLAM LSQ factor RSQ LB factor RB
+    (40) ul -> . olis
+    (41) ul -> . olis iul
+    (45) ul -> . lis
+    (48) ul -> . lis iul
+    (32) codes -> . code QQ
+    (33) codes -> . code CR QQ
+    (34) codes -> . QQ UDL factor UDL QQ
+    (35) codes -> . QQ codes QQ
+    (31) quote -> . RT factor
+    (64) link -> . LT factor RT
+    (65) link -> . LSQ factor RSQ LB factor RB
+    (25) strong -> . AS em AS
+    (26) strong -> . UDL em UDL
+    (27) em -> . ASfactor AS
+    (28) em -> . UDL factor UDL
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+    (43) olis -> . olis oli
+    (44) olis -> . oli
+    (53) lis -> . lis li
+    (54) lis -> . li
+    (36) code -> . QQ factor
+    (37) code -> . code factor
+    (38) code -> . code CR
+    (39) code -> . QQ CR factor
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (42) oli -> . NUMBER DOT factor CR
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+
+    $end            reduce using rule 4 (statement -> statement CR .)
+    CR              reduce using rule 4 (statement -> statement CR .)
+    H1              shift and go to state 32
+    H2              shift and go to state 30
+    H3              shift and go to state 31
+    AS              shift and go to state 24
+    UDL             shift and go to state 37
+    MINUS           shift and go to state 8
+    EQ              shift and go to state 28
+    EXCLAM          shift and go to state 7
+    QQ              shift and go to state 29
+    RT              shift and go to state 10
+    LT              shift and go to state 14
+    LSQ             shift and go to state 36
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 4
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+    PLUS            shift and go to state 15
+
+    em                             shift and go to state 1
+    picture                        shift and go to state 20
+    codes                          shift and go to state 11
+    olis                           shift and go to state 34
+    oli                            shift and go to state 21
+    quote                          shift and go to state 22
+    lis                            shift and go to state 5
+    li                             shift and go to state 13
+    ul                             shift and go to state 33
+    code                           shift and go to state 2
+    link                           shift and go to state 25
+    ASfactor                       shift and go to state 3
+    factor                         shift and go to state 23
+    line                           shift and go to state 26
+    strong                         shift and go to state 27
+    expression                     shift and go to state 102
+    subfactor                      shift and go to state 18
+
+state 63
+
+    (66) factor -> factor subfactor .
+
+    $end            reduce using rule 66 (factor -> factor subfactor .)
+    CR              reduce using rule 66 (factor -> factor subfactor .)
+    H1              reduce using rule 66 (factor -> factor subfactor .)
+    H2              reduce using rule 66 (factor -> factor subfactor .)
+    H3              reduce using rule 66 (factor -> factor subfactor .)
+    WORD            reduce using rule 66 (factor -> factor subfactor .)
+    NUMBER          reduce using rule 66 (factor -> factor subfactor .)
+    DOT             reduce using rule 66 (factor -> factor subfactor .)
+    BLANK           reduce using rule 66 (factor -> factor subfactor .)
+    TAB             reduce using rule 66 (factor -> factor subfactor .)
+    AS              reduce using rule 66 (factor -> factor subfactor .)
+    UDL             reduce using rule 66 (factor -> factor subfactor .)
+    MINUS           reduce using rule 66 (factor -> factor subfactor .)
+    EQ              reduce using rule 66 (factor -> factor subfactor .)
+    EXCLAM          reduce using rule 66 (factor -> factor subfactor .)
+    PLUS            reduce using rule 66 (factor -> factor subfactor .)
+    QQ              reduce using rule 66 (factor -> factor subfactor .)
+    RT              reduce using rule 66 (factor -> factor subfactor .)
+    LT              reduce using rule 66 (factor -> factor subfactor .)
+    LSQ             reduce using rule 66 (factor -> factor subfactor .)
+    RSQ             reduce using rule 66 (factor -> factor subfactor .)
+    RB              reduce using rule 66 (factor -> factor subfactor .)
+
+
+state 64
+
+    (25) strong -> AS em . AS
+
+    AS              shift and go to state 103
+
+
+state 65
+
+    (27) em -> ASfactor . AS
+    (30) ASfactor -> ASfactor . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    AS              shift and go to state 42
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 43
+
+state 66
+
+    (21) line -> AS BLANK . AS BLANK AS
+    (71) subfactor -> BLANK .
+
+  ! shift/reduce conflict for AS resolved as shift
+    AS              shift and go to state 104
+    $end            reduce using rule 71 (subfactor -> BLANK .)
+    CR              reduce using rule 71 (subfactor -> BLANK .)
+    H1              reduce using rule 71 (subfactor -> BLANK .)
+    H2              reduce using rule 71 (subfactor -> BLANK .)
+    H3              reduce using rule 71 (subfactor -> BLANK .)
+    WORD            reduce using rule 71 (subfactor -> BLANK .)
+    NUMBER          reduce using rule 71 (subfactor -> BLANK .)
+    DOT             reduce using rule 71 (subfactor -> BLANK .)
+    BLANK           reduce using rule 71 (subfactor -> BLANK .)
+    TAB             reduce using rule 71 (subfactor -> BLANK .)
+    UDL             reduce using rule 71 (subfactor -> BLANK .)
+    MINUS           reduce using rule 71 (subfactor -> BLANK .)
+    EQ              reduce using rule 71 (subfactor -> BLANK .)
+    EXCLAM          reduce using rule 71 (subfactor -> BLANK .)
+    PLUS            reduce using rule 71 (subfactor -> BLANK .)
+    QQ              reduce using rule 71 (subfactor -> BLANK .)
+    RT              reduce using rule 71 (subfactor -> BLANK .)
+    LT              reduce using rule 71 (subfactor -> BLANK .)
+    LSQ             reduce using rule 71 (subfactor -> BLANK .)
+    RSQ             reduce using rule 71 (subfactor -> BLANK .)
+    RB              reduce using rule 71 (subfactor -> BLANK .)
+
+  ! AS              [ reduce using rule 71 (subfactor -> BLANK .) ]
+
+
+state 67
+
+    (19) line -> AS AS . AS
+    (29) ASfactor -> AS . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    AS              shift and go to state 105
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 68
+
+state 68
+
+    (29) ASfactor -> AS factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    AS              reduce using rule 29 (ASfactor -> AS factor .)
+    CR              reduce using rule 29 (ASfactor -> AS factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 29 (ASfactor -> AS factor .) ]
+  ! NUMBER          [ reduce using rule 29 (ASfactor -> AS factor .) ]
+  ! DOT             [ reduce using rule 29 (ASfactor -> AS factor .) ]
+  ! BLANK           [ reduce using rule 29 (ASfactor -> AS factor .) ]
+  ! TAB             [ reduce using rule 29 (ASfactor -> AS factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 69
+
+    (28) em -> UDL . factor UDL
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 85
+
+state 70
+
+    (24) line -> EQ EQ . EQ
+
+    EQ              shift and go to state 106
+
+
+state 71
+
+    (35) codes -> QQ codes . QQ
+
+    QQ              shift and go to state 107
+
+
+state 72
+
+    (36) code -> QQ factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    QQ              reduce using rule 36 (code -> QQ factor .)
+    CR              reduce using rule 36 (code -> QQ factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 36 (code -> QQ factor .) ]
+  ! NUMBER          [ reduce using rule 36 (code -> QQ factor .) ]
+  ! DOT             [ reduce using rule 36 (code -> QQ factor .) ]
+  ! BLANK           [ reduce using rule 36 (code -> QQ factor .) ]
+  ! TAB             [ reduce using rule 36 (code -> QQ factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 73
+
+    (39) code -> QQ CR . factor
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 108
+
+state 74
+
+    (34) codes -> QQ UDL . factor UDL QQ
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 109
+
+state 75
+
+    (7) expression -> H2 factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 7 (expression -> H2 factor .)
+    CR              reduce using rule 7 (expression -> H2 factor .)
+    H1              reduce using rule 7 (expression -> H2 factor .)
+    H2              reduce using rule 7 (expression -> H2 factor .)
+    H3              reduce using rule 7 (expression -> H2 factor .)
+    AS              reduce using rule 7 (expression -> H2 factor .)
+    UDL             reduce using rule 7 (expression -> H2 factor .)
+    MINUS           reduce using rule 7 (expression -> H2 factor .)
+    EQ              reduce using rule 7 (expression -> H2 factor .)
+    EXCLAM          reduce using rule 7 (expression -> H2 factor .)
+    PLUS            reduce using rule 7 (expression -> H2 factor .)
+    QQ              reduce using rule 7 (expression -> H2 factor .)
+    RT              reduce using rule 7 (expression -> H2 factor .)
+    LT              reduce using rule 7 (expression -> H2 factor .)
+    LSQ             reduce using rule 7 (expression -> H2 factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 7 (expression -> H2 factor .) ]
+  ! NUMBER          [ reduce using rule 7 (expression -> H2 factor .) ]
+  ! DOT             [ reduce using rule 7 (expression -> H2 factor .) ]
+  ! BLANK           [ reduce using rule 7 (expression -> H2 factor .) ]
+  ! TAB             [ reduce using rule 7 (expression -> H2 factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 76
+
+    (8) expression -> H3 factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 8 (expression -> H3 factor .)
+    CR              reduce using rule 8 (expression -> H3 factor .)
+    H1              reduce using rule 8 (expression -> H3 factor .)
+    H2              reduce using rule 8 (expression -> H3 factor .)
+    H3              reduce using rule 8 (expression -> H3 factor .)
+    AS              reduce using rule 8 (expression -> H3 factor .)
+    UDL             reduce using rule 8 (expression -> H3 factor .)
+    MINUS           reduce using rule 8 (expression -> H3 factor .)
+    EQ              reduce using rule 8 (expression -> H3 factor .)
+    EXCLAM          reduce using rule 8 (expression -> H3 factor .)
+    PLUS            reduce using rule 8 (expression -> H3 factor .)
+    QQ              reduce using rule 8 (expression -> H3 factor .)
+    RT              reduce using rule 8 (expression -> H3 factor .)
+    LT              reduce using rule 8 (expression -> H3 factor .)
+    LSQ             reduce using rule 8 (expression -> H3 factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 8 (expression -> H3 factor .) ]
+  ! NUMBER          [ reduce using rule 8 (expression -> H3 factor .) ]
+  ! DOT             [ reduce using rule 8 (expression -> H3 factor .) ]
+  ! BLANK           [ reduce using rule 8 (expression -> H3 factor .) ]
+  ! TAB             [ reduce using rule 8 (expression -> H3 factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 77
+
+    (6) expression -> H1 factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 6 (expression -> H1 factor .)
+    CR              reduce using rule 6 (expression -> H1 factor .)
+    H1              reduce using rule 6 (expression -> H1 factor .)
+    H2              reduce using rule 6 (expression -> H1 factor .)
+    H3              reduce using rule 6 (expression -> H1 factor .)
+    AS              reduce using rule 6 (expression -> H1 factor .)
+    UDL             reduce using rule 6 (expression -> H1 factor .)
+    MINUS           reduce using rule 6 (expression -> H1 factor .)
+    EQ              reduce using rule 6 (expression -> H1 factor .)
+    EXCLAM          reduce using rule 6 (expression -> H1 factor .)
+    PLUS            reduce using rule 6 (expression -> H1 factor .)
+    QQ              reduce using rule 6 (expression -> H1 factor .)
+    RT              reduce using rule 6 (expression -> H1 factor .)
+    LT              reduce using rule 6 (expression -> H1 factor .)
+    LSQ             reduce using rule 6 (expression -> H1 factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 6 (expression -> H1 factor .) ]
+  ! NUMBER          [ reduce using rule 6 (expression -> H1 factor .) ]
+  ! DOT             [ reduce using rule 6 (expression -> H1 factor .) ]
+  ! BLANK           [ reduce using rule 6 (expression -> H1 factor .) ]
+  ! TAB             [ reduce using rule 6 (expression -> H1 factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 78
+
+    (41) ul -> olis iul .
+
+    $end            reduce using rule 41 (ul -> olis iul .)
+    CR              reduce using rule 41 (ul -> olis iul .)
+    H1              reduce using rule 41 (ul -> olis iul .)
+    H2              reduce using rule 41 (ul -> olis iul .)
+    H3              reduce using rule 41 (ul -> olis iul .)
+    WORD            reduce using rule 41 (ul -> olis iul .)
+    NUMBER          reduce using rule 41 (ul -> olis iul .)
+    DOT             reduce using rule 41 (ul -> olis iul .)
+    BLANK           reduce using rule 41 (ul -> olis iul .)
+    TAB             reduce using rule 41 (ul -> olis iul .)
+    AS              reduce using rule 41 (ul -> olis iul .)
+    UDL             reduce using rule 41 (ul -> olis iul .)
+    MINUS           reduce using rule 41 (ul -> olis iul .)
+    EQ              reduce using rule 41 (ul -> olis iul .)
+    EXCLAM          reduce using rule 41 (ul -> olis iul .)
+    PLUS            reduce using rule 41 (ul -> olis iul .)
+    QQ              reduce using rule 41 (ul -> olis iul .)
+    RT              reduce using rule 41 (ul -> olis iul .)
+    LT              reduce using rule 41 (ul -> olis iul .)
+    LSQ             reduce using rule 41 (ul -> olis iul .)
+
+
+state 79
+
+    (42) oli -> NUMBER . DOT factor CR
+
+    DOT             shift and go to state 45
+
+
+state 80
+
+    (43) olis -> olis oli .
+
+    $end            reduce using rule 43 (olis -> olis oli .)
+    CR              reduce using rule 43 (olis -> olis oli .)
+    H1              reduce using rule 43 (olis -> olis oli .)
+    H2              reduce using rule 43 (olis -> olis oli .)
+    H3              reduce using rule 43 (olis -> olis oli .)
+    WORD            reduce using rule 43 (olis -> olis oli .)
+    NUMBER          reduce using rule 43 (olis -> olis oli .)
+    DOT             reduce using rule 43 (olis -> olis oli .)
+    BLANK           reduce using rule 43 (olis -> olis oli .)
+    TAB             reduce using rule 43 (olis -> olis oli .)
+    AS              reduce using rule 43 (olis -> olis oli .)
+    UDL             reduce using rule 43 (olis -> olis oli .)
+    MINUS           reduce using rule 43 (olis -> olis oli .)
+    EQ              reduce using rule 43 (olis -> olis oli .)
+    EXCLAM          reduce using rule 43 (olis -> olis oli .)
+    PLUS            reduce using rule 43 (olis -> olis oli .)
+    QQ              reduce using rule 43 (olis -> olis oli .)
+    RT              reduce using rule 43 (olis -> olis oli .)
+    LT              reduce using rule 43 (olis -> olis oli .)
+    LSQ             reduce using rule 43 (olis -> olis oli .)
+
+
+state 81
+
+    (9) expression -> expression expression .
+    (9) expression -> expression . expression
+    (6) expression -> . H1 factor
+    (7) expression -> . H2 factor
+    (8) expression -> . H3 factor
+    (9) expression -> . expression expression
+    (10) expression -> . factor
+    (11) expression -> . line
+    (12) expression -> . picture
+    (13) expression -> . ul
+    (14) expression -> . codes
+    (15) expression -> . quote
+    (16) expression -> . link
+    (17) expression -> . strong
+    (18) expression -> . em
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (19) line -> . AS AS AS
+    (20) line -> . UDL UDL UDL
+    (21) line -> . AS BLANK AS BLANK AS
+    (22) line -> . UDL BLANK UDL BLANK UDL
+    (23) line -> . MINUS MINUS MINUS
+    (24) line -> . EQ EQ EQ
+    (63) picture -> . EXCLAM LSQ factor RSQ LB factor RB
+    (40) ul -> . olis
+    (41) ul -> . olis iul
+    (45) ul -> . lis
+    (48) ul -> . lis iul
+    (32) codes -> . code QQ
+    (33) codes -> . code CR QQ
+    (34) codes -> . QQ UDL factor UDL QQ
+    (35) codes -> . QQ codes QQ
+    (31) quote -> . RT factor
+    (64) link -> . LT factor RT
+    (65) link -> . LSQ factor RSQ LB factor RB
+    (25) strong -> . AS em AS
+    (26) strong -> . UDL em UDL
+    (27) em -> . ASfactor AS
+    (28) em -> . UDL factor UDL
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+    (43) olis -> . olis oli
+    (44) olis -> . oli
+    (53) lis -> . lis li
+    (54) lis -> . li
+    (36) code -> . QQ factor
+    (37) code -> . code factor
+    (38) code -> . code CR
+    (39) code -> . QQ CR factor
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (42) oli -> . NUMBER DOT factor CR
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+
+  ! shift/reduce conflict for H1 resolved as shift
+  ! shift/reduce conflict for H2 resolved as shift
+  ! shift/reduce conflict for H3 resolved as shift
+  ! shift/reduce conflict for AS resolved as shift
+  ! shift/reduce conflict for UDL resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for EXCLAM resolved as shift
+  ! shift/reduce conflict for QQ resolved as shift
+  ! shift/reduce conflict for RT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for LSQ resolved as shift
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+    $end            reduce using rule 9 (expression -> expression expression .)
+    CR              reduce using rule 9 (expression -> expression expression .)
+    H1              shift and go to state 32
+    H2              shift and go to state 30
+    H3              shift and go to state 31
+    AS              shift and go to state 24
+    UDL             shift and go to state 37
+    MINUS           shift and go to state 8
+    EQ              shift and go to state 28
+    EXCLAM          shift and go to state 7
+    QQ              shift and go to state 29
+    RT              shift and go to state 10
+    LT              shift and go to state 14
+    LSQ             shift and go to state 36
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 4
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+    PLUS            shift and go to state 15
+
+  ! H1              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! H2              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! H3              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! WORD            [ reduce using rule 9 (expression -> expression expression .) ]
+  ! NUMBER          [ reduce using rule 9 (expression -> expression expression .) ]
+  ! DOT             [ reduce using rule 9 (expression -> expression expression .) ]
+  ! BLANK           [ reduce using rule 9 (expression -> expression expression .) ]
+  ! TAB             [ reduce using rule 9 (expression -> expression expression .) ]
+  ! AS              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! UDL             [ reduce using rule 9 (expression -> expression expression .) ]
+  ! MINUS           [ reduce using rule 9 (expression -> expression expression .) ]
+  ! EQ              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! EXCLAM          [ reduce using rule 9 (expression -> expression expression .) ]
+  ! PLUS            [ reduce using rule 9 (expression -> expression expression .) ]
+  ! QQ              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! RT              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! LT              [ reduce using rule 9 (expression -> expression expression .) ]
+  ! LSQ             [ reduce using rule 9 (expression -> expression expression .) ]
+
+    em                             shift and go to state 1
+    picture                        shift and go to state 20
+    codes                          shift and go to state 11
+    olis                           shift and go to state 34
+    oli                            shift and go to state 21
+    quote                          shift and go to state 22
+    lis                            shift and go to state 5
+    li                             shift and go to state 13
+    ul                             shift and go to state 33
+    code                           shift and go to state 2
+    link                           shift and go to state 25
+    ASfactor                       shift and go to state 3
+    factor                         shift and go to state 23
+    line                           shift and go to state 26
+    strong                         shift and go to state 27
+    expression                     shift and go to state 81
+    subfactor                      shift and go to state 18
+
+state 82
+
+    (65) link -> LSQ factor . RSQ LB factor RB
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    RSQ             shift and go to state 110
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 83
+
+    (26) strong -> UDL em . UDL
+
+    UDL             shift and go to state 111
+
+
+state 84
+
+    (22) line -> UDL BLANK . UDL BLANK UDL
+    (71) subfactor -> BLANK .
+
+  ! shift/reduce conflict for UDL resolved as shift
+    UDL             shift and go to state 112
+    $end            reduce using rule 71 (subfactor -> BLANK .)
+    CR              reduce using rule 71 (subfactor -> BLANK .)
+    H1              reduce using rule 71 (subfactor -> BLANK .)
+    H2              reduce using rule 71 (subfactor -> BLANK .)
+    H3              reduce using rule 71 (subfactor -> BLANK .)
+    WORD            reduce using rule 71 (subfactor -> BLANK .)
+    NUMBER          reduce using rule 71 (subfactor -> BLANK .)
+    DOT             reduce using rule 71 (subfactor -> BLANK .)
+    BLANK           reduce using rule 71 (subfactor -> BLANK .)
+    TAB             reduce using rule 71 (subfactor -> BLANK .)
+    AS              reduce using rule 71 (subfactor -> BLANK .)
+    MINUS           reduce using rule 71 (subfactor -> BLANK .)
+    EQ              reduce using rule 71 (subfactor -> BLANK .)
+    EXCLAM          reduce using rule 71 (subfactor -> BLANK .)
+    PLUS            reduce using rule 71 (subfactor -> BLANK .)
+    QQ              reduce using rule 71 (subfactor -> BLANK .)
+    RT              reduce using rule 71 (subfactor -> BLANK .)
+    LT              reduce using rule 71 (subfactor -> BLANK .)
+    LSQ             reduce using rule 71 (subfactor -> BLANK .)
+    RSQ             reduce using rule 71 (subfactor -> BLANK .)
+    RB              reduce using rule 71 (subfactor -> BLANK .)
+
+  ! UDL             [ reduce using rule 71 (subfactor -> BLANK .) ]
+
+
+state 85
+
+    (28) em -> UDL factor . UDL
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    UDL             shift and go to state 113
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 86
+
+    (20) line -> UDL UDL . UDL
+    (28) em -> UDL . factor UDL
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    UDL             shift and go to state 114
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 85
+
+state 87
+
+    (33) codes -> code CR QQ .
+
+    $end            reduce using rule 33 (codes -> code CR QQ .)
+    CR              reduce using rule 33 (codes -> code CR QQ .)
+    H1              reduce using rule 33 (codes -> code CR QQ .)
+    H2              reduce using rule 33 (codes -> code CR QQ .)
+    H3              reduce using rule 33 (codes -> code CR QQ .)
+    WORD            reduce using rule 33 (codes -> code CR QQ .)
+    NUMBER          reduce using rule 33 (codes -> code CR QQ .)
+    DOT             reduce using rule 33 (codes -> code CR QQ .)
+    BLANK           reduce using rule 33 (codes -> code CR QQ .)
+    TAB             reduce using rule 33 (codes -> code CR QQ .)
+    AS              reduce using rule 33 (codes -> code CR QQ .)
+    UDL             reduce using rule 33 (codes -> code CR QQ .)
+    MINUS           reduce using rule 33 (codes -> code CR QQ .)
+    EQ              reduce using rule 33 (codes -> code CR QQ .)
+    EXCLAM          reduce using rule 33 (codes -> code CR QQ .)
+    PLUS            reduce using rule 33 (codes -> code CR QQ .)
+    QQ              reduce using rule 33 (codes -> code CR QQ .)
+    RT              reduce using rule 33 (codes -> code CR QQ .)
+    LT              reduce using rule 33 (codes -> code CR QQ .)
+    LSQ             reduce using rule 33 (codes -> code CR QQ .)
+
+
+state 88
+
+    (42) oli -> NUMBER DOT factor . CR
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    CR              shift and go to state 115
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 89
+
+    (49) iul -> ilis iiul .
+
+    $end            reduce using rule 49 (iul -> ilis iiul .)
+    CR              reduce using rule 49 (iul -> ilis iiul .)
+    H1              reduce using rule 49 (iul -> ilis iiul .)
+    H2              reduce using rule 49 (iul -> ilis iiul .)
+    H3              reduce using rule 49 (iul -> ilis iiul .)
+    WORD            reduce using rule 49 (iul -> ilis iiul .)
+    NUMBER          reduce using rule 49 (iul -> ilis iiul .)
+    DOT             reduce using rule 49 (iul -> ilis iiul .)
+    BLANK           reduce using rule 49 (iul -> ilis iiul .)
+    TAB             reduce using rule 49 (iul -> ilis iiul .)
+    AS              reduce using rule 49 (iul -> ilis iiul .)
+    UDL             reduce using rule 49 (iul -> ilis iiul .)
+    MINUS           reduce using rule 49 (iul -> ilis iiul .)
+    EQ              reduce using rule 49 (iul -> ilis iiul .)
+    EXCLAM          reduce using rule 49 (iul -> ilis iiul .)
+    PLUS            reduce using rule 49 (iul -> ilis iiul .)
+    QQ              reduce using rule 49 (iul -> ilis iiul .)
+    RT              reduce using rule 49 (iul -> ilis iiul .)
+    LT              reduce using rule 49 (iul -> ilis iiul .)
+    LSQ             reduce using rule 49 (iul -> ilis iiul .)
+
+
+state 90
+
+    (47) iiul -> iilis .
+    (57) iilis -> iilis . iili
+    (52) iili -> . TAB TAB li
+
+  ! shift/reduce conflict for TAB resolved as shift
+    $end            reduce using rule 47 (iiul -> iilis .)
+    CR              reduce using rule 47 (iiul -> iilis .)
+    H1              reduce using rule 47 (iiul -> iilis .)
+    H2              reduce using rule 47 (iiul -> iilis .)
+    H3              reduce using rule 47 (iiul -> iilis .)
+    WORD            reduce using rule 47 (iiul -> iilis .)
+    NUMBER          reduce using rule 47 (iiul -> iilis .)
+    DOT             reduce using rule 47 (iiul -> iilis .)
+    BLANK           reduce using rule 47 (iiul -> iilis .)
+    AS              reduce using rule 47 (iiul -> iilis .)
+    UDL             reduce using rule 47 (iiul -> iilis .)
+    MINUS           reduce using rule 47 (iiul -> iilis .)
+    EQ              reduce using rule 47 (iiul -> iilis .)
+    EXCLAM          reduce using rule 47 (iiul -> iilis .)
+    PLUS            reduce using rule 47 (iiul -> iilis .)
+    QQ              reduce using rule 47 (iiul -> iilis .)
+    RT              reduce using rule 47 (iiul -> iilis .)
+    LT              reduce using rule 47 (iiul -> iilis .)
+    LSQ             reduce using rule 47 (iiul -> iilis .)
+    TAB             shift and go to state 116
+
+  ! TAB             [ reduce using rule 47 (iiul -> iilis .) ]
+
+    iili                           shift and go to state 117
+
+state 91
+
+    (51) ili -> TAB . li
+    (52) iili -> TAB . TAB li
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+
+    TAB             shift and go to state 118
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 53
+    AS              shift and go to state 49
+
+    ASfactor                       shift and go to state 47
+    li                             shift and go to state 94
+
+state 92
+
+    (58) iilis -> iili .
+
+    TAB             reduce using rule 58 (iilis -> iili .)
+    $end            reduce using rule 58 (iilis -> iili .)
+    CR              reduce using rule 58 (iilis -> iili .)
+    H1              reduce using rule 58 (iilis -> iili .)
+    H2              reduce using rule 58 (iilis -> iili .)
+    H3              reduce using rule 58 (iilis -> iili .)
+    WORD            reduce using rule 58 (iilis -> iili .)
+    NUMBER          reduce using rule 58 (iilis -> iili .)
+    DOT             reduce using rule 58 (iilis -> iili .)
+    BLANK           reduce using rule 58 (iilis -> iili .)
+    AS              reduce using rule 58 (iilis -> iili .)
+    UDL             reduce using rule 58 (iilis -> iili .)
+    MINUS           reduce using rule 58 (iilis -> iili .)
+    EQ              reduce using rule 58 (iilis -> iili .)
+    EXCLAM          reduce using rule 58 (iilis -> iili .)
+    PLUS            reduce using rule 58 (iilis -> iili .)
+    QQ              reduce using rule 58 (iilis -> iili .)
+    RT              reduce using rule 58 (iilis -> iili .)
+    LT              reduce using rule 58 (iilis -> iili .)
+    LSQ             reduce using rule 58 (iilis -> iili .)
+
+
+state 93
+
+    (55) ilis -> ilis ili .
+
+    $end            reduce using rule 55 (ilis -> ilis ili .)
+    CR              reduce using rule 55 (ilis -> ilis ili .)
+    H1              reduce using rule 55 (ilis -> ilis ili .)
+    H2              reduce using rule 55 (ilis -> ilis ili .)
+    H3              reduce using rule 55 (ilis -> ilis ili .)
+    WORD            reduce using rule 55 (ilis -> ilis ili .)
+    NUMBER          reduce using rule 55 (ilis -> ilis ili .)
+    DOT             reduce using rule 55 (ilis -> ilis ili .)
+    BLANK           reduce using rule 55 (ilis -> ilis ili .)
+    TAB             reduce using rule 55 (ilis -> ilis ili .)
+    AS              reduce using rule 55 (ilis -> ilis ili .)
+    UDL             reduce using rule 55 (ilis -> ilis ili .)
+    MINUS           reduce using rule 55 (ilis -> ilis ili .)
+    EQ              reduce using rule 55 (ilis -> ilis ili .)
+    EXCLAM          reduce using rule 55 (ilis -> ilis ili .)
+    PLUS            reduce using rule 55 (ilis -> ilis ili .)
+    QQ              reduce using rule 55 (ilis -> ilis ili .)
+    RT              reduce using rule 55 (ilis -> ilis ili .)
+    LT              reduce using rule 55 (ilis -> ilis ili .)
+    LSQ             reduce using rule 55 (ilis -> ilis ili .)
+
+
+state 94
+
+    (51) ili -> TAB li .
+    (59) li -> li . PLUS factor CR
+    (60) li -> li . MINUS factor CR
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    $end            reduce using rule 51 (ili -> TAB li .)
+    CR              reduce using rule 51 (ili -> TAB li .)
+    H1              reduce using rule 51 (ili -> TAB li .)
+    H2              reduce using rule 51 (ili -> TAB li .)
+    H3              reduce using rule 51 (ili -> TAB li .)
+    WORD            reduce using rule 51 (ili -> TAB li .)
+    NUMBER          reduce using rule 51 (ili -> TAB li .)
+    DOT             reduce using rule 51 (ili -> TAB li .)
+    BLANK           reduce using rule 51 (ili -> TAB li .)
+    TAB             reduce using rule 51 (ili -> TAB li .)
+    AS              reduce using rule 51 (ili -> TAB li .)
+    UDL             reduce using rule 51 (ili -> TAB li .)
+    EQ              reduce using rule 51 (ili -> TAB li .)
+    EXCLAM          reduce using rule 51 (ili -> TAB li .)
+    QQ              reduce using rule 51 (ili -> TAB li .)
+    RT              reduce using rule 51 (ili -> TAB li .)
+    LT              reduce using rule 51 (ili -> TAB li .)
+    LSQ             reduce using rule 51 (ili -> TAB li .)
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 59
+
+  ! MINUS           [ reduce using rule 51 (ili -> TAB li .) ]
+  ! PLUS            [ reduce using rule 51 (ili -> TAB li .) ]
+
+
+state 95
+
+    (63) picture -> EXCLAM LSQ factor . RSQ LB factor RB
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    RSQ             shift and go to state 119
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 96
+
+    (62) li -> MINUS factor CR .
+
+    $end            reduce using rule 62 (li -> MINUS factor CR .)
+    CR              reduce using rule 62 (li -> MINUS factor CR .)
+    H1              reduce using rule 62 (li -> MINUS factor CR .)
+    H2              reduce using rule 62 (li -> MINUS factor CR .)
+    H3              reduce using rule 62 (li -> MINUS factor CR .)
+    WORD            reduce using rule 62 (li -> MINUS factor CR .)
+    NUMBER          reduce using rule 62 (li -> MINUS factor CR .)
+    DOT             reduce using rule 62 (li -> MINUS factor CR .)
+    BLANK           reduce using rule 62 (li -> MINUS factor CR .)
+    TAB             reduce using rule 62 (li -> MINUS factor CR .)
+    AS              reduce using rule 62 (li -> MINUS factor CR .)
+    UDL             reduce using rule 62 (li -> MINUS factor CR .)
+    MINUS           reduce using rule 62 (li -> MINUS factor CR .)
+    EQ              reduce using rule 62 (li -> MINUS factor CR .)
+    EXCLAM          reduce using rule 62 (li -> MINUS factor CR .)
+    PLUS            reduce using rule 62 (li -> MINUS factor CR .)
+    QQ              reduce using rule 62 (li -> MINUS factor CR .)
+    RT              reduce using rule 62 (li -> MINUS factor CR .)
+    LT              reduce using rule 62 (li -> MINUS factor CR .)
+    LSQ             reduce using rule 62 (li -> MINUS factor CR .)
+
+
+state 97
+
+    (23) line -> MINUS MINUS MINUS .
+
+    $end            reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    CR              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    H1              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    H2              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    H3              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    WORD            reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    NUMBER          reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    DOT             reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    BLANK           reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    TAB             reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    AS              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    UDL             reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    MINUS           reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    EQ              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    EXCLAM          reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    PLUS            reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    QQ              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    RT              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    LT              reduce using rule 23 (line -> MINUS MINUS MINUS .)
+    LSQ             reduce using rule 23 (line -> MINUS MINUS MINUS .)
+
+
+state 98
+
+    (59) li -> li PLUS factor . CR
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    CR              shift and go to state 120
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 99
+
+    (60) li -> li MINUS factor . CR
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    CR              shift and go to state 121
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 100
+
+    (64) link -> LT factor RT .
+
+    $end            reduce using rule 64 (link -> LT factor RT .)
+    CR              reduce using rule 64 (link -> LT factor RT .)
+    H1              reduce using rule 64 (link -> LT factor RT .)
+    H2              reduce using rule 64 (link -> LT factor RT .)
+    H3              reduce using rule 64 (link -> LT factor RT .)
+    WORD            reduce using rule 64 (link -> LT factor RT .)
+    NUMBER          reduce using rule 64 (link -> LT factor RT .)
+    DOT             reduce using rule 64 (link -> LT factor RT .)
+    BLANK           reduce using rule 64 (link -> LT factor RT .)
+    TAB             reduce using rule 64 (link -> LT factor RT .)
+    AS              reduce using rule 64 (link -> LT factor RT .)
+    UDL             reduce using rule 64 (link -> LT factor RT .)
+    MINUS           reduce using rule 64 (link -> LT factor RT .)
+    EQ              reduce using rule 64 (link -> LT factor RT .)
+    EXCLAM          reduce using rule 64 (link -> LT factor RT .)
+    PLUS            reduce using rule 64 (link -> LT factor RT .)
+    QQ              reduce using rule 64 (link -> LT factor RT .)
+    RT              reduce using rule 64 (link -> LT factor RT .)
+    LT              reduce using rule 64 (link -> LT factor RT .)
+    LSQ             reduce using rule 64 (link -> LT factor RT .)
+
+
+state 101
+
+    (61) li -> PLUS factor CR .
+
+    $end            reduce using rule 61 (li -> PLUS factor CR .)
+    CR              reduce using rule 61 (li -> PLUS factor CR .)
+    H1              reduce using rule 61 (li -> PLUS factor CR .)
+    H2              reduce using rule 61 (li -> PLUS factor CR .)
+    H3              reduce using rule 61 (li -> PLUS factor CR .)
+    WORD            reduce using rule 61 (li -> PLUS factor CR .)
+    NUMBER          reduce using rule 61 (li -> PLUS factor CR .)
+    DOT             reduce using rule 61 (li -> PLUS factor CR .)
+    BLANK           reduce using rule 61 (li -> PLUS factor CR .)
+    TAB             reduce using rule 61 (li -> PLUS factor CR .)
+    AS              reduce using rule 61 (li -> PLUS factor CR .)
+    UDL             reduce using rule 61 (li -> PLUS factor CR .)
+    MINUS           reduce using rule 61 (li -> PLUS factor CR .)
+    EQ              reduce using rule 61 (li -> PLUS factor CR .)
+    EXCLAM          reduce using rule 61 (li -> PLUS factor CR .)
+    PLUS            reduce using rule 61 (li -> PLUS factor CR .)
+    QQ              reduce using rule 61 (li -> PLUS factor CR .)
+    RT              reduce using rule 61 (li -> PLUS factor CR .)
+    LT              reduce using rule 61 (li -> PLUS factor CR .)
+    LSQ             reduce using rule 61 (li -> PLUS factor CR .)
+
+
+state 102
+
+    (3) statement -> statement CR expression .
+    (9) expression -> expression . expression
+    (6) expression -> . H1 factor
+    (7) expression -> . H2 factor
+    (8) expression -> . H3 factor
+    (9) expression -> . expression expression
+    (10) expression -> . factor
+    (11) expression -> . line
+    (12) expression -> . picture
+    (13) expression -> . ul
+    (14) expression -> . codes
+    (15) expression -> . quote
+    (16) expression -> . link
+    (17) expression -> . strong
+    (18) expression -> . em
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (19) line -> . AS AS AS
+    (20) line -> . UDL UDL UDL
+    (21) line -> . AS BLANK AS BLANK AS
+    (22) line -> . UDL BLANK UDL BLANK UDL
+    (23) line -> . MINUS MINUS MINUS
+    (24) line -> . EQ EQ EQ
+    (63) picture -> . EXCLAM LSQ factor RSQ LB factor RB
+    (40) ul -> . olis
+    (41) ul -> . olis iul
+    (45) ul -> . lis
+    (48) ul -> . lis iul
+    (32) codes -> . code QQ
+    (33) codes -> . code CR QQ
+    (34) codes -> . QQ UDL factor UDL QQ
+    (35) codes -> . QQ codes QQ
+    (31) quote -> . RT factor
+    (64) link -> . LT factor RT
+    (65) link -> . LSQ factor RSQ LB factor RB
+    (25) strong -> . AS em AS
+    (26) strong -> . UDL em UDL
+    (27) em -> . ASfactor AS
+    (28) em -> . UDL factor UDL
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+    (43) olis -> . olis oli
+    (44) olis -> . oli
+    (53) lis -> . lis li
+    (54) lis -> . li
+    (36) code -> . QQ factor
+    (37) code -> . code factor
+    (38) code -> . code CR
+    (39) code -> . QQ CR factor
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+    (42) oli -> . NUMBER DOT factor CR
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+
+    $end            reduce using rule 3 (statement -> statement CR expression .)
+    CR              reduce using rule 3 (statement -> statement CR expression .)
+    H1              shift and go to state 32
+    H2              shift and go to state 30
+    H3              shift and go to state 31
+    AS              shift and go to state 24
+    UDL             shift and go to state 37
+    MINUS           shift and go to state 8
+    EQ              shift and go to state 28
+    EXCLAM          shift and go to state 7
+    QQ              shift and go to state 29
+    RT              shift and go to state 10
+    LT              shift and go to state 14
+    LSQ             shift and go to state 36
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 4
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+    PLUS            shift and go to state 15
+
+    em                             shift and go to state 1
+    picture                        shift and go to state 20
+    codes                          shift and go to state 11
+    olis                           shift and go to state 34
+    oli                            shift and go to state 21
+    quote                          shift and go to state 22
+    lis                            shift and go to state 5
+    li                             shift and go to state 13
+    ul                             shift and go to state 33
+    code                           shift and go to state 2
+    link                           shift and go to state 25
+    ASfactor                       shift and go to state 3
+    factor                         shift and go to state 23
+    line                           shift and go to state 26
+    strong                         shift and go to state 27
+    expression                     shift and go to state 81
+    subfactor                      shift and go to state 18
+
+state 103
+
+    (25) strong -> AS em AS .
+
+    $end            reduce using rule 25 (strong -> AS em AS .)
+    CR              reduce using rule 25 (strong -> AS em AS .)
+    H1              reduce using rule 25 (strong -> AS em AS .)
+    H2              reduce using rule 25 (strong -> AS em AS .)
+    H3              reduce using rule 25 (strong -> AS em AS .)
+    WORD            reduce using rule 25 (strong -> AS em AS .)
+    NUMBER          reduce using rule 25 (strong -> AS em AS .)
+    DOT             reduce using rule 25 (strong -> AS em AS .)
+    BLANK           reduce using rule 25 (strong -> AS em AS .)
+    TAB             reduce using rule 25 (strong -> AS em AS .)
+    AS              reduce using rule 25 (strong -> AS em AS .)
+    UDL             reduce using rule 25 (strong -> AS em AS .)
+    MINUS           reduce using rule 25 (strong -> AS em AS .)
+    EQ              reduce using rule 25 (strong -> AS em AS .)
+    EXCLAM          reduce using rule 25 (strong -> AS em AS .)
+    PLUS            reduce using rule 25 (strong -> AS em AS .)
+    QQ              reduce using rule 25 (strong -> AS em AS .)
+    RT              reduce using rule 25 (strong -> AS em AS .)
+    LT              reduce using rule 25 (strong -> AS em AS .)
+    LSQ             reduce using rule 25 (strong -> AS em AS .)
+
+
+state 104
+
+    (21) line -> AS BLANK AS . BLANK AS
+
+    BLANK           shift and go to state 122
+
+
+state 105
+
+    (19) line -> AS AS AS .
+
+    $end            reduce using rule 19 (line -> AS AS AS .)
+    CR              reduce using rule 19 (line -> AS AS AS .)
+    H1              reduce using rule 19 (line -> AS AS AS .)
+    H2              reduce using rule 19 (line -> AS AS AS .)
+    H3              reduce using rule 19 (line -> AS AS AS .)
+    WORD            reduce using rule 19 (line -> AS AS AS .)
+    NUMBER          reduce using rule 19 (line -> AS AS AS .)
+    DOT             reduce using rule 19 (line -> AS AS AS .)
+    BLANK           reduce using rule 19 (line -> AS AS AS .)
+    TAB             reduce using rule 19 (line -> AS AS AS .)
+    AS              reduce using rule 19 (line -> AS AS AS .)
+    UDL             reduce using rule 19 (line -> AS AS AS .)
+    MINUS           reduce using rule 19 (line -> AS AS AS .)
+    EQ              reduce using rule 19 (line -> AS AS AS .)
+    EXCLAM          reduce using rule 19 (line -> AS AS AS .)
+    PLUS            reduce using rule 19 (line -> AS AS AS .)
+    QQ              reduce using rule 19 (line -> AS AS AS .)
+    RT              reduce using rule 19 (line -> AS AS AS .)
+    LT              reduce using rule 19 (line -> AS AS AS .)
+    LSQ             reduce using rule 19 (line -> AS AS AS .)
+
+
+state 106
+
+    (24) line -> EQ EQ EQ .
+
+    $end            reduce using rule 24 (line -> EQ EQ EQ .)
+    CR              reduce using rule 24 (line -> EQ EQ EQ .)
+    H1              reduce using rule 24 (line -> EQ EQ EQ .)
+    H2              reduce using rule 24 (line -> EQ EQ EQ .)
+    H3              reduce using rule 24 (line -> EQ EQ EQ .)
+    WORD            reduce using rule 24 (line -> EQ EQ EQ .)
+    NUMBER          reduce using rule 24 (line -> EQ EQ EQ .)
+    DOT             reduce using rule 24 (line -> EQ EQ EQ .)
+    BLANK           reduce using rule 24 (line -> EQ EQ EQ .)
+    TAB             reduce using rule 24 (line -> EQ EQ EQ .)
+    AS              reduce using rule 24 (line -> EQ EQ EQ .)
+    UDL             reduce using rule 24 (line -> EQ EQ EQ .)
+    MINUS           reduce using rule 24 (line -> EQ EQ EQ .)
+    EQ              reduce using rule 24 (line -> EQ EQ EQ .)
+    EXCLAM          reduce using rule 24 (line -> EQ EQ EQ .)
+    PLUS            reduce using rule 24 (line -> EQ EQ EQ .)
+    QQ              reduce using rule 24 (line -> EQ EQ EQ .)
+    RT              reduce using rule 24 (line -> EQ EQ EQ .)
+    LT              reduce using rule 24 (line -> EQ EQ EQ .)
+    LSQ             reduce using rule 24 (line -> EQ EQ EQ .)
+
+
+state 107
+
+    (35) codes -> QQ codes QQ .
+
+    $end            reduce using rule 35 (codes -> QQ codes QQ .)
+    CR              reduce using rule 35 (codes -> QQ codes QQ .)
+    H1              reduce using rule 35 (codes -> QQ codes QQ .)
+    H2              reduce using rule 35 (codes -> QQ codes QQ .)
+    H3              reduce using rule 35 (codes -> QQ codes QQ .)
+    WORD            reduce using rule 35 (codes -> QQ codes QQ .)
+    NUMBER          reduce using rule 35 (codes -> QQ codes QQ .)
+    DOT             reduce using rule 35 (codes -> QQ codes QQ .)
+    BLANK           reduce using rule 35 (codes -> QQ codes QQ .)
+    TAB             reduce using rule 35 (codes -> QQ codes QQ .)
+    AS              reduce using rule 35 (codes -> QQ codes QQ .)
+    UDL             reduce using rule 35 (codes -> QQ codes QQ .)
+    MINUS           reduce using rule 35 (codes -> QQ codes QQ .)
+    EQ              reduce using rule 35 (codes -> QQ codes QQ .)
+    EXCLAM          reduce using rule 35 (codes -> QQ codes QQ .)
+    PLUS            reduce using rule 35 (codes -> QQ codes QQ .)
+    QQ              reduce using rule 35 (codes -> QQ codes QQ .)
+    RT              reduce using rule 35 (codes -> QQ codes QQ .)
+    LT              reduce using rule 35 (codes -> QQ codes QQ .)
+    LSQ             reduce using rule 35 (codes -> QQ codes QQ .)
+
+
+state 108
+
+    (39) code -> QQ CR factor .
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+  ! shift/reduce conflict for WORD resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for BLANK resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+    QQ              reduce using rule 39 (code -> QQ CR factor .)
+    CR              reduce using rule 39 (code -> QQ CR factor .)
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+  ! WORD            [ reduce using rule 39 (code -> QQ CR factor .) ]
+  ! NUMBER          [ reduce using rule 39 (code -> QQ CR factor .) ]
+  ! DOT             [ reduce using rule 39 (code -> QQ CR factor .) ]
+  ! BLANK           [ reduce using rule 39 (code -> QQ CR factor .) ]
+  ! TAB             [ reduce using rule 39 (code -> QQ CR factor .) ]
+
+    subfactor                      shift and go to state 63
+
+state 109
+
+    (34) codes -> QQ UDL factor . UDL QQ
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    UDL             shift and go to state 123
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 110
+
+    (65) link -> LSQ factor RSQ . LB factor RB
+
+    LB              shift and go to state 124
+
+
+state 111
+
+    (26) strong -> UDL em UDL .
+
+    $end            reduce using rule 26 (strong -> UDL em UDL .)
+    CR              reduce using rule 26 (strong -> UDL em UDL .)
+    H1              reduce using rule 26 (strong -> UDL em UDL .)
+    H2              reduce using rule 26 (strong -> UDL em UDL .)
+    H3              reduce using rule 26 (strong -> UDL em UDL .)
+    WORD            reduce using rule 26 (strong -> UDL em UDL .)
+    NUMBER          reduce using rule 26 (strong -> UDL em UDL .)
+    DOT             reduce using rule 26 (strong -> UDL em UDL .)
+    BLANK           reduce using rule 26 (strong -> UDL em UDL .)
+    TAB             reduce using rule 26 (strong -> UDL em UDL .)
+    AS              reduce using rule 26 (strong -> UDL em UDL .)
+    UDL             reduce using rule 26 (strong -> UDL em UDL .)
+    MINUS           reduce using rule 26 (strong -> UDL em UDL .)
+    EQ              reduce using rule 26 (strong -> UDL em UDL .)
+    EXCLAM          reduce using rule 26 (strong -> UDL em UDL .)
+    PLUS            reduce using rule 26 (strong -> UDL em UDL .)
+    QQ              reduce using rule 26 (strong -> UDL em UDL .)
+    RT              reduce using rule 26 (strong -> UDL em UDL .)
+    LT              reduce using rule 26 (strong -> UDL em UDL .)
+    LSQ             reduce using rule 26 (strong -> UDL em UDL .)
+
+
+state 112
+
+    (22) line -> UDL BLANK UDL . BLANK UDL
+
+    BLANK           shift and go to state 125
+
+
+state 113
+
+    (28) em -> UDL factor UDL .
+
+    $end            reduce using rule 28 (em -> UDL factor UDL .)
+    CR              reduce using rule 28 (em -> UDL factor UDL .)
+    H1              reduce using rule 28 (em -> UDL factor UDL .)
+    H2              reduce using rule 28 (em -> UDL factor UDL .)
+    H3              reduce using rule 28 (em -> UDL factor UDL .)
+    WORD            reduce using rule 28 (em -> UDL factor UDL .)
+    NUMBER          reduce using rule 28 (em -> UDL factor UDL .)
+    DOT             reduce using rule 28 (em -> UDL factor UDL .)
+    BLANK           reduce using rule 28 (em -> UDL factor UDL .)
+    TAB             reduce using rule 28 (em -> UDL factor UDL .)
+    AS              reduce using rule 28 (em -> UDL factor UDL .)
+    UDL             reduce using rule 28 (em -> UDL factor UDL .)
+    MINUS           reduce using rule 28 (em -> UDL factor UDL .)
+    EQ              reduce using rule 28 (em -> UDL factor UDL .)
+    EXCLAM          reduce using rule 28 (em -> UDL factor UDL .)
+    PLUS            reduce using rule 28 (em -> UDL factor UDL .)
+    QQ              reduce using rule 28 (em -> UDL factor UDL .)
+    RT              reduce using rule 28 (em -> UDL factor UDL .)
+    LT              reduce using rule 28 (em -> UDL factor UDL .)
+    LSQ             reduce using rule 28 (em -> UDL factor UDL .)
+
+
+state 114
+
+    (20) line -> UDL UDL UDL .
+
+    $end            reduce using rule 20 (line -> UDL UDL UDL .)
+    CR              reduce using rule 20 (line -> UDL UDL UDL .)
+    H1              reduce using rule 20 (line -> UDL UDL UDL .)
+    H2              reduce using rule 20 (line -> UDL UDL UDL .)
+    H3              reduce using rule 20 (line -> UDL UDL UDL .)
+    WORD            reduce using rule 20 (line -> UDL UDL UDL .)
+    NUMBER          reduce using rule 20 (line -> UDL UDL UDL .)
+    DOT             reduce using rule 20 (line -> UDL UDL UDL .)
+    BLANK           reduce using rule 20 (line -> UDL UDL UDL .)
+    TAB             reduce using rule 20 (line -> UDL UDL UDL .)
+    AS              reduce using rule 20 (line -> UDL UDL UDL .)
+    UDL             reduce using rule 20 (line -> UDL UDL UDL .)
+    MINUS           reduce using rule 20 (line -> UDL UDL UDL .)
+    EQ              reduce using rule 20 (line -> UDL UDL UDL .)
+    EXCLAM          reduce using rule 20 (line -> UDL UDL UDL .)
+    PLUS            reduce using rule 20 (line -> UDL UDL UDL .)
+    QQ              reduce using rule 20 (line -> UDL UDL UDL .)
+    RT              reduce using rule 20 (line -> UDL UDL UDL .)
+    LT              reduce using rule 20 (line -> UDL UDL UDL .)
+    LSQ             reduce using rule 20 (line -> UDL UDL UDL .)
+
+
+state 115
+
+    (42) oli -> NUMBER DOT factor CR .
+
+    $end            reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    CR              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    H1              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    H2              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    H3              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    WORD            reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    NUMBER          reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    DOT             reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    BLANK           reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    TAB             reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    AS              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    UDL             reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    MINUS           reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    EQ              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    EXCLAM          reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    PLUS            reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    QQ              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    RT              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    LT              reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+    LSQ             reduce using rule 42 (oli -> NUMBER DOT factor CR .)
+
+
+state 116
+
+    (52) iili -> TAB . TAB li
+
+    TAB             shift and go to state 118
+
+
+state 117
+
+    (57) iilis -> iilis iili .
+
+    TAB             reduce using rule 57 (iilis -> iilis iili .)
+    $end            reduce using rule 57 (iilis -> iilis iili .)
+    CR              reduce using rule 57 (iilis -> iilis iili .)
+    H1              reduce using rule 57 (iilis -> iilis iili .)
+    H2              reduce using rule 57 (iilis -> iilis iili .)
+    H3              reduce using rule 57 (iilis -> iilis iili .)
+    WORD            reduce using rule 57 (iilis -> iilis iili .)
+    NUMBER          reduce using rule 57 (iilis -> iilis iili .)
+    DOT             reduce using rule 57 (iilis -> iilis iili .)
+    BLANK           reduce using rule 57 (iilis -> iilis iili .)
+    AS              reduce using rule 57 (iilis -> iilis iili .)
+    UDL             reduce using rule 57 (iilis -> iilis iili .)
+    MINUS           reduce using rule 57 (iilis -> iilis iili .)
+    EQ              reduce using rule 57 (iilis -> iilis iili .)
+    EXCLAM          reduce using rule 57 (iilis -> iilis iili .)
+    PLUS            reduce using rule 57 (iilis -> iilis iili .)
+    QQ              reduce using rule 57 (iilis -> iilis iili .)
+    RT              reduce using rule 57 (iilis -> iilis iili .)
+    LT              reduce using rule 57 (iilis -> iilis iili .)
+    LSQ             reduce using rule 57 (iilis -> iilis iili .)
+
+
+state 118
+
+    (52) iili -> TAB TAB . li
+    (50) li -> . ASfactor CR
+    (59) li -> . li PLUS factor CR
+    (60) li -> . li MINUS factor CR
+    (61) li -> . PLUS factor CR
+    (62) li -> . MINUS factor CR
+    (29) ASfactor -> . AS factor
+    (30) ASfactor -> . ASfactor factor
+
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 53
+    AS              shift and go to state 49
+
+    ASfactor                       shift and go to state 47
+    li                             shift and go to state 126
+
+state 119
+
+    (63) picture -> EXCLAM LSQ factor RSQ . LB factor RB
+
+    LB              shift and go to state 127
+
+
+state 120
+
+    (59) li -> li PLUS factor CR .
+
+    $end            reduce using rule 59 (li -> li PLUS factor CR .)
+    CR              reduce using rule 59 (li -> li PLUS factor CR .)
+    H1              reduce using rule 59 (li -> li PLUS factor CR .)
+    H2              reduce using rule 59 (li -> li PLUS factor CR .)
+    H3              reduce using rule 59 (li -> li PLUS factor CR .)
+    WORD            reduce using rule 59 (li -> li PLUS factor CR .)
+    NUMBER          reduce using rule 59 (li -> li PLUS factor CR .)
+    DOT             reduce using rule 59 (li -> li PLUS factor CR .)
+    BLANK           reduce using rule 59 (li -> li PLUS factor CR .)
+    TAB             reduce using rule 59 (li -> li PLUS factor CR .)
+    AS              reduce using rule 59 (li -> li PLUS factor CR .)
+    UDL             reduce using rule 59 (li -> li PLUS factor CR .)
+    MINUS           reduce using rule 59 (li -> li PLUS factor CR .)
+    EQ              reduce using rule 59 (li -> li PLUS factor CR .)
+    EXCLAM          reduce using rule 59 (li -> li PLUS factor CR .)
+    PLUS            reduce using rule 59 (li -> li PLUS factor CR .)
+    QQ              reduce using rule 59 (li -> li PLUS factor CR .)
+    RT              reduce using rule 59 (li -> li PLUS factor CR .)
+    LT              reduce using rule 59 (li -> li PLUS factor CR .)
+    LSQ             reduce using rule 59 (li -> li PLUS factor CR .)
+
+
+state 121
+
+    (60) li -> li MINUS factor CR .
+
+    $end            reduce using rule 60 (li -> li MINUS factor CR .)
+    CR              reduce using rule 60 (li -> li MINUS factor CR .)
+    H1              reduce using rule 60 (li -> li MINUS factor CR .)
+    H2              reduce using rule 60 (li -> li MINUS factor CR .)
+    H3              reduce using rule 60 (li -> li MINUS factor CR .)
+    WORD            reduce using rule 60 (li -> li MINUS factor CR .)
+    NUMBER          reduce using rule 60 (li -> li MINUS factor CR .)
+    DOT             reduce using rule 60 (li -> li MINUS factor CR .)
+    BLANK           reduce using rule 60 (li -> li MINUS factor CR .)
+    TAB             reduce using rule 60 (li -> li MINUS factor CR .)
+    AS              reduce using rule 60 (li -> li MINUS factor CR .)
+    UDL             reduce using rule 60 (li -> li MINUS factor CR .)
+    MINUS           reduce using rule 60 (li -> li MINUS factor CR .)
+    EQ              reduce using rule 60 (li -> li MINUS factor CR .)
+    EXCLAM          reduce using rule 60 (li -> li MINUS factor CR .)
+    PLUS            reduce using rule 60 (li -> li MINUS factor CR .)
+    QQ              reduce using rule 60 (li -> li MINUS factor CR .)
+    RT              reduce using rule 60 (li -> li MINUS factor CR .)
+    LT              reduce using rule 60 (li -> li MINUS factor CR .)
+    LSQ             reduce using rule 60 (li -> li MINUS factor CR .)
+
+
+state 122
+
+    (21) line -> AS BLANK AS BLANK . AS
+
+    AS              shift and go to state 128
+
+
+state 123
+
+    (34) codes -> QQ UDL factor UDL . QQ
+
+    QQ              shift and go to state 129
+
+
+state 124
+
+    (65) link -> LSQ factor RSQ LB . factor RB
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 130
+
+state 125
+
+    (22) line -> UDL BLANK UDL BLANK . UDL
+
+    UDL             shift and go to state 131
+
+
+state 126
+
+    (52) iili -> TAB TAB li .
+    (59) li -> li . PLUS factor CR
+    (60) li -> li . MINUS factor CR
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    TAB             reduce using rule 52 (iili -> TAB TAB li .)
+    $end            reduce using rule 52 (iili -> TAB TAB li .)
+    CR              reduce using rule 52 (iili -> TAB TAB li .)
+    H1              reduce using rule 52 (iili -> TAB TAB li .)
+    H2              reduce using rule 52 (iili -> TAB TAB li .)
+    H3              reduce using rule 52 (iili -> TAB TAB li .)
+    WORD            reduce using rule 52 (iili -> TAB TAB li .)
+    NUMBER          reduce using rule 52 (iili -> TAB TAB li .)
+    DOT             reduce using rule 52 (iili -> TAB TAB li .)
+    BLANK           reduce using rule 52 (iili -> TAB TAB li .)
+    AS              reduce using rule 52 (iili -> TAB TAB li .)
+    UDL             reduce using rule 52 (iili -> TAB TAB li .)
+    EQ              reduce using rule 52 (iili -> TAB TAB li .)
+    EXCLAM          reduce using rule 52 (iili -> TAB TAB li .)
+    QQ              reduce using rule 52 (iili -> TAB TAB li .)
+    RT              reduce using rule 52 (iili -> TAB TAB li .)
+    LT              reduce using rule 52 (iili -> TAB TAB li .)
+    LSQ             reduce using rule 52 (iili -> TAB TAB li .)
+    PLUS            shift and go to state 58
+    MINUS           shift and go to state 59
+
+  ! MINUS           [ reduce using rule 52 (iili -> TAB TAB li .) ]
+  ! PLUS            [ reduce using rule 52 (iili -> TAB TAB li .) ]
+
+
+state 127
+
+    (63) picture -> EXCLAM LSQ factor RSQ LB . factor RB
+    (66) factor -> . factor subfactor
+    (67) factor -> . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 18
+    factor                         shift and go to state 132
+
+state 128
+
+    (21) line -> AS BLANK AS BLANK AS .
+
+    $end            reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    CR              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    H1              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    H2              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    H3              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    WORD            reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    NUMBER          reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    DOT             reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    BLANK           reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    TAB             reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    AS              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    UDL             reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    MINUS           reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    EQ              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    EXCLAM          reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    PLUS            reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    QQ              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    RT              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    LT              reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+    LSQ             reduce using rule 21 (line -> AS BLANK AS BLANK AS .)
+
+
+state 129
+
+    (34) codes -> QQ UDL factor UDL QQ .
+
+    $end            reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    CR              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    H1              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    H2              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    H3              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    WORD            reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    NUMBER          reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    DOT             reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    BLANK           reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    TAB             reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    AS              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    UDL             reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    MINUS           reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    EQ              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    EXCLAM          reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    PLUS            reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    QQ              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    RT              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    LT              reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+    LSQ             reduce using rule 34 (codes -> QQ UDL factor UDL QQ .)
+
+
+state 130
+
+    (65) link -> LSQ factor RSQ LB factor . RB
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    RB              shift and go to state 133
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 131
+
+    (22) line -> UDL BLANK UDL BLANK UDL .
+
+    $end            reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    CR              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    H1              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    H2              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    H3              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    WORD            reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    NUMBER          reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    DOT             reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    BLANK           reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    TAB             reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    AS              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    UDL             reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    MINUS           reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    EQ              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    EXCLAM          reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    PLUS            reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    QQ              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    RT              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    LT              reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+    LSQ             reduce using rule 22 (line -> UDL BLANK UDL BLANK UDL .)
+
+
+state 132
+
+    (63) picture -> EXCLAM LSQ factor RSQ LB factor . RB
+    (66) factor -> factor . subfactor
+    (68) subfactor -> . WORD
+    (69) subfactor -> . NUMBER
+    (70) subfactor -> . DOT
+    (71) subfactor -> . BLANK
+    (72) subfactor -> . TAB
+
+    RB              shift and go to state 134
+    WORD            shift and go to state 6
+    NUMBER          shift and go to state 39
+    DOT             shift and go to state 9
+    BLANK           shift and go to state 17
+    TAB             shift and go to state 12
+
+    subfactor                      shift and go to state 63
+
+state 133
+
+    (65) link -> LSQ factor RSQ LB factor RB .
+
+    $end            reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    CR              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    H1              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    H2              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    H3              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    WORD            reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    NUMBER          reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    DOT             reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    BLANK           reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    TAB             reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    AS              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    UDL             reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    MINUS           reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    EQ              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    EXCLAM          reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    PLUS            reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    QQ              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    RT              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    LT              reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+    LSQ             reduce using rule 65 (link -> LSQ factor RSQ LB factor RB .)
+
+
+state 134
+
+    (63) picture -> EXCLAM LSQ factor RSQ LB factor RB .
+
+    $end            reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    CR              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    H1              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    H2              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    H3              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    WORD            reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    NUMBER          reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    DOT             reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    BLANK           reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    TAB             reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    AS              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    UDL             reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    MINUS           reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    EQ              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    EXCLAM          reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    PLUS            reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    QQ              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    RT              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    LT              reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
+    LSQ             reduce using rule 63 (picture -> EXCLAM LSQ factor RSQ LB factor RB .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for TEXT in state 13 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 19 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 20 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 21 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 22 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 23 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 24 resolved as shift
-WARNING: shift/reduce conflict for CR in state 26 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 29 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 4 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 5 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 5 resolved as shift
+WARNING: shift/reduce conflict for AS in state 5 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 5 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 13 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 13 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 23 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 23 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 23 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 23 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 23 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 34 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 34 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 40 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 40 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 40 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 40 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 40 resolved as shift
+WARNING: shift/reduce conflict for QQ in state 41 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 43 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 43 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 43 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 43 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 43 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 48 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 48 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 50 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 57 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 57 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 57 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 57 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 57 resolved as shift
+WARNING: shift/reduce conflict for AS in state 66 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 68 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 68 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 68 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 68 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 68 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 72 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 72 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 72 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 72 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 72 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 75 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 75 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 75 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 75 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 75 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 76 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 76 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 76 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 76 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 76 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 77 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 77 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 77 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 77 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 77 resolved as shift
+WARNING: shift/reduce conflict for H1 in state 81 resolved as shift
+WARNING: shift/reduce conflict for H2 in state 81 resolved as shift
+WARNING: shift/reduce conflict for H3 in state 81 resolved as shift
+WARNING: shift/reduce conflict for AS in state 81 resolved as shift
+WARNING: shift/reduce conflict for UDL in state 81 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 81 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 81 resolved as shift
+WARNING: shift/reduce conflict for EXCLAM in state 81 resolved as shift
+WARNING: shift/reduce conflict for QQ in state 81 resolved as shift
+WARNING: shift/reduce conflict for RT in state 81 resolved as shift
+WARNING: shift/reduce conflict for LT in state 81 resolved as shift
+WARNING: shift/reduce conflict for LSQ in state 81 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 81 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 81 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 81 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 81 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 81 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 81 resolved as shift
+WARNING: shift/reduce conflict for UDL in state 84 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 90 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 94 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 94 resolved as shift
+WARNING: shift/reduce conflict for WORD in state 108 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 108 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 108 resolved as shift
+WARNING: shift/reduce conflict for BLANK in state 108 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 108 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 126 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 126 resolved as shift
