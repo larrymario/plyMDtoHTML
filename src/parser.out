@@ -19,16 +19,38 @@ Rule 13    expression -> SH1
 Rule 14    expression -> SH2
 Rule 15    expression -> expression factor
 Rule 16    expression -> factor
-Rule 17    factor -> STRONG factor STRONG
-Rule 18    factor -> EM factor EM
-Rule 19    factor -> factor subfactor
-Rule 20    factor -> subfactor
-Rule 21    subfactor -> TEXT
+Rule 17    factor -> LINK1 factor LINK2
+Rule 18    factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+Rule 19    factor -> STRONG1 subfactor STRONG1
+Rule 20    factor -> STRONG2 subfactor STRONG2
+Rule 21    factor -> CODE subfactor CODE
+Rule 22    factor -> EM1 subfactor EM1
+Rule 23    factor -> EM2 subfactor EM2
+Rule 24    starfactor -> EM1 subfactor
+Rule 25    plusfactor -> PLUS subfactor
+Rule 26    nofactor -> NO DOT subfactor
+Rule 27    subfactor -> subfactor1
+Rule 28    factor -> starfactor
+Rule 29    factor -> plusfactor
+Rule 30    factor -> nofactor
+Rule 31    factor -> subfactor
+Rule 32    subfactor1 -> texts
+Rule 33    subfactor1 -> subfactor1 texts
+Rule 34    texts -> TEXT
+Rule 35    texts -> DOT
+Rule 36    texts -> SPACE
+Rule 37    texts -> TAB
+Rule 38    texts -> NO
 
 Terminals, with rules where they appear
 
+BRACKET1             : 18
+BRACKET2             : 18
+CODE                 : 21 21
 CR                   : 2 3 5
-EM                   : 18 18
+DOT                  : 26 35
+EM1                  : 22 22 24
+EM2                  : 23 23
 H1                   : 7
 H2                   : 8
 H3                   : 9
@@ -36,19 +58,33 @@ H4                   : 10
 H5                   : 11
 H6                   : 12
 LINE                 : 6
+LINK1                : 17
+LINK2                : 17
+NO                   : 26 38
+PARENT1              : 18
+PARENT2              : 18
+PLUS                 : 25
 SH1                  : 13
 SH2                  : 14
-STRONG               : 17 17
-TEXT                 : 21
+SPACE                : 36
+STRONG1              : 19 19
+STRONG2              : 20 20
+TAB                  : 37
+TEXT                 : 34
 error                : 
 
 Nonterminals, with rules where they appear
 
 body                 : 0
 expression           : 2 4 15
-factor               : 7 8 9 10 11 12 15 16 17 18 19
+factor               : 7 8 9 10 11 12 15 16 17 18 18
+nofactor             : 30
+plusfactor           : 29
+starfactor           : 28
 statement            : 1 2 3
-subfactor            : 19 20
+subfactor            : 19 20 21 22 23 24 25 26 31
+subfactor1           : 27 33
+texts                : 32 33
 
 Parsing method: SLR
 
@@ -71,392 +107,1131 @@ state 0
     (14) expression -> . SH2
     (15) expression -> . expression factor
     (16) expression -> . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
 
-    CR              shift and go to state 14
-    LINE            shift and go to state 15
-    H1              shift and go to state 6
-    H2              shift and go to state 4
-    H3              shift and go to state 5
-    H4              shift and go to state 8
-    H5              shift and go to state 9
-    H6              shift and go to state 7
-    SH1             shift and go to state 2
-    SH2             shift and go to state 3
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
+    CR              shift and go to state 22
+    LINE            shift and go to state 6
+    H1              shift and go to state 26
+    H2              shift and go to state 24
+    H3              shift and go to state 25
+    H4              shift and go to state 28
+    H5              shift and go to state 29
+    H6              shift and go to state 27
+    SH1             shift and go to state 8
+    SH2             shift and go to state 9
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
 
-    body                           shift and go to state 1
-    expression                     shift and go to state 17
-    subfactor                      shift and go to state 18
-    statement                      shift and go to state 12
-    factor                         shift and go to state 13
+    body                           shift and go to state 17
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    statement                      shift and go to state 13
+    factor                         shift and go to state 14
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    expression                     shift and go to state 33
+    subfactor                      shift and go to state 16
 
 state 1
 
-    (0) S' -> body .
+    (21) factor -> CODE . subfactor CODE
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
 
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
 
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    subfactor                      shift and go to state 35
 
 state 2
+
+    (17) factor -> LINK1 . factor LINK2
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 36
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
+
+state 3
+
+    (18) factor -> BRACKET1 . factor BRACKET2 PARENT1 factor PARENT2
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 37
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
+
+state 4
+
+    (34) texts -> TEXT .
+
+    STRONG1         reduce using rule 34 (texts -> TEXT .)
+    STRONG2         reduce using rule 34 (texts -> TEXT .)
+    CODE            reduce using rule 34 (texts -> TEXT .)
+    EM1             reduce using rule 34 (texts -> TEXT .)
+    EM2             reduce using rule 34 (texts -> TEXT .)
+    TEXT            reduce using rule 34 (texts -> TEXT .)
+    DOT             reduce using rule 34 (texts -> TEXT .)
+    SPACE           reduce using rule 34 (texts -> TEXT .)
+    TAB             reduce using rule 34 (texts -> TEXT .)
+    NO              reduce using rule 34 (texts -> TEXT .)
+    $end            reduce using rule 34 (texts -> TEXT .)
+    CR              reduce using rule 34 (texts -> TEXT .)
+    LINK1           reduce using rule 34 (texts -> TEXT .)
+    BRACKET1        reduce using rule 34 (texts -> TEXT .)
+    PLUS            reduce using rule 34 (texts -> TEXT .)
+    LINK2           reduce using rule 34 (texts -> TEXT .)
+    BRACKET2        reduce using rule 34 (texts -> TEXT .)
+    PARENT2         reduce using rule 34 (texts -> TEXT .)
+
+
+state 5
+
+    (32) subfactor1 -> texts .
+
+    STRONG1         reduce using rule 32 (subfactor1 -> texts .)
+    STRONG2         reduce using rule 32 (subfactor1 -> texts .)
+    CODE            reduce using rule 32 (subfactor1 -> texts .)
+    EM1             reduce using rule 32 (subfactor1 -> texts .)
+    EM2             reduce using rule 32 (subfactor1 -> texts .)
+    TEXT            reduce using rule 32 (subfactor1 -> texts .)
+    DOT             reduce using rule 32 (subfactor1 -> texts .)
+    SPACE           reduce using rule 32 (subfactor1 -> texts .)
+    TAB             reduce using rule 32 (subfactor1 -> texts .)
+    NO              reduce using rule 32 (subfactor1 -> texts .)
+    $end            reduce using rule 32 (subfactor1 -> texts .)
+    CR              reduce using rule 32 (subfactor1 -> texts .)
+    LINK1           reduce using rule 32 (subfactor1 -> texts .)
+    BRACKET1        reduce using rule 32 (subfactor1 -> texts .)
+    PLUS            reduce using rule 32 (subfactor1 -> texts .)
+    LINK2           reduce using rule 32 (subfactor1 -> texts .)
+    BRACKET2        reduce using rule 32 (subfactor1 -> texts .)
+    PARENT2         reduce using rule 32 (subfactor1 -> texts .)
+
+
+state 6
+
+    (6) expression -> LINE .
+
+    $end            reduce using rule 6 (expression -> LINE .)
+    CR              reduce using rule 6 (expression -> LINE .)
+    LINK1           reduce using rule 6 (expression -> LINE .)
+    BRACKET1        reduce using rule 6 (expression -> LINE .)
+    STRONG1         reduce using rule 6 (expression -> LINE .)
+    STRONG2         reduce using rule 6 (expression -> LINE .)
+    CODE            reduce using rule 6 (expression -> LINE .)
+    EM1             reduce using rule 6 (expression -> LINE .)
+    EM2             reduce using rule 6 (expression -> LINE .)
+    PLUS            reduce using rule 6 (expression -> LINE .)
+    NO              reduce using rule 6 (expression -> LINE .)
+    TEXT            reduce using rule 6 (expression -> LINE .)
+    DOT             reduce using rule 6 (expression -> LINE .)
+    SPACE           reduce using rule 6 (expression -> LINE .)
+    TAB             reduce using rule 6 (expression -> LINE .)
+
+
+state 7
+
+    (35) texts -> DOT .
+
+    STRONG1         reduce using rule 35 (texts -> DOT .)
+    STRONG2         reduce using rule 35 (texts -> DOT .)
+    CODE            reduce using rule 35 (texts -> DOT .)
+    EM1             reduce using rule 35 (texts -> DOT .)
+    EM2             reduce using rule 35 (texts -> DOT .)
+    TEXT            reduce using rule 35 (texts -> DOT .)
+    DOT             reduce using rule 35 (texts -> DOT .)
+    SPACE           reduce using rule 35 (texts -> DOT .)
+    TAB             reduce using rule 35 (texts -> DOT .)
+    NO              reduce using rule 35 (texts -> DOT .)
+    $end            reduce using rule 35 (texts -> DOT .)
+    CR              reduce using rule 35 (texts -> DOT .)
+    LINK1           reduce using rule 35 (texts -> DOT .)
+    BRACKET1        reduce using rule 35 (texts -> DOT .)
+    PLUS            reduce using rule 35 (texts -> DOT .)
+    LINK2           reduce using rule 35 (texts -> DOT .)
+    BRACKET2        reduce using rule 35 (texts -> DOT .)
+    PARENT2         reduce using rule 35 (texts -> DOT .)
+
+
+state 8
 
     (13) expression -> SH1 .
 
     $end            reduce using rule 13 (expression -> SH1 .)
     CR              reduce using rule 13 (expression -> SH1 .)
-    STRONG          reduce using rule 13 (expression -> SH1 .)
-    EM              reduce using rule 13 (expression -> SH1 .)
+    LINK1           reduce using rule 13 (expression -> SH1 .)
+    BRACKET1        reduce using rule 13 (expression -> SH1 .)
+    STRONG1         reduce using rule 13 (expression -> SH1 .)
+    STRONG2         reduce using rule 13 (expression -> SH1 .)
+    CODE            reduce using rule 13 (expression -> SH1 .)
+    EM1             reduce using rule 13 (expression -> SH1 .)
+    EM2             reduce using rule 13 (expression -> SH1 .)
+    PLUS            reduce using rule 13 (expression -> SH1 .)
+    NO              reduce using rule 13 (expression -> SH1 .)
     TEXT            reduce using rule 13 (expression -> SH1 .)
+    DOT             reduce using rule 13 (expression -> SH1 .)
+    SPACE           reduce using rule 13 (expression -> SH1 .)
+    TAB             reduce using rule 13 (expression -> SH1 .)
 
 
-state 3
+state 9
 
     (14) expression -> SH2 .
 
     $end            reduce using rule 14 (expression -> SH2 .)
     CR              reduce using rule 14 (expression -> SH2 .)
-    STRONG          reduce using rule 14 (expression -> SH2 .)
-    EM              reduce using rule 14 (expression -> SH2 .)
+    LINK1           reduce using rule 14 (expression -> SH2 .)
+    BRACKET1        reduce using rule 14 (expression -> SH2 .)
+    STRONG1         reduce using rule 14 (expression -> SH2 .)
+    STRONG2         reduce using rule 14 (expression -> SH2 .)
+    CODE            reduce using rule 14 (expression -> SH2 .)
+    EM1             reduce using rule 14 (expression -> SH2 .)
+    EM2             reduce using rule 14 (expression -> SH2 .)
+    PLUS            reduce using rule 14 (expression -> SH2 .)
+    NO              reduce using rule 14 (expression -> SH2 .)
     TEXT            reduce using rule 14 (expression -> SH2 .)
+    DOT             reduce using rule 14 (expression -> SH2 .)
+    SPACE           reduce using rule 14 (expression -> SH2 .)
+    TAB             reduce using rule 14 (expression -> SH2 .)
 
-
-state 4
-
-    (8) expression -> H2 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 19
-
-state 5
-
-    (9) expression -> H3 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 20
-
-state 6
-
-    (7) expression -> H1 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 21
-
-state 7
-
-    (12) expression -> H6 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 22
-
-state 8
-
-    (10) expression -> H4 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 23
-
-state 9
-
-    (11) expression -> H5 . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 24
 
 state 10
 
-    (21) subfactor -> TEXT .
+    (26) nofactor -> NO . DOT subfactor
+    (38) texts -> NO .
 
-    $end            reduce using rule 21 (subfactor -> TEXT .)
-    CR              reduce using rule 21 (subfactor -> TEXT .)
-    STRONG          reduce using rule 21 (subfactor -> TEXT .)
-    EM              reduce using rule 21 (subfactor -> TEXT .)
-    TEXT            reduce using rule 21 (subfactor -> TEXT .)
+  ! shift/reduce conflict for DOT resolved as shift
+    DOT             shift and go to state 38
+    STRONG1         reduce using rule 38 (texts -> NO .)
+    STRONG2         reduce using rule 38 (texts -> NO .)
+    CODE            reduce using rule 38 (texts -> NO .)
+    EM1             reduce using rule 38 (texts -> NO .)
+    EM2             reduce using rule 38 (texts -> NO .)
+    TEXT            reduce using rule 38 (texts -> NO .)
+    SPACE           reduce using rule 38 (texts -> NO .)
+    TAB             reduce using rule 38 (texts -> NO .)
+    NO              reduce using rule 38 (texts -> NO .)
+    $end            reduce using rule 38 (texts -> NO .)
+    CR              reduce using rule 38 (texts -> NO .)
+    LINK1           reduce using rule 38 (texts -> NO .)
+    BRACKET1        reduce using rule 38 (texts -> NO .)
+    PLUS            reduce using rule 38 (texts -> NO .)
+    LINK2           reduce using rule 38 (texts -> NO .)
+    BRACKET2        reduce using rule 38 (texts -> NO .)
+    PARENT2         reduce using rule 38 (texts -> NO .)
+
+  ! DOT             [ reduce using rule 38 (texts -> NO .) ]
 
 
 state 11
 
-    (18) factor -> EM . factor EM
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
+    (29) factor -> plusfactor .
 
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
+    $end            reduce using rule 29 (factor -> plusfactor .)
+    CR              reduce using rule 29 (factor -> plusfactor .)
+    LINK1           reduce using rule 29 (factor -> plusfactor .)
+    BRACKET1        reduce using rule 29 (factor -> plusfactor .)
+    STRONG1         reduce using rule 29 (factor -> plusfactor .)
+    STRONG2         reduce using rule 29 (factor -> plusfactor .)
+    CODE            reduce using rule 29 (factor -> plusfactor .)
+    EM1             reduce using rule 29 (factor -> plusfactor .)
+    EM2             reduce using rule 29 (factor -> plusfactor .)
+    PLUS            reduce using rule 29 (factor -> plusfactor .)
+    NO              reduce using rule 29 (factor -> plusfactor .)
+    TEXT            reduce using rule 29 (factor -> plusfactor .)
+    DOT             reduce using rule 29 (factor -> plusfactor .)
+    SPACE           reduce using rule 29 (factor -> plusfactor .)
+    TAB             reduce using rule 29 (factor -> plusfactor .)
+    LINK2           reduce using rule 29 (factor -> plusfactor .)
+    BRACKET2        reduce using rule 29 (factor -> plusfactor .)
+    PARENT2         reduce using rule 29 (factor -> plusfactor .)
 
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 25
 
 state 12
+
+    (25) plusfactor -> PLUS . subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
+
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    subfactor                      shift and go to state 39
+
+state 13
 
     (1) body -> statement .
     (2) statement -> statement . CR expression
     (3) statement -> statement . CR
 
     $end            reduce using rule 1 (body -> statement .)
-    CR              shift and go to state 26
+    CR              shift and go to state 40
 
-
-state 13
-
-    (16) expression -> factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
-
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 16 (expression -> factor .)
-    CR              reduce using rule 16 (expression -> factor .)
-    STRONG          reduce using rule 16 (expression -> factor .)
-    EM              reduce using rule 16 (expression -> factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 16 (expression -> factor .) ]
-
-    subfactor                      shift and go to state 27
 
 state 14
+
+    (16) expression -> factor .
+
+    $end            reduce using rule 16 (expression -> factor .)
+    CR              reduce using rule 16 (expression -> factor .)
+    LINK1           reduce using rule 16 (expression -> factor .)
+    BRACKET1        reduce using rule 16 (expression -> factor .)
+    STRONG1         reduce using rule 16 (expression -> factor .)
+    STRONG2         reduce using rule 16 (expression -> factor .)
+    CODE            reduce using rule 16 (expression -> factor .)
+    EM1             reduce using rule 16 (expression -> factor .)
+    EM2             reduce using rule 16 (expression -> factor .)
+    PLUS            reduce using rule 16 (expression -> factor .)
+    NO              reduce using rule 16 (expression -> factor .)
+    TEXT            reduce using rule 16 (expression -> factor .)
+    DOT             reduce using rule 16 (expression -> factor .)
+    SPACE           reduce using rule 16 (expression -> factor .)
+    TAB             reduce using rule 16 (expression -> factor .)
+
+
+state 15
+
+    (30) factor -> nofactor .
+
+    $end            reduce using rule 30 (factor -> nofactor .)
+    CR              reduce using rule 30 (factor -> nofactor .)
+    LINK1           reduce using rule 30 (factor -> nofactor .)
+    BRACKET1        reduce using rule 30 (factor -> nofactor .)
+    STRONG1         reduce using rule 30 (factor -> nofactor .)
+    STRONG2         reduce using rule 30 (factor -> nofactor .)
+    CODE            reduce using rule 30 (factor -> nofactor .)
+    EM1             reduce using rule 30 (factor -> nofactor .)
+    EM2             reduce using rule 30 (factor -> nofactor .)
+    PLUS            reduce using rule 30 (factor -> nofactor .)
+    NO              reduce using rule 30 (factor -> nofactor .)
+    TEXT            reduce using rule 30 (factor -> nofactor .)
+    DOT             reduce using rule 30 (factor -> nofactor .)
+    SPACE           reduce using rule 30 (factor -> nofactor .)
+    TAB             reduce using rule 30 (factor -> nofactor .)
+    LINK2           reduce using rule 30 (factor -> nofactor .)
+    BRACKET2        reduce using rule 30 (factor -> nofactor .)
+    PARENT2         reduce using rule 30 (factor -> nofactor .)
+
+
+state 16
+
+    (31) factor -> subfactor .
+
+    $end            reduce using rule 31 (factor -> subfactor .)
+    CR              reduce using rule 31 (factor -> subfactor .)
+    LINK1           reduce using rule 31 (factor -> subfactor .)
+    BRACKET1        reduce using rule 31 (factor -> subfactor .)
+    STRONG1         reduce using rule 31 (factor -> subfactor .)
+    STRONG2         reduce using rule 31 (factor -> subfactor .)
+    CODE            reduce using rule 31 (factor -> subfactor .)
+    EM1             reduce using rule 31 (factor -> subfactor .)
+    EM2             reduce using rule 31 (factor -> subfactor .)
+    PLUS            reduce using rule 31 (factor -> subfactor .)
+    NO              reduce using rule 31 (factor -> subfactor .)
+    TEXT            reduce using rule 31 (factor -> subfactor .)
+    DOT             reduce using rule 31 (factor -> subfactor .)
+    SPACE           reduce using rule 31 (factor -> subfactor .)
+    TAB             reduce using rule 31 (factor -> subfactor .)
+    LINK2           reduce using rule 31 (factor -> subfactor .)
+    BRACKET2        reduce using rule 31 (factor -> subfactor .)
+    PARENT2         reduce using rule 31 (factor -> subfactor .)
+
+
+state 17
+
+    (0) S' -> body .
+
+
+
+state 18
+
+    (37) texts -> TAB .
+
+    STRONG1         reduce using rule 37 (texts -> TAB .)
+    STRONG2         reduce using rule 37 (texts -> TAB .)
+    CODE            reduce using rule 37 (texts -> TAB .)
+    EM1             reduce using rule 37 (texts -> TAB .)
+    EM2             reduce using rule 37 (texts -> TAB .)
+    TEXT            reduce using rule 37 (texts -> TAB .)
+    DOT             reduce using rule 37 (texts -> TAB .)
+    SPACE           reduce using rule 37 (texts -> TAB .)
+    TAB             reduce using rule 37 (texts -> TAB .)
+    NO              reduce using rule 37 (texts -> TAB .)
+    $end            reduce using rule 37 (texts -> TAB .)
+    CR              reduce using rule 37 (texts -> TAB .)
+    LINK1           reduce using rule 37 (texts -> TAB .)
+    BRACKET1        reduce using rule 37 (texts -> TAB .)
+    PLUS            reduce using rule 37 (texts -> TAB .)
+    LINK2           reduce using rule 37 (texts -> TAB .)
+    BRACKET2        reduce using rule 37 (texts -> TAB .)
+    PARENT2         reduce using rule 37 (texts -> TAB .)
+
+
+state 19
+
+    (19) factor -> STRONG1 . subfactor STRONG1
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
+
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    subfactor                      shift and go to state 41
+
+state 20
+
+    (20) factor -> STRONG2 . subfactor STRONG2
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
+
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    subfactor                      shift and go to state 42
+
+state 21
+
+    (36) texts -> SPACE .
+
+    STRONG1         reduce using rule 36 (texts -> SPACE .)
+    STRONG2         reduce using rule 36 (texts -> SPACE .)
+    CODE            reduce using rule 36 (texts -> SPACE .)
+    EM1             reduce using rule 36 (texts -> SPACE .)
+    EM2             reduce using rule 36 (texts -> SPACE .)
+    TEXT            reduce using rule 36 (texts -> SPACE .)
+    DOT             reduce using rule 36 (texts -> SPACE .)
+    SPACE           reduce using rule 36 (texts -> SPACE .)
+    TAB             reduce using rule 36 (texts -> SPACE .)
+    NO              reduce using rule 36 (texts -> SPACE .)
+    $end            reduce using rule 36 (texts -> SPACE .)
+    CR              reduce using rule 36 (texts -> SPACE .)
+    LINK1           reduce using rule 36 (texts -> SPACE .)
+    BRACKET1        reduce using rule 36 (texts -> SPACE .)
+    PLUS            reduce using rule 36 (texts -> SPACE .)
+    LINK2           reduce using rule 36 (texts -> SPACE .)
+    BRACKET2        reduce using rule 36 (texts -> SPACE .)
+    PARENT2         reduce using rule 36 (texts -> SPACE .)
+
+
+state 22
 
     (5) expression -> CR .
 
     $end            reduce using rule 5 (expression -> CR .)
     CR              reduce using rule 5 (expression -> CR .)
-    STRONG          reduce using rule 5 (expression -> CR .)
-    EM              reduce using rule 5 (expression -> CR .)
+    LINK1           reduce using rule 5 (expression -> CR .)
+    BRACKET1        reduce using rule 5 (expression -> CR .)
+    STRONG1         reduce using rule 5 (expression -> CR .)
+    STRONG2         reduce using rule 5 (expression -> CR .)
+    CODE            reduce using rule 5 (expression -> CR .)
+    EM1             reduce using rule 5 (expression -> CR .)
+    EM2             reduce using rule 5 (expression -> CR .)
+    PLUS            reduce using rule 5 (expression -> CR .)
+    NO              reduce using rule 5 (expression -> CR .)
     TEXT            reduce using rule 5 (expression -> CR .)
+    DOT             reduce using rule 5 (expression -> CR .)
+    SPACE           reduce using rule 5 (expression -> CR .)
+    TAB             reduce using rule 5 (expression -> CR .)
 
-
-state 15
-
-    (6) expression -> LINE .
-
-    $end            reduce using rule 6 (expression -> LINE .)
-    CR              reduce using rule 6 (expression -> LINE .)
-    STRONG          reduce using rule 6 (expression -> LINE .)
-    EM              reduce using rule 6 (expression -> LINE .)
-    TEXT            reduce using rule 6 (expression -> LINE .)
-
-
-state 16
-
-    (17) factor -> STRONG . factor STRONG
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 28
-
-state 17
-
-    (4) statement -> expression .
-    (15) expression -> expression . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
-
-    $end            reduce using rule 4 (statement -> expression .)
-    CR              reduce using rule 4 (statement -> expression .)
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
-
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 29
-
-state 18
-
-    (20) factor -> subfactor .
-
-    $end            reduce using rule 20 (factor -> subfactor .)
-    CR              reduce using rule 20 (factor -> subfactor .)
-    STRONG          reduce using rule 20 (factor -> subfactor .)
-    EM              reduce using rule 20 (factor -> subfactor .)
-    TEXT            reduce using rule 20 (factor -> subfactor .)
-
-
-state 19
-
-    (8) expression -> H2 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
-
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 8 (expression -> H2 factor .)
-    CR              reduce using rule 8 (expression -> H2 factor .)
-    STRONG          reduce using rule 8 (expression -> H2 factor .)
-    EM              reduce using rule 8 (expression -> H2 factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 8 (expression -> H2 factor .) ]
-
-    subfactor                      shift and go to state 27
-
-state 20
-
-    (9) expression -> H3 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
-
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 9 (expression -> H3 factor .)
-    CR              reduce using rule 9 (expression -> H3 factor .)
-    STRONG          reduce using rule 9 (expression -> H3 factor .)
-    EM              reduce using rule 9 (expression -> H3 factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 9 (expression -> H3 factor .) ]
-
-    subfactor                      shift and go to state 27
-
-state 21
-
-    (7) expression -> H1 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
-
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 7 (expression -> H1 factor .)
-    CR              reduce using rule 7 (expression -> H1 factor .)
-    STRONG          reduce using rule 7 (expression -> H1 factor .)
-    EM              reduce using rule 7 (expression -> H1 factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 7 (expression -> H1 factor .) ]
-
-    subfactor                      shift and go to state 27
-
-state 22
-
-    (12) expression -> H6 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
-
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 12 (expression -> H6 factor .)
-    CR              reduce using rule 12 (expression -> H6 factor .)
-    STRONG          reduce using rule 12 (expression -> H6 factor .)
-    EM              reduce using rule 12 (expression -> H6 factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 12 (expression -> H6 factor .) ]
-
-    subfactor                      shift and go to state 27
 
 state 23
 
-    (10) expression -> H4 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (27) subfactor -> subfactor1 .
+    (33) subfactor1 -> subfactor1 . texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
 
   ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 10 (expression -> H4 factor .)
-    CR              reduce using rule 10 (expression -> H4 factor .)
-    STRONG          reduce using rule 10 (expression -> H4 factor .)
-    EM              reduce using rule 10 (expression -> H4 factor .)
-    TEXT            shift and go to state 10
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for SPACE resolved as shift
+  ! shift/reduce conflict for TAB resolved as shift
+  ! shift/reduce conflict for NO resolved as shift
+    STRONG1         reduce using rule 27 (subfactor -> subfactor1 .)
+    STRONG2         reduce using rule 27 (subfactor -> subfactor1 .)
+    CODE            reduce using rule 27 (subfactor -> subfactor1 .)
+    EM1             reduce using rule 27 (subfactor -> subfactor1 .)
+    EM2             reduce using rule 27 (subfactor -> subfactor1 .)
+    $end            reduce using rule 27 (subfactor -> subfactor1 .)
+    CR              reduce using rule 27 (subfactor -> subfactor1 .)
+    LINK1           reduce using rule 27 (subfactor -> subfactor1 .)
+    BRACKET1        reduce using rule 27 (subfactor -> subfactor1 .)
+    PLUS            reduce using rule 27 (subfactor -> subfactor1 .)
+    LINK2           reduce using rule 27 (subfactor -> subfactor1 .)
+    BRACKET2        reduce using rule 27 (subfactor -> subfactor1 .)
+    PARENT2         reduce using rule 27 (subfactor -> subfactor1 .)
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
 
-  ! TEXT            [ reduce using rule 10 (expression -> H4 factor .) ]
+  ! NO              [ reduce using rule 27 (subfactor -> subfactor1 .) ]
+  ! TEXT            [ reduce using rule 27 (subfactor -> subfactor1 .) ]
+  ! DOT             [ reduce using rule 27 (subfactor -> subfactor1 .) ]
+  ! SPACE           [ reduce using rule 27 (subfactor -> subfactor1 .) ]
+  ! TAB             [ reduce using rule 27 (subfactor -> subfactor1 .) ]
 
-    subfactor                      shift and go to state 27
+    texts                          shift and go to state 43
 
 state 24
 
-    (11) expression -> H5 factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (8) expression -> H2 . factor
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
 
-  ! shift/reduce conflict for TEXT resolved as shift
-    $end            reduce using rule 11 (expression -> H5 factor .)
-    CR              reduce using rule 11 (expression -> H5 factor .)
-    STRONG          reduce using rule 11 (expression -> H5 factor .)
-    EM              reduce using rule 11 (expression -> H5 factor .)
-    TEXT            shift and go to state 10
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
 
-  ! TEXT            [ reduce using rule 11 (expression -> H5 factor .) ]
-
-    subfactor                      shift and go to state 27
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 44
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
 
 state 25
 
-    (18) factor -> EM factor . EM
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (9) expression -> H3 . factor
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
 
-    EM              shift and go to state 30
-    TEXT            shift and go to state 10
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
 
-    subfactor                      shift and go to state 27
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 45
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
 
 state 26
+
+    (7) expression -> H1 . factor
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 46
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
+
+state 27
+
+    (12) expression -> H6 . factor
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 47
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
+
+state 28
+
+    (10) expression -> H4 . factor
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 48
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
+
+state 29
+
+    (11) expression -> H5 . factor
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 49
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
+
+state 30
+
+    (22) factor -> EM1 . subfactor EM1
+    (24) starfactor -> EM1 . subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
+
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    subfactor                      shift and go to state 50
+
+state 31
+
+    (23) factor -> EM2 . subfactor EM2
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
+
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    subfactor                      shift and go to state 51
+
+state 32
+
+    (28) factor -> starfactor .
+
+    $end            reduce using rule 28 (factor -> starfactor .)
+    CR              reduce using rule 28 (factor -> starfactor .)
+    LINK1           reduce using rule 28 (factor -> starfactor .)
+    BRACKET1        reduce using rule 28 (factor -> starfactor .)
+    STRONG1         reduce using rule 28 (factor -> starfactor .)
+    STRONG2         reduce using rule 28 (factor -> starfactor .)
+    CODE            reduce using rule 28 (factor -> starfactor .)
+    EM1             reduce using rule 28 (factor -> starfactor .)
+    EM2             reduce using rule 28 (factor -> starfactor .)
+    PLUS            reduce using rule 28 (factor -> starfactor .)
+    NO              reduce using rule 28 (factor -> starfactor .)
+    TEXT            reduce using rule 28 (factor -> starfactor .)
+    DOT             reduce using rule 28 (factor -> starfactor .)
+    SPACE           reduce using rule 28 (factor -> starfactor .)
+    TAB             reduce using rule 28 (factor -> starfactor .)
+    LINK2           reduce using rule 28 (factor -> starfactor .)
+    BRACKET2        reduce using rule 28 (factor -> starfactor .)
+    PARENT2         reduce using rule 28 (factor -> starfactor .)
+
+
+state 33
+
+    (4) statement -> expression .
+    (15) expression -> expression . factor
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    $end            reduce using rule 4 (statement -> expression .)
+    CR              reduce using rule 4 (statement -> expression .)
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    factor                         shift and go to state 52
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor                      shift and go to state 16
+
+state 34
+
+    (38) texts -> NO .
+
+    STRONG1         reduce using rule 38 (texts -> NO .)
+    STRONG2         reduce using rule 38 (texts -> NO .)
+    CODE            reduce using rule 38 (texts -> NO .)
+    EM1             reduce using rule 38 (texts -> NO .)
+    EM2             reduce using rule 38 (texts -> NO .)
+    TEXT            reduce using rule 38 (texts -> NO .)
+    DOT             reduce using rule 38 (texts -> NO .)
+    SPACE           reduce using rule 38 (texts -> NO .)
+    TAB             reduce using rule 38 (texts -> NO .)
+    NO              reduce using rule 38 (texts -> NO .)
+    $end            reduce using rule 38 (texts -> NO .)
+    CR              reduce using rule 38 (texts -> NO .)
+    LINK1           reduce using rule 38 (texts -> NO .)
+    BRACKET1        reduce using rule 38 (texts -> NO .)
+    PLUS            reduce using rule 38 (texts -> NO .)
+    LINK2           reduce using rule 38 (texts -> NO .)
+    BRACKET2        reduce using rule 38 (texts -> NO .)
+    PARENT2         reduce using rule 38 (texts -> NO .)
+
+
+state 35
+
+    (21) factor -> CODE subfactor . CODE
+
+    CODE            shift and go to state 53
+
+
+state 36
+
+    (17) factor -> LINK1 factor . LINK2
+
+    LINK2           shift and go to state 54
+
+
+state 37
+
+    (18) factor -> BRACKET1 factor . BRACKET2 PARENT1 factor PARENT2
+
+    BRACKET2        shift and go to state 55
+
+
+state 38
+
+    (26) nofactor -> NO DOT . subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+    NO              shift and go to state 34
+
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    subfactor                      shift and go to state 56
+
+state 39
+
+    (25) plusfactor -> PLUS subfactor .
+
+    $end            reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    CR              reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    LINK1           reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    BRACKET1        reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    STRONG1         reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    STRONG2         reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    CODE            reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    EM1             reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    EM2             reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    PLUS            reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    NO              reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    TEXT            reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    DOT             reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    SPACE           reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    TAB             reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    LINK2           reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    BRACKET2        reduce using rule 25 (plusfactor -> PLUS subfactor .)
+    PARENT2         reduce using rule 25 (plusfactor -> PLUS subfactor .)
+
+
+state 40
 
     (2) statement -> statement CR . expression
     (3) statement -> statement CR .
@@ -472,122 +1247,598 @@ state 26
     (14) expression -> . SH2
     (15) expression -> . expression factor
     (16) expression -> . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
 
   ! shift/reduce conflict for CR resolved as shift
     $end            reduce using rule 3 (statement -> statement CR .)
-    CR              shift and go to state 14
-    LINE            shift and go to state 15
-    H1              shift and go to state 6
-    H2              shift and go to state 4
-    H3              shift and go to state 5
-    H4              shift and go to state 8
-    H5              shift and go to state 9
-    H6              shift and go to state 7
-    SH1             shift and go to state 2
-    SH2             shift and go to state 3
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
+    CR              shift and go to state 22
+    LINE            shift and go to state 6
+    H1              shift and go to state 26
+    H2              shift and go to state 24
+    H3              shift and go to state 25
+    H4              shift and go to state 28
+    H5              shift and go to state 29
+    H6              shift and go to state 27
+    SH1             shift and go to state 8
+    SH2             shift and go to state 9
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
 
   ! CR              [ reduce using rule 3 (statement -> statement CR .) ]
 
-    expression                     shift and go to state 31
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 13
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    factor                         shift and go to state 14
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    expression                     shift and go to state 57
+    subfactor                      shift and go to state 16
 
-state 27
+state 41
 
-    (19) factor -> factor subfactor .
+    (19) factor -> STRONG1 subfactor . STRONG1
 
-    $end            reduce using rule 19 (factor -> factor subfactor .)
-    CR              reduce using rule 19 (factor -> factor subfactor .)
-    STRONG          reduce using rule 19 (factor -> factor subfactor .)
-    EM              reduce using rule 19 (factor -> factor subfactor .)
-    TEXT            reduce using rule 19 (factor -> factor subfactor .)
+    STRONG1         shift and go to state 58
 
 
-state 28
+state 42
 
-    (17) factor -> STRONG factor . STRONG
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
+    (20) factor -> STRONG2 subfactor . STRONG2
 
-    STRONG          shift and go to state 32
-    TEXT            shift and go to state 10
+    STRONG2         shift and go to state 59
 
-    subfactor                      shift and go to state 27
 
-state 29
+state 43
+
+    (33) subfactor1 -> subfactor1 texts .
+
+    STRONG1         reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    STRONG2         reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    CODE            reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    EM1             reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    EM2             reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    TEXT            reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    DOT             reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    SPACE           reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    TAB             reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    NO              reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    $end            reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    CR              reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    LINK1           reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    BRACKET1        reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    PLUS            reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    LINK2           reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    BRACKET2        reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+    PARENT2         reduce using rule 33 (subfactor1 -> subfactor1 texts .)
+
+
+state 44
+
+    (8) expression -> H2 factor .
+
+    $end            reduce using rule 8 (expression -> H2 factor .)
+    CR              reduce using rule 8 (expression -> H2 factor .)
+    LINK1           reduce using rule 8 (expression -> H2 factor .)
+    BRACKET1        reduce using rule 8 (expression -> H2 factor .)
+    STRONG1         reduce using rule 8 (expression -> H2 factor .)
+    STRONG2         reduce using rule 8 (expression -> H2 factor .)
+    CODE            reduce using rule 8 (expression -> H2 factor .)
+    EM1             reduce using rule 8 (expression -> H2 factor .)
+    EM2             reduce using rule 8 (expression -> H2 factor .)
+    PLUS            reduce using rule 8 (expression -> H2 factor .)
+    NO              reduce using rule 8 (expression -> H2 factor .)
+    TEXT            reduce using rule 8 (expression -> H2 factor .)
+    DOT             reduce using rule 8 (expression -> H2 factor .)
+    SPACE           reduce using rule 8 (expression -> H2 factor .)
+    TAB             reduce using rule 8 (expression -> H2 factor .)
+
+
+state 45
+
+    (9) expression -> H3 factor .
+
+    $end            reduce using rule 9 (expression -> H3 factor .)
+    CR              reduce using rule 9 (expression -> H3 factor .)
+    LINK1           reduce using rule 9 (expression -> H3 factor .)
+    BRACKET1        reduce using rule 9 (expression -> H3 factor .)
+    STRONG1         reduce using rule 9 (expression -> H3 factor .)
+    STRONG2         reduce using rule 9 (expression -> H3 factor .)
+    CODE            reduce using rule 9 (expression -> H3 factor .)
+    EM1             reduce using rule 9 (expression -> H3 factor .)
+    EM2             reduce using rule 9 (expression -> H3 factor .)
+    PLUS            reduce using rule 9 (expression -> H3 factor .)
+    NO              reduce using rule 9 (expression -> H3 factor .)
+    TEXT            reduce using rule 9 (expression -> H3 factor .)
+    DOT             reduce using rule 9 (expression -> H3 factor .)
+    SPACE           reduce using rule 9 (expression -> H3 factor .)
+    TAB             reduce using rule 9 (expression -> H3 factor .)
+
+
+state 46
+
+    (7) expression -> H1 factor .
+
+    $end            reduce using rule 7 (expression -> H1 factor .)
+    CR              reduce using rule 7 (expression -> H1 factor .)
+    LINK1           reduce using rule 7 (expression -> H1 factor .)
+    BRACKET1        reduce using rule 7 (expression -> H1 factor .)
+    STRONG1         reduce using rule 7 (expression -> H1 factor .)
+    STRONG2         reduce using rule 7 (expression -> H1 factor .)
+    CODE            reduce using rule 7 (expression -> H1 factor .)
+    EM1             reduce using rule 7 (expression -> H1 factor .)
+    EM2             reduce using rule 7 (expression -> H1 factor .)
+    PLUS            reduce using rule 7 (expression -> H1 factor .)
+    NO              reduce using rule 7 (expression -> H1 factor .)
+    TEXT            reduce using rule 7 (expression -> H1 factor .)
+    DOT             reduce using rule 7 (expression -> H1 factor .)
+    SPACE           reduce using rule 7 (expression -> H1 factor .)
+    TAB             reduce using rule 7 (expression -> H1 factor .)
+
+
+state 47
+
+    (12) expression -> H6 factor .
+
+    $end            reduce using rule 12 (expression -> H6 factor .)
+    CR              reduce using rule 12 (expression -> H6 factor .)
+    LINK1           reduce using rule 12 (expression -> H6 factor .)
+    BRACKET1        reduce using rule 12 (expression -> H6 factor .)
+    STRONG1         reduce using rule 12 (expression -> H6 factor .)
+    STRONG2         reduce using rule 12 (expression -> H6 factor .)
+    CODE            reduce using rule 12 (expression -> H6 factor .)
+    EM1             reduce using rule 12 (expression -> H6 factor .)
+    EM2             reduce using rule 12 (expression -> H6 factor .)
+    PLUS            reduce using rule 12 (expression -> H6 factor .)
+    NO              reduce using rule 12 (expression -> H6 factor .)
+    TEXT            reduce using rule 12 (expression -> H6 factor .)
+    DOT             reduce using rule 12 (expression -> H6 factor .)
+    SPACE           reduce using rule 12 (expression -> H6 factor .)
+    TAB             reduce using rule 12 (expression -> H6 factor .)
+
+
+state 48
+
+    (10) expression -> H4 factor .
+
+    $end            reduce using rule 10 (expression -> H4 factor .)
+    CR              reduce using rule 10 (expression -> H4 factor .)
+    LINK1           reduce using rule 10 (expression -> H4 factor .)
+    BRACKET1        reduce using rule 10 (expression -> H4 factor .)
+    STRONG1         reduce using rule 10 (expression -> H4 factor .)
+    STRONG2         reduce using rule 10 (expression -> H4 factor .)
+    CODE            reduce using rule 10 (expression -> H4 factor .)
+    EM1             reduce using rule 10 (expression -> H4 factor .)
+    EM2             reduce using rule 10 (expression -> H4 factor .)
+    PLUS            reduce using rule 10 (expression -> H4 factor .)
+    NO              reduce using rule 10 (expression -> H4 factor .)
+    TEXT            reduce using rule 10 (expression -> H4 factor .)
+    DOT             reduce using rule 10 (expression -> H4 factor .)
+    SPACE           reduce using rule 10 (expression -> H4 factor .)
+    TAB             reduce using rule 10 (expression -> H4 factor .)
+
+
+state 49
+
+    (11) expression -> H5 factor .
+
+    $end            reduce using rule 11 (expression -> H5 factor .)
+    CR              reduce using rule 11 (expression -> H5 factor .)
+    LINK1           reduce using rule 11 (expression -> H5 factor .)
+    BRACKET1        reduce using rule 11 (expression -> H5 factor .)
+    STRONG1         reduce using rule 11 (expression -> H5 factor .)
+    STRONG2         reduce using rule 11 (expression -> H5 factor .)
+    CODE            reduce using rule 11 (expression -> H5 factor .)
+    EM1             reduce using rule 11 (expression -> H5 factor .)
+    EM2             reduce using rule 11 (expression -> H5 factor .)
+    PLUS            reduce using rule 11 (expression -> H5 factor .)
+    NO              reduce using rule 11 (expression -> H5 factor .)
+    TEXT            reduce using rule 11 (expression -> H5 factor .)
+    DOT             reduce using rule 11 (expression -> H5 factor .)
+    SPACE           reduce using rule 11 (expression -> H5 factor .)
+    TAB             reduce using rule 11 (expression -> H5 factor .)
+
+
+state 50
+
+    (22) factor -> EM1 subfactor . EM1
+    (24) starfactor -> EM1 subfactor .
+
+  ! shift/reduce conflict for EM1 resolved as shift
+    EM1             shift and go to state 60
+    $end            reduce using rule 24 (starfactor -> EM1 subfactor .)
+    CR              reduce using rule 24 (starfactor -> EM1 subfactor .)
+    LINK1           reduce using rule 24 (starfactor -> EM1 subfactor .)
+    BRACKET1        reduce using rule 24 (starfactor -> EM1 subfactor .)
+    STRONG1         reduce using rule 24 (starfactor -> EM1 subfactor .)
+    STRONG2         reduce using rule 24 (starfactor -> EM1 subfactor .)
+    CODE            reduce using rule 24 (starfactor -> EM1 subfactor .)
+    EM2             reduce using rule 24 (starfactor -> EM1 subfactor .)
+    PLUS            reduce using rule 24 (starfactor -> EM1 subfactor .)
+    NO              reduce using rule 24 (starfactor -> EM1 subfactor .)
+    TEXT            reduce using rule 24 (starfactor -> EM1 subfactor .)
+    DOT             reduce using rule 24 (starfactor -> EM1 subfactor .)
+    SPACE           reduce using rule 24 (starfactor -> EM1 subfactor .)
+    TAB             reduce using rule 24 (starfactor -> EM1 subfactor .)
+    LINK2           reduce using rule 24 (starfactor -> EM1 subfactor .)
+    BRACKET2        reduce using rule 24 (starfactor -> EM1 subfactor .)
+    PARENT2         reduce using rule 24 (starfactor -> EM1 subfactor .)
+
+  ! EM1             [ reduce using rule 24 (starfactor -> EM1 subfactor .) ]
+
+
+state 51
+
+    (23) factor -> EM2 subfactor . EM2
+
+    EM2             shift and go to state 61
+
+
+state 52
 
     (15) expression -> expression factor .
-    (19) factor -> factor . subfactor
-    (21) subfactor -> . TEXT
 
-  ! shift/reduce conflict for TEXT resolved as shift
     $end            reduce using rule 15 (expression -> expression factor .)
     CR              reduce using rule 15 (expression -> expression factor .)
-    STRONG          reduce using rule 15 (expression -> expression factor .)
-    EM              reduce using rule 15 (expression -> expression factor .)
-    TEXT            shift and go to state 10
-
-  ! TEXT            [ reduce using rule 15 (expression -> expression factor .) ]
-
-    subfactor                      shift and go to state 27
-
-state 30
-
-    (18) factor -> EM factor EM .
-
-    $end            reduce using rule 18 (factor -> EM factor EM .)
-    CR              reduce using rule 18 (factor -> EM factor EM .)
-    STRONG          reduce using rule 18 (factor -> EM factor EM .)
-    EM              reduce using rule 18 (factor -> EM factor EM .)
-    TEXT            reduce using rule 18 (factor -> EM factor EM .)
+    LINK1           reduce using rule 15 (expression -> expression factor .)
+    BRACKET1        reduce using rule 15 (expression -> expression factor .)
+    STRONG1         reduce using rule 15 (expression -> expression factor .)
+    STRONG2         reduce using rule 15 (expression -> expression factor .)
+    CODE            reduce using rule 15 (expression -> expression factor .)
+    EM1             reduce using rule 15 (expression -> expression factor .)
+    EM2             reduce using rule 15 (expression -> expression factor .)
+    PLUS            reduce using rule 15 (expression -> expression factor .)
+    NO              reduce using rule 15 (expression -> expression factor .)
+    TEXT            reduce using rule 15 (expression -> expression factor .)
+    DOT             reduce using rule 15 (expression -> expression factor .)
+    SPACE           reduce using rule 15 (expression -> expression factor .)
+    TAB             reduce using rule 15 (expression -> expression factor .)
 
 
-state 31
+state 53
+
+    (21) factor -> CODE subfactor CODE .
+
+    $end            reduce using rule 21 (factor -> CODE subfactor CODE .)
+    CR              reduce using rule 21 (factor -> CODE subfactor CODE .)
+    LINK1           reduce using rule 21 (factor -> CODE subfactor CODE .)
+    BRACKET1        reduce using rule 21 (factor -> CODE subfactor CODE .)
+    STRONG1         reduce using rule 21 (factor -> CODE subfactor CODE .)
+    STRONG2         reduce using rule 21 (factor -> CODE subfactor CODE .)
+    CODE            reduce using rule 21 (factor -> CODE subfactor CODE .)
+    EM1             reduce using rule 21 (factor -> CODE subfactor CODE .)
+    EM2             reduce using rule 21 (factor -> CODE subfactor CODE .)
+    PLUS            reduce using rule 21 (factor -> CODE subfactor CODE .)
+    NO              reduce using rule 21 (factor -> CODE subfactor CODE .)
+    TEXT            reduce using rule 21 (factor -> CODE subfactor CODE .)
+    DOT             reduce using rule 21 (factor -> CODE subfactor CODE .)
+    SPACE           reduce using rule 21 (factor -> CODE subfactor CODE .)
+    TAB             reduce using rule 21 (factor -> CODE subfactor CODE .)
+    LINK2           reduce using rule 21 (factor -> CODE subfactor CODE .)
+    BRACKET2        reduce using rule 21 (factor -> CODE subfactor CODE .)
+    PARENT2         reduce using rule 21 (factor -> CODE subfactor CODE .)
+
+
+state 54
+
+    (17) factor -> LINK1 factor LINK2 .
+
+    $end            reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    CR              reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    LINK1           reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    BRACKET1        reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    STRONG1         reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    STRONG2         reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    CODE            reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    EM1             reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    EM2             reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    PLUS            reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    NO              reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    TEXT            reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    DOT             reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    SPACE           reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    TAB             reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    LINK2           reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    BRACKET2        reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+    PARENT2         reduce using rule 17 (factor -> LINK1 factor LINK2 .)
+
+
+state 55
+
+    (18) factor -> BRACKET1 factor BRACKET2 . PARENT1 factor PARENT2
+
+    PARENT1         shift and go to state 62
+
+
+state 56
+
+    (26) nofactor -> NO DOT subfactor .
+
+    $end            reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    CR              reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    LINK1           reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    BRACKET1        reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    STRONG1         reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    STRONG2         reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    CODE            reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    EM1             reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    EM2             reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    PLUS            reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    NO              reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    TEXT            reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    DOT             reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    SPACE           reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    TAB             reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    LINK2           reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    BRACKET2        reduce using rule 26 (nofactor -> NO DOT subfactor .)
+    PARENT2         reduce using rule 26 (nofactor -> NO DOT subfactor .)
+
+
+state 57
 
     (2) statement -> statement CR expression .
     (15) expression -> expression . factor
-    (17) factor -> . STRONG factor STRONG
-    (18) factor -> . EM factor EM
-    (19) factor -> . factor subfactor
-    (20) factor -> . subfactor
-    (21) subfactor -> . TEXT
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
 
     $end            reduce using rule 2 (statement -> statement CR expression .)
     CR              reduce using rule 2 (statement -> statement CR expression .)
-    STRONG          shift and go to state 16
-    EM              shift and go to state 11
-    TEXT            shift and go to state 10
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
 
-    subfactor                      shift and go to state 18
-    factor                         shift and go to state 29
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor1                     shift and go to state 23
+    factor                         shift and go to state 52
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor                      shift and go to state 16
 
-state 32
+state 58
 
-    (17) factor -> STRONG factor STRONG .
+    (19) factor -> STRONG1 subfactor STRONG1 .
 
-    $end            reduce using rule 17 (factor -> STRONG factor STRONG .)
-    CR              reduce using rule 17 (factor -> STRONG factor STRONG .)
-    STRONG          reduce using rule 17 (factor -> STRONG factor STRONG .)
-    EM              reduce using rule 17 (factor -> STRONG factor STRONG .)
-    TEXT            reduce using rule 17 (factor -> STRONG factor STRONG .)
+    $end            reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    CR              reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    LINK1           reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    BRACKET1        reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    STRONG1         reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    STRONG2         reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    CODE            reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    EM1             reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    EM2             reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    PLUS            reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    NO              reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    TEXT            reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    DOT             reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    SPACE           reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    TAB             reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    LINK2           reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    BRACKET2        reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+    PARENT2         reduce using rule 19 (factor -> STRONG1 subfactor STRONG1 .)
+
+
+state 59
+
+    (20) factor -> STRONG2 subfactor STRONG2 .
+
+    $end            reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    CR              reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    LINK1           reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    BRACKET1        reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    STRONG1         reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    STRONG2         reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    CODE            reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    EM1             reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    EM2             reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    PLUS            reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    NO              reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    TEXT            reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    DOT             reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    SPACE           reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    TAB             reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    LINK2           reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    BRACKET2        reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+    PARENT2         reduce using rule 20 (factor -> STRONG2 subfactor STRONG2 .)
+
+
+state 60
+
+    (22) factor -> EM1 subfactor EM1 .
+
+    $end            reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    CR              reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    LINK1           reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    BRACKET1        reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    STRONG1         reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    STRONG2         reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    CODE            reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    EM1             reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    EM2             reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    PLUS            reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    NO              reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    TEXT            reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    DOT             reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    SPACE           reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    TAB             reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    LINK2           reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    BRACKET2        reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+    PARENT2         reduce using rule 22 (factor -> EM1 subfactor EM1 .)
+
+
+state 61
+
+    (23) factor -> EM2 subfactor EM2 .
+
+    $end            reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    CR              reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    LINK1           reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    BRACKET1        reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    STRONG1         reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    STRONG2         reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    CODE            reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    EM1             reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    EM2             reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    PLUS            reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    NO              reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    TEXT            reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    DOT             reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    SPACE           reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    TAB             reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    LINK2           reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    BRACKET2        reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+    PARENT2         reduce using rule 23 (factor -> EM2 subfactor EM2 .)
+
+
+state 62
+
+    (18) factor -> BRACKET1 factor BRACKET2 PARENT1 . factor PARENT2
+    (17) factor -> . LINK1 factor LINK2
+    (18) factor -> . BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+    (19) factor -> . STRONG1 subfactor STRONG1
+    (20) factor -> . STRONG2 subfactor STRONG2
+    (21) factor -> . CODE subfactor CODE
+    (22) factor -> . EM1 subfactor EM1
+    (23) factor -> . EM2 subfactor EM2
+    (28) factor -> . starfactor
+    (29) factor -> . plusfactor
+    (30) factor -> . nofactor
+    (31) factor -> . subfactor
+    (24) starfactor -> . EM1 subfactor
+    (25) plusfactor -> . PLUS subfactor
+    (26) nofactor -> . NO DOT subfactor
+    (27) subfactor -> . subfactor1
+    (32) subfactor1 -> . texts
+    (33) subfactor1 -> . subfactor1 texts
+    (34) texts -> . TEXT
+    (35) texts -> . DOT
+    (36) texts -> . SPACE
+    (37) texts -> . TAB
+    (38) texts -> . NO
+
+    LINK1           shift and go to state 2
+    BRACKET1        shift and go to state 3
+    STRONG1         shift and go to state 19
+    STRONG2         shift and go to state 20
+    CODE            shift and go to state 1
+    EM1             shift and go to state 30
+    EM2             shift and go to state 31
+    PLUS            shift and go to state 12
+    NO              shift and go to state 10
+    TEXT            shift and go to state 4
+    DOT             shift and go to state 7
+    SPACE           shift and go to state 21
+    TAB             shift and go to state 18
+
+    plusfactor                     shift and go to state 11
+    texts                          shift and go to state 5
+    subfactor                      shift and go to state 16
+    factor                         shift and go to state 63
+    nofactor                       shift and go to state 15
+    starfactor                     shift and go to state 32
+    subfactor1                     shift and go to state 23
+
+state 63
+
+    (18) factor -> BRACKET1 factor BRACKET2 PARENT1 factor . PARENT2
+
+    PARENT2         shift and go to state 64
+
+
+state 64
+
+    (18) factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .
+
+    $end            reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    CR              reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    LINK1           reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    BRACKET1        reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    STRONG1         reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    STRONG2         reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    CODE            reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    EM1             reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    EM2             reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    PLUS            reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    NO              reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    TEXT            reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    DOT             reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    SPACE           reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    TAB             reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    LINK2           reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    BRACKET2        reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
+    PARENT2         reduce using rule 18 (factor -> BRACKET1 factor BRACKET2 PARENT1 factor PARENT2 .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for TEXT in state 13 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 19 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 20 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 21 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 22 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 10 resolved as shift
 WARNING: shift/reduce conflict for TEXT in state 23 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 24 resolved as shift
-WARNING: shift/reduce conflict for CR in state 26 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 29 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 23 resolved as shift
+WARNING: shift/reduce conflict for SPACE in state 23 resolved as shift
+WARNING: shift/reduce conflict for TAB in state 23 resolved as shift
+WARNING: shift/reduce conflict for NO in state 23 resolved as shift
+WARNING: shift/reduce conflict for CR in state 40 resolved as shift
+WARNING: shift/reduce conflict for EM1 in state 50 resolved as shift
