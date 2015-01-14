@@ -2,7 +2,7 @@
 # coding: utf-8
 # -------------------------------------------------
 # @author larrymario lizhen2013 ScottFoH
-# @update 2014-12-24
+# @update 2015-01-14
 # -------------------------------------------------
 
 import sys
@@ -19,8 +19,11 @@ tokens = (
     'H1','H2','H3','H4','H5','H6',
     'SH1','SH2',
     'LINE',
-    'STRONG','EM',
-    'CR', 'TEXT'
+    'STRONG1', 'STRONG2', 'EM1', 'EM2', 'CODE',
+    'CR', 'TAB', 'TEXT', 'LINK1', 'LINK2',
+    'BRACKET1', 'BRACKET2',
+    'PARENT1', 'PARENT2',
+    'NO', 'PLUS', 'DOT', 'SPACE'
     )
 
 # Tokens
@@ -33,21 +36,39 @@ t_H6 = r'\#\#\#\#\#\#'
 t_SH1 = r'=+'
 t_SH2 = r'-+'
 t_LINE = r'(\*[ ]{0,2}\*[ ]{0,2}\*)|(_[ ]{0,2}_[ ]{0,2}_)'
+t_LINK1 = r'<'
+t_LINK2 = r'>'
+t_EM1 = r'\* '
+t_EM2 = r'\_'
 #t_LINE = r'\*[ ]{0,2}\*[ ]{0,2}\*'
-t_STRONG = r'(\*\*|__)'
-t_EM = r'(\*|_)'
+t_STRONG1 = r'\*\*'
+t_STRONG2 = r'\_\_'
+t_PLUS = r'\+ '
+t_NO = r'[0-9]+'
+t_DOT = r'\.'
+t_SPACE = r'[ ]'
+t_TEXT = r'[a-zA-Z,!\?\'’\:\/]+'
+t_CODE = r'\`'
+t_BRACKET1 = r'\['
+t_BRACKET2 = r'\]'
+t_PARENT1 = r'\('
+t_PARENT2 = r'\)'
+
+#def t_TEXT(t):
+#    r'[a-zA-Z,!\?\'’\:\/]+'
+#    t.value = str(t.value)
+#    return t
 
 
-def t_TEXT(t):
-    r'[a-zA-Z0-9,.!\?\'’]+'
-    t.value = str(t.value)
-    return t
-
-
-t_ignore = " \t"
+t_ignore = ""
 
 def t_CR(t):
     r'\n+'
+    t.lexer.lineno += t.value.count("\n")
+    return t
+
+def t_TAB(t):
+    r'\t+'
     t.lexer.lineno += t.value.count("\n")
     return t
 
@@ -105,7 +126,8 @@ def p_exp_header_factor(p):
                 | H3 factor
                 | H4 factor
                 | H5 factor
-                | H6 factor'''
+                | H6 factor
+                '''
     if p[1] == '#':
         p[0] = '<h1>' + p[2] + '</h1>\n'
     elif p[1] == '##':
@@ -118,7 +140,16 @@ def p_exp_header_factor(p):
         p[0] = '<h5>' + p[2] + '</h5>\n'
     elif p[1] == '######':
         p[0] = '<h6>' + p[2] + '</h6>\n'
+#    elif p[1] == '*':
+#        p[0] = '<LI>' + p[2] + '</LI>'
 
+#def p_exp_list_factor(p):
+#    '''expression : STAR factor
+#                '''
+#    if p[1] == '*':
+#        p[0] = '<LI>' + p[2] + '</LI>'
+        
+    
 def p_exp_sheader1(p):
     "expression : SH1"
     p[0] = '<h1>' + '</h1>\n'
@@ -131,28 +162,96 @@ def p_exp_factor(p):
     '''expression : expression factor
                 | factor'''
     if len(p) == 3:
-        p[0] = p[1] + ' ' + p[2]
+        p[0] = p[1] + p[2]
     else:
         p[0] = p[1]
-    
-def p_factor_strong(p):
-    "factor : STRONG factor STRONG"
+
+def p_factor_link(p):
+    '''factor : LINK1 factor LINK2
+                '''
+    if p[1] == '<':
+        p[0] = '<p><a target="_blank" href="'+p[2]+'">'+p[2]+'</a></p>'
+
+def p_factor_slink(p):
+    '''factor : BRACKET1 factor BRACKET2 PARENT1 factor PARENT2
+                '''
+    if len(p) == 7:
+        p[0] = '<a target="_blank" href="'+p[5]+'">'+p[2]+'</a>'
+        
+def p_subfactor_strong(p):
+    '''factor : STRONG1 subfactor STRONG1
+            | STRONG2 subfactor STRONG2'''
     p[0] = '<strong>' + p[2] + "</strong>"
 
-def p_factor_em(p):
-    "factor : EM factor EM"
+def p_subfactor_code(p):
+    '''factor : CODE subfactor CODE
+            '''
+    p[0] = '<code style="background:AliceBlue">' + p[2] + "</code>"
+
+def p_subfactor_em(p):
+    '''factor : EM1 subfactor EM1
+            | EM2 subfactor EM2'''
     p[0] = '<em>' + p[2] + "</em>"
+    
+def p_starfactor(p):
+    '''starfactor : EM1 subfactor
+            '''   
+    p[0] =  p[2]
 
+def p_plusfactor(p):
+    '''plusfactor : PLUS subfactor
+            '''   
+    p[0] =  p[2]
+
+def p_nofactor(p):
+    '''nofactor : NO DOT subfactor
+            '''   
+    p[0] =  p[3]
+
+    
+def p_subfactor_subfactor1(p):
+    '''subfactor : subfactor1
+            '''
+    p[0] = p[1]
+
+def p_factor_starfactor(p):
+    '''factor : starfactor
+            '''
+    p[0] = '<ul>\n'+'<li>' + p[1] + '</li>\n'+'</ul>\n'
+
+def p_factor_plusfactor(p):
+    '''factor : plusfactor
+            '''
+    p[0] = '<ul>\n'+'<li>' + p[1] + '</li>\n'+'</ul>\n'
+
+def p_factor_nofactor(p):
+    '''factor : nofactor
+            '''
+    p[0] = '<ol>\n'+'<li>' + p[1] + '</li>\n'+'</ol>\n'
+        
 def p_factor_subfactor(p):
-    '''factor : factor subfactor
-            | subfactor'''
-    if len(p) == 3:
-        p[0] = p[1] + ' ' + p[2]
-    else:
-        p[0] = p[1] 
+    '''factor : subfactor
+            '''
+    if len(p) == 2:
+        p[0] = p[1]
 
-def p_subfactor(p):
-    "subfactor : TEXT"
+
+
+def p_subfactor1(p):
+    '''subfactor1 : texts
+            | subfactor1 texts
+               '''
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[1] + p[2]
+
+def p_texts(p):
+    '''texts : TEXT
+            | DOT
+            | SPACE
+            | TAB
+            | NO'''
     p[0] = p[1]
 
 def p_error(p):
